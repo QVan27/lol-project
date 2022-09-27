@@ -2,16 +2,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>
 			{% block title %}Symfony app
 			{% endblock %}
 		</title>
-		{% block stylesheets %}
-			<link rel="stylesheet" href="{{ asset('build/app.css') }}">
-		{% endblock %}
+		{{ encore_entry_link_tags('app') }}
 	</head>
 	<body>
 		<div id="root"></div>
-		<script type="text/javascript" src="{{ asset('build/app.js') }}"></script>
+		{{ encore_entry_script_tags('app') }}
 	</body>
 </html>

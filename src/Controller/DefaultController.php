@@ -2,17 +2,23 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/', name: 'app_default')]
-    public function index(): Response
+    /**
+     * @Template("base.html.twig")
+     * @Route(
+     *     "/{reactRouting}",
+     *     name="index",
+     *     requirements={"reactRouting"="^.+"},
+     *     defaults={"reactRouting": null}
+     *     )
+     */
+    public function index()
     {
-        return $this->render('base.html.twig', [
-            'controller_name' => 'DefaultController',
-        ]);
+        return [];
     }
 }
