@@ -1,24 +1,24 @@
-import React, { FunctionComponent, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { ABOUT, HOME } from "../../constants/route-paths";
+import React, { FunctionComponent } from "react";
+import { Link } from "react-router-dom";
+import { MAP, HOME } from "../../constants/route-paths";
 
 const Header: FunctionComponent = () => {
-  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-
-  const toggleNavbar = () => {
-    setIsNavbarOpen(!isNavbarOpen);
-  };
 
   return (
     <header>
-      <nav>
-        <Link className="nav-link" to={HOME}>
-          home
-        </Link>
-        <Link className="nav-link" to={ABOUT}>
-          about
-        </Link>
-      </nav>
+      <div className="wrap-main">
+        <nav>
+          <Link className="nav-link" to={HOME}>
+            <div>
+              <img src="./build/images/teemo.png" alt="" />
+            </div>
+            <span>LOL. Trackers</span>
+          </Link>
+          <Link className="nav-link" to={MAP}>
+            Recherche
+          </Link>
+        </nav>
+      </div>
     </header>
   );
 };

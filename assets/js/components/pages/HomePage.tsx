@@ -15,7 +15,9 @@ const HomePage: FunctionComponent = () => {
 //   };
 
   return (
-    <section></section>
+    <main>
+      <section></section>
+    </main>
   );
 };
 
