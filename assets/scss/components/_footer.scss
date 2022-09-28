@@ -1,7 +1,12 @@
 footer {
   font-size: $fs__300;
-  padding: 20px 0;
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   .wrap-main {
+    padding: 20px 0;
     p {
       text-align: center;
     }

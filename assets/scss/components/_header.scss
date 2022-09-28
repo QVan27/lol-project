@@ -1,7 +1,12 @@
 header {
-  padding: 10px 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
   .wrap-main {
     nav {
+      padding: 10px 0;
       display: flex;
       justify-content: space-between;
       .nav-link {
