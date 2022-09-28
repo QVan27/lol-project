@@ -2,10 +2,12 @@
 # Home
 --------------------------------------------------------------*/
 section {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: center / cover no-repeat url("../../images/background.jpg");
+  
 }
 /*--------------------------------------------------------------
 # Home

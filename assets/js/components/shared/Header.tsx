@@ -6,7 +6,7 @@ const Header: FunctionComponent = () => {
 
   return (
     <header>
-      <div className="wrap-main">
+      <div className="wrap">
         <nav>
           <Link className="nav-link" to={HOME}>
             <div>

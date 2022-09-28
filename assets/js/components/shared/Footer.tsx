@@ -4,7 +4,7 @@ const Footer: FunctionComponent = () => {
 
   return (
     <footer>
-      <div className="wrap-main">
+      <div className="wrap">
         <p>Lol Trackers © 2022. Tous droits réservés.</p>
       </div>
     </footer>

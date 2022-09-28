@@ -17,8 +17,11 @@ const HomePage: FunctionComponent = () => {
   return (
     <main>
       <section className="home">
-        <div className="wrap-main">
-          <div className="home__container"></div>
+        <div className="wrap">
+          <div className="home__container">
+            <div className="home__container-logo"></div>
+            <button></button>
+          </div>
         </div>
       </section>
     </main>
