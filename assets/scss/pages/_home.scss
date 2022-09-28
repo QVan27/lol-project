@@ -1,13 +1,29 @@
 /*--------------------------------------------------------------
 # Home
 --------------------------------------------------------------*/
-section {
+.home {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: center / cover no-repeat url("../../images/background.jpg");
-  
+  .wrap {
+    .home__container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      .home__container-logo {
+        width: min(800px, 100%);
+        height: max(150px, 150px + 10vw);
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+  }
 }
 /*--------------------------------------------------------------
 # Home

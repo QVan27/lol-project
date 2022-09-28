@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from "react";
 
 const Footer: FunctionComponent = () => {
-
   return (
     <footer>
       <div className="wrap">
-        <p>Lol Trackers © 2022. Tous droits réservés.</p>
+        <p>Lol Trackers © {new Date().getFullYear()}. Tous droits réservés.</p>
       </div>
     </footer>
   );
