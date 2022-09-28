@@ -14,9 +14,9 @@ const Header: FunctionComponent = () => {
             </div>
             <span>LOL. Trackers</span>
           </Link>
-          <Link className="nav-link" to={MAP}>
+          {/* <Link className="nav-link" to={MAP}>
             Recherche
-          </Link>
+          </Link> */}
         </nav>
       </div>
     </header>

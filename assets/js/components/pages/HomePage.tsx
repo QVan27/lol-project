@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from "react";
-// import { Col, Container, Form, FormGroup, Input, Label } from "reactstrap";
 // import { useInput } from "../hooks/useInput";
 // import axios from '../../config/axios';
 import { Link } from "react-router-dom";
@@ -22,7 +21,7 @@ const HomePage: FunctionComponent = () => {
         <div className="wrap">
           <div className="home__container">
             <div className="home__container-logo">
-              <img src="./build/images/logo-long-lol.png" alt="" />
+              <img src="./build/images/logo-long-lol.png" alt="Logo Teemo" />
             </div>
             <Link className="button-lol" to={MAP}>touch to start</Link>
           </div>
