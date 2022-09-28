@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import '../scss/app.scss';
 import { ROOT } from "./constants/general";
+import { MAP, HOME, NOTFOUND } from "./constants/route-paths";
+// Shared
 import Header from "./components/shared/Header";
-import { ABOUT, HOME, NOTFOUND } from "./constants/route-paths";
-
+import Footer from './components/shared/Footer';
+// Components
 import HomePage from "./components/pages/HomePage";
-import AboutPage from "./components/pages/AboutPage";
+import MapPage from "./components/pages/MapPage";
 import NotFound from "./components/pages/NotFound";
 
 const App: FunctionComponent = () => {
@@ -16,9 +18,10 @@ const App: FunctionComponent = () => {
       <Header />
       <Switch>
         <Route exact={ true } path={ HOME } component={ HomePage } />
-        <Route exact={ true } path={ ABOUT } component={ AboutPage } />
+        <Route exact={ true } path={ MAP } component={ MapPage } />
         <Route exact={ true } path={ NOTFOUND } component={ NotFound } />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 };

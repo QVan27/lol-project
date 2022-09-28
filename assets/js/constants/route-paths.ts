@@ -1,3 +1,3 @@
 export const HOME = "/";
-export const ABOUT = "/about";
+export const MAP = "/map";
 export const NOTFOUND = "/*";
