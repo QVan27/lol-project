@@ -1,0 +1,92 @@
+/*--------------------------------------------------------------
+# Map
+--------------------------------------------------------------*/
+.map {
+  padding: 50px 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: center / cover no-repeat url("../../images/background-map.jpg");
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000000, $alpha: 0.7);
+  }
+  .wrap {
+    position: relative;
+    .map__container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+      .map__container__head {
+        padding: 20px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background: $color__paragraph-dark;
+        color: $color__yellow;
+        border-radius: 20px;
+        @media screen and (min-width: 568px) {
+          flex-direction: row;
+          gap: 50px;
+          align-items: center;
+        }
+        .map__container__head-img {
+          width: min(300px, 100%);
+          height: max(150px, 150px + 5vw);
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+        .map__container__head-title {
+          font-family: $font__lol;
+          @media screen and (min-width: 568px) {
+            white-space: nowrap;
+          }
+        }
+      }
+      .map__container__form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        @media screen and (min-width: 768px) {
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: center;
+        }
+        .map__container__form-group {
+          label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: rgba($color: #ffffff, $alpha: 0.75);
+            text-transform: capitalize;
+            font-weight: 100;
+            width: 100%;
+            input {
+              background: transparent;
+              border: 1px solid $color__yellow;
+              height: max(30px, 30px + 0.5vw);
+              background-color: $color__background-dark;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/*--------------------------------------------------------------
+  # Map
+  --------------------------------------------------------------*/
