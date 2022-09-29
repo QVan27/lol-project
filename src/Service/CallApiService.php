@@ -31,4 +31,13 @@ class CallApiService
 
         return $response->toArray();
     }
+
+    public function getMatches() : array
+    {
+            $response = $this->client->request('GET',
+            'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/JnsW5hRzCQyuY4OIH82xVciPzQRFdGIvUlEk5XxZ1otn5aLHVMQkPYfm3LFDnDVBxJoY_jiopqJb6A/ids?api_key=' . $this-> parameterBag->get('api_key')
+        );
+
+        return $response->toArray();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\APIJSON;
+use App\Entity\Matches;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,5 +27,30 @@ class ApiJsonController extends AbstractController
         $entityManager->flush();
 
         return new Response('test'.$apijson->getId());
+    }
+
+    #[Route('/ma', name: 'app_create_api_json')]
+    public function insertMatchesInBD(ManagerRegistry $doctrine, CallApiService $callApiService)  
+    {
+        $entityManager = $doctrine->getManager();
+
+        $matches = new Matches();
+        
+        $matches = $callApiService->getMatches();
+        
+        foreach($matches as $valeur)
+        {
+            $valeur->setMatchId();
+            $entityManager->flush();
+        }
+        // $nbMatches = count($matches);
+        // for ($i=0; $i <= 10;)
+        // {
+        //     dd($matches);
+        //     $i = $i + 4;
+        // }
+       
+       
+
     }
 }
