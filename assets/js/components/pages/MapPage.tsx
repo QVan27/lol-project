@@ -1,4 +1,6 @@
 import React, { FunctionComponent, useRef } from "react";
+// Shared
+import Canvas from "../shared/Canvas";
 
 const MapPage: FunctionComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -43,6 +45,7 @@ const MapPage: FunctionComponent = () => {
                 <input className="button-lol" type="submit" value="Rechercher" />
               </div>
             </form>
+            <Canvas />
           </div>
         </div>
       </section>
