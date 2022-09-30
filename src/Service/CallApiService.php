@@ -21,7 +21,7 @@ class CallApiService
     
 
 
-    public function getData(): array
+    public function getTimeline(): array
     {
         
             $response = $this->client->request(
@@ -32,10 +32,11 @@ class CallApiService
         return $response->toArray();
     }
 
-    public function getMatches() : array
+    public function getPlayer($user) : array
     {
             $response = $this->client->request('GET',
-            'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/JnsW5hRzCQyuY4OIH82xVciPzQRFdGIvUlEk5XxZ1otn5aLHVMQkPYfm3LFDnDVBxJoY_jiopqJb6A/ids?api_key=' . $this-> parameterBag->get('api_key')
+            'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' . $user . '?api_key=' .$this-> parameterBag->get('api_key')
+            
         );
 
         return $response->toArray();

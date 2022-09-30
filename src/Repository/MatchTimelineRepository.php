@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Matches;
+use App\Entity\MatchTimeline;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Matches>
+ * @extends ServiceEntityRepository<MatchTimeline>
  *
- * @method Matches|null find($id, $lockMode = null, $lockVersion = null)
- * @method Matches|null findOneBy(array $criteria, array $orderBy = null)
- * @method Matches[]    findAll()
- * @method Matches[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MatchTimeline|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MatchTimeline|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MatchTimeline[]    findAll()
+ * @method MatchTimeline[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MatchesRepository extends ServiceEntityRepository
+class MatchTimelineRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Matches::class);
+        parent::__construct($registry, MatchTimeline::class);
     }
 
-    public function save(Matches $entity, bool $flush = false): void
+    public function save(MatchTimeline $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class MatchesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Matches $entity, bool $flush = false): void
+    public function remove(MatchTimeline $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class MatchesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Matches[] Returns an array of Matches objects
+//     * @return MatchTimeline[] Returns an array of MatchTimeline objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class MatchesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Matches
+//    public function findOneBySomeField($value): ?MatchTimeline
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

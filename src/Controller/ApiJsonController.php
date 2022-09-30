@@ -2,53 +2,69 @@
 
 namespace App\Controller;
 
-use App\Entity\APIJSON;
-use App\Entity\Matches;
+use App\Entity\Player;
+use App\Entity\MatchTimeline;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\CallApiService;
+use Symfony\Component\BrowserKit\Request;
+
 
 class ApiJsonController extends AbstractController
 {
 
-    #[Route('/json', name: 'app_create_api_json')]
-    public function createApiJson(ManagerRegistry $doctrine, CallApiService $callApiService): Response
+    #[Route('/timeline', name: 'app_timeline')]
+    public function AddMatchTimeline(ManagerRegistry $doctrine, CallApiService $callApiService): Response
     {
         $entityManager = $doctrine->getManager();
 
-        $apijson = new APIJSON();
-        $apijson->setJsonScript($callApiService->getData());
+        $apijson = new MatchTimeline();
+        $apijson->setMatchtimelinejson($callApiService->getTimeline());
         
-
-        $entityManager->persist($apijson);
-
-        $entityManager->flush();
-
-        return new Response('test'.$apijson->getId());
-    }
-
-    #[Route('/ma', name: 'app_create_api_json')]
-    public function insertMatchesInBD(ManagerRegistry $doctrine, CallApiService $callApiService)  
-    {
-        $entityManager = $doctrine->getManager();
-
-        $matches = new Matches();
-        
-        $matches = $callApiService->getMatches();
-        
-        foreach($matches as $valeur)
-        {
-            $valeur->setMatchId();
+        // Loop array $arraytimeline and store in database.
+        $arraytimeline = $callApiService->getTimeline();
+        $arraytimeline = array_slice($arraytimeline, 0, 10);
+        foreach ($arraytimeline as $key => $value) {
+            $apijson->setMatchtimelinejson($value);
+            $entityManager->persist($apijson);
             $entityManager->flush();
         }
-        // $nbMatches = count($matches);
-        // for ($i=0; $i <= 10;)
-        // {
-        //     dd($matches);
-        //     $i = $i + 4;
-        // }
+            
+        $entityManager->persist($apijson);
+        $entityManager->flush();
+            
+        return $this->render('api/index.html.twig', [
+            'controller_name' => 'ApiJsonController',
+            'data' => $callApiService->getTimeline(),
+        ]);
+
+      
+       
+    
+        
+    
+    }
+
+    #[Route('/addmatch/{user}', name: 'app_addmatch')]
+    public function AddMatchbyuser($user, ManagerRegistry $doctrine, CallApiService $callApiService)  
+    {
+        $entityManager = $doctrine->getManager();
+        // dd($user);
+        
+
+        $apijson_user = new Player();
+        $apijson_user->setPlayerjson($callApiService->getPlayer($user));
+  
+        
+
+        
+
+        return $this->render('api/index.html.twig', [
+            'controller_name' => 'ApiJsonController',
+            'data' => $callApiService->getPlayer(),
+        ]);
        
        
 
