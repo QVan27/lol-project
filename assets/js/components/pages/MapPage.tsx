@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useRef } from "react";
 // Shared
 import Canvas from "../shared/Canvas";
+// import Map from "../shared/Map";
 
 const MapPage: FunctionComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -46,6 +47,7 @@ const MapPage: FunctionComponent = () => {
               </div>
             </form>
             <Canvas />
+            {/* <Map /> */}
           </div>
         </div>
       </section>

@@ -5,28 +5,35 @@ import { Stage, Layer, Image } from "react-konva";
 import styled from "styled-components";
 import useImage from "use-image";
 
-const StyledImage = styled(Image)`
-  width: 100%;
+const Wrapper = styled.div`
   height: 100%;
-  object-fit: contain;
+  width: min(500px, 100%);
 `;
 
+const StyledStage = styled(Stage)`
+  width: calc(100% - 30px);
+  min-width: 350px;
+  height: 500px;
+  margin: 0 auto;
+  background: center / cover no-repeat url("./build/images/map.png");
+`;
+
+const StyledLayer = styled(Layer)`
+  width: calc(100% - 30px);
+  height: auto;
+`;
 
 const Map: FunctionComponent = () => {
-
-  const [tower] = useImage("./build/images/buildings/tower.svg");
-  const [map] = useImage("./build/images/map.png");
-
-
+  const [image] = useImage("./build/images/buildings/tower.svg");
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
-      <Layer>
-        <StyledImage image={map} />
-        <StyledImage image={tower} />
-      </Layer>
-    </Stage>
+    <Wrapper>
+      <StyledStage>
+        <StyledLayer>
+          <Image image={image} x={0} y={0} />
+        </StyledLayer>
+      </StyledStage>
+    </Wrapper>
   );
 };
 
 export default Map;
-
