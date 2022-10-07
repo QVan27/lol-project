@@ -4,19 +4,30 @@ namespace App\Controller;
 
 use App\Entity\Matches;
 use App\Entity\Players;
-use App\Repository\PlayersRepository;
+use App\Service\DataSerializer;
 use App\Repository\MatchesRepository;
+use App\Repository\PlayersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
 {
+
+    private $dataSerializer;
+
+    public function __construct(DataSerializer $dataSerializer, EntityManagerInterface $manager)
+    {
+        $this->jsonCircularSerializer = $dataSerializer;
+        $this->manager = $manager;
+    }
+
     #[Route('/api/add/{name}', name: 'app_api_riot')]
     public function fetchRiotApi(EntityManagerInterface $entityManager, string $name = "")
     {
-        $token = "RGAPI-92d035ce-7e34-441a-bc30-8499e60cd4d3";
+        $token = "RGAPI-057c6048-0778-406c-844c-46dea7298bda";
 
         $user = $name;
 
@@ -35,7 +46,8 @@ class ApiController extends AbstractController
         foreach ($jsonMatch as $match) {
             $matchs = new Matches();
             $matchs->setMatchId($match);
-            $matchs->addPuuidPlayer($player);
+            $matchs->setIdPlayer($player);
+
             $player->addMatch($matchs);
 
             $urlTimeline = file_get_contents('https://europe.api.riotgames.com/lol/match/v5/matches/' . $match . '/timeline?api_key=' . $token);
@@ -57,13 +69,14 @@ class ApiController extends AbstractController
 
         // SELECT matches.id, matches.timeline, matches.match_id FROM matches INNER JOIN matches_players on matches.id = matches_players.matches_id AND matches_players.players_id = 89 INNER JOIN players ON matches_players.players_id = players.id
 
-        $matches = $matchesRepository->findMatchesFromPlayer($player);
+        $matchs = $matchesRepository->findBy(['idPlayer' => $player->getId()]);
 
-        
+        $data = [];
 
-        return $this->json($matches);
+        array_push($data, $player, $matchs);
+        // array_push($data, $player, $matchs);
+        $jsonContent = $this->dataSerializer->serialize($data, 'json');
 
-
-
+        return JsonResponse::fromJsonString($jsonContent);
     }
 }

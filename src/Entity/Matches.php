@@ -18,11 +18,12 @@ class Matches
     #[ORM\Column(length: 255)]
     private ?string $matchId = null;
 
-    #[ORM\ManyToMany(targetEntity: Players::class, inversedBy: 'matches')]
-    private Collection $puuidPlayer;
-
     #[ORM\Column]
     private array $timeline = [];
+
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Players $idPlayer = null;
 
     public function __construct()
     {
@@ -78,6 +79,18 @@ class Matches
     public function setTimeline(array $timeline): self
     {
         $this->timeline = $timeline;
+
+        return $this;
+    }
+
+    public function getIdPlayer(): ?Players
+    {
+        return $this->idPlayer;
+    }
+
+    public function setIdPlayer(?Players $idPlayer): self
+    {
+        $this->idPlayer = $idPlayer;
 
         return $this;
     }

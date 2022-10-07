@@ -21,12 +21,13 @@ class Players
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Matches::class, mappedBy: 'puuidPlayer')]
-    private Collection $matches;
+    #[ORM\OneToMany(mappedBy: 'idPlayer', targetEntity: Matches::class)]
+    private Collection $games;
 
     public function __construct()
     {
         $this->matches = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,6 +81,36 @@ class Players
     {
         if ($this->matches->removeElement($match)) {
             $match->removePuuidPlayer($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Matches>
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Matches $game): self
+    {
+        if (!$this->games->contains($game)) {
+            $this->games->add($game);
+            $game->setIdPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Matches $game): self
+    {
+        if ($this->games->removeElement($game)) {
+            // set the owning side to null (unless already changed)
+            if ($game->getIdPlayer() === $this) {
+                $game->setIdPlayer(null);
+            }
         }
 
         return $this;
