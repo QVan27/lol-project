@@ -4,30 +4,27 @@ namespace App\Controller;
 
 use App\Entity\Matches;
 use App\Entity\Players;
-use App\Service\DataSerializer;
-use App\Repository\MatchesRepository;
-use App\Repository\PlayersRepository;
+// use App\Service\DataSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
 {
 
-    private $dataSerializer;
+    // private $dataSerializer;
 
-    public function __construct(DataSerializer $dataSerializer, EntityManagerInterface $manager)
-    {
-        $this->jsonCircularSerializer = $dataSerializer;
-        $this->manager = $manager;
-    }
+    // public function __construct(DataSerializer $dataSerializer, EntityManagerInterface $manager)
+    // {
+    //     $this->dataSerializer = $dataSerializer;
+    //     $this->manager = $manager;
+    // }
 
     #[Route('/api/add/{name}', name: 'app_api_riot')]
     public function fetchRiotApi(EntityManagerInterface $entityManager, string $name = "")
     {
-        $token = "RGAPI-057c6048-0778-406c-844c-46dea7298bda";
+        $token = "RGAPI-d3f0ab28-fc9a-470f-8c66-b4710576bc25";
 
         $user = $name;
 
@@ -48,11 +45,15 @@ class ApiController extends AbstractController
             $matchs->setMatchId($match);
             $matchs->setIdPlayer($player);
 
-            $player->addMatch($matchs);
+            $player->addGame($matchs);
 
             $urlTimeline = file_get_contents('https://europe.api.riotgames.com/lol/match/v5/matches/' . $match . '/timeline?api_key=' . $token);
             $jsonTimeline = json_decode($urlTimeline, true);
             $matchs->setTimeline($jsonTimeline);
+
+            $urlResume = file_get_contents('https://europe.api.riotgames.com/lol/match/v5/matches/' . $match . '?api_key=' . $token);
+            $jsonResume = json_decode($urlResume, true);
+            $matchs->setResume($jsonResume);
 
             $entityManager->persist($matchs);
         }
@@ -61,22 +62,32 @@ class ApiController extends AbstractController
         return new Response('Saved new player with id ' . $player->getId());
     }
 
-    #[Route('/api/get/{name}', name: 'app_api_bdd',)]
+    // #[Route('/api/get/{name}', name: 'app_api_bdd',)]
 
-    public function fetchBdd(PlayersRepository $playersRepository, MatchesRepository $matchesRepository, string $name = "")
-    {
-        $player = $playersRepository->findOneBy(['name' => $name]);
+    // public function fetchBdd(PlayersRepository $playersRepository, MatchesRepository $matchesRepository, string $name = ""): JsonResponse
 
-        // SELECT matches.id, matches.timeline, matches.match_id FROM matches INNER JOIN matches_players on matches.id = matches_players.matches_id AND matches_players.players_id = 89 INNER JOIN players ON matches_players.players_id = players.id
+    // // {
+    // //     $player = $playersRepository->findOneBy(['name' => $name]);
+    // //     $matches = $matchesRepository->findBy(['idPlayer' => $player->getId()]);
 
-        $matchs = $matchesRepository->findBy(['idPlayer' => $player->getId()]);
+    // //     $data = $this->dataSerializer->serialize($matches);
 
-        $data = [];
+    // //     return new JsonResponse($data);
+    // // }
+    // {
+    //     $jsonResponse = new JsonResponse();
 
-        array_push($data, $player, $matchs);
-        // array_push($data, $player, $matchs);
-        $jsonContent = $this->dataSerializer->serialize($data, 'json');
+    //     $player = $playersRepository->findOneBy(['name' => $name]);
 
-        return JsonResponse::fromJsonString($jsonContent);
-    }
+
+    //     $matchs = $matchesRepository->findBy(['idPlayer' => $player->getId()]);
+
+    //     $data = [];
+
+
+    //     array_push($data, $player, $matchs);
+
+    //     $jsonResponse->setContent($this->dataSerializer->serialize($data, 'json'));
+    //     return $jsonResponse;
+    // }
 }

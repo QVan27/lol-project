@@ -43,6 +43,7 @@ const MapPage: FunctionComponent = () => {
                 <input className="button-lol" type="submit" value="Rechercher" />
               </div>
             </form>
+            
           </div>
         </div>
       </section>

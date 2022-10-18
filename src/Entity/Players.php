@@ -62,29 +62,29 @@ class Players
     /**
      * @return Collection<int, Matches>
      */
-    public function getMatches(): Collection
-    {
-        return $this->matches;
-    }
+    // public function getMatches(): Collection
+    // {
+    //     return $this->matches;
+    // }
 
-    public function addMatch(Matches $match): self
-    {
-        if (!$this->matches->contains($match)) {
-            $this->matches->add($match);
-            $match->addPuuidPlayer($this);
-        }
+    // public function addMatch(Matches $match): self
+    // {
+    //     if (!$this->matches->contains($match)) {
+    //         $this->matches->add($match);
+    //         $match->addPuuidPlayer($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeMatch(Matches $match): self
-    {
-        if ($this->matches->removeElement($match)) {
-            $match->removePuuidPlayer($this);
-        }
+    // public function removeMatch(Matches $match): self
+    // {
+    //     if ($this->matches->removeElement($match)) {
+    //         $match->removePuuidPlayer($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Matches>

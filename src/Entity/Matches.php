@@ -25,6 +25,9 @@ class Matches
     #[ORM\JoinColumn(nullable: false)]
     private ?Players $idPlayer = null;
 
+    #[ORM\Column]
+    private array $resume = [];
+
     public function __construct()
     {
         $this->puuidPlayer = new ArrayCollection();
@@ -50,26 +53,26 @@ class Matches
     /**
      * @return Collection<int, Players>
      */
-    public function getPuuidPlayer(): Collection
-    {
-        return $this->puuidPlayer;
-    }
+    // public function getPuuidPlayer(): Collection
+    // {
+    //     return $this->puuidPlayer;
+    // }
 
-    public function addPuuidPlayer(Players $puuidPlayer): self
-    {
-        if (!$this->puuidPlayer->contains($puuidPlayer)) {
-            $this->puuidPlayer->add($puuidPlayer);
-        }
+    // public function addPuuidPlayer(Players $puuidPlayer): self
+    // {
+    //     if (!$this->puuidPlayer->contains($puuidPlayer)) {
+    //         $this->puuidPlayer->add($puuidPlayer);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removePuuidPlayer(Players $puuidPlayer): self
-    {
-        $this->puuidPlayer->removeElement($puuidPlayer);
+    // public function removePuuidPlayer(Players $puuidPlayer): self
+    // {
+    //     $this->puuidPlayer->removeElement($puuidPlayer);
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getTimeline(): ?array
     {
@@ -91,6 +94,18 @@ class Matches
     public function setIdPlayer(?Players $idPlayer): self
     {
         $this->idPlayer = $idPlayer;
+
+        return $this;
+    }
+
+    public function getResume(): array
+    {
+        return $this->resume;
+    }
+
+    public function setResume(array $resume): self
+    {
+        $this->resume = $resume;
 
         return $this;
     }
