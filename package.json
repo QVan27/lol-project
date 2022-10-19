@@ -42,5 +42,6 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress"
-  }
+  },
+  "proxy": "http://127.0.0.1:8000"
 }

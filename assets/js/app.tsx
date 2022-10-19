@@ -32,6 +32,3 @@ const root = document.getElementById(ROOT);
 if (root) {
   createRoot(root).render(<App />);
 }
-
-
-
