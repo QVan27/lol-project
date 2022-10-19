@@ -25,10 +25,16 @@ class BddController extends AbstractController
         $this->manager = $manager;
     }
 
-    #[Route('/bdd/get/{name}', name: 'bdd_get_player')]
+    /**
+     * Get Player by Name
+     */
+
+    #[Route('/bdd/{name}', name: 'player')]
     public function getPlayer(ManagerRegistry $doctrine, string $name = "")
     {
+        // Get Player by Name
         $player = $doctrine->getRepository(Players::class)->findOneBy(['name' => $name]);
+        // Return Player
         if (!$player) {
             throw $this->createNotFoundException(
                 'No player found for name ' . $name
@@ -37,18 +43,25 @@ class BddController extends AbstractController
         return new JsonResponse($player->getName());
     }
 
-    #[Route('/bdd/{name}/matches', name: 'bdd_get_matches_from_player')]
+    /**
+     * Get Matches (resume) with QueryBuilder
+     */
+
+    #[Route('/bdd/{name}/matches', name: 'matches')]
     public function getMatches(ManagerRegistry $doctrine, string $name = "")
     {
         $jsonResponse = new JsonResponse();
-
+        // Get Player by Name
         $player = $doctrine->getRepository(Players::class)->findOneBy(['name' => $name]);
-        $matches = $doctrine->getRepository(Matches::class)->findAll(
-            [
-                'idPlayer' => $player->getId()
-            ]
-        );
-      
+        // QueryBuilder
+        $qb = $this->manager->createQueryBuilder();
+        $qb->select('m')
+            ->from(Matches::class, 'm')
+            ->where('m.idPlayer = :idPlayer')
+            ->select('m.resume')
+            ->setParameter('idPlayer', $player->getId());
+        $matches = $qb->getQuery()->getResult();
+        // Return Json Response
         if (!$matches) {
             throw $this->createNotFoundException(
                 'No matches found'
@@ -58,4 +71,31 @@ class BddController extends AbstractController
     }
 
 
+    /**
+     * Get Single Match (timeline) with QueryBuilder
+     */
+    #[Route('/bdd/{name}/matches/{id}', name: 'single_match')]
+    public function getSingleMatch(ManagerRegistry $doctrine, string $name = "", string $id = "")
+    {
+        $jsonResponse = new JsonResponse();
+        // Get Player by Name
+        $player = $doctrine->getRepository(Players::class)->findOneBy(['name' => $name]);
+        // QueryBuilder
+        $qb = $this->manager->createQueryBuilder();
+        $qb->select('m')
+            ->from(Matches::class, 'm')
+            ->where('m.idPlayer = :idPlayer')
+            ->andWhere('m.matchId = :matchId')
+            ->select('m.timeline')
+            ->setParameter('idPlayer', $player->getId())
+            ->setParameter('matchId', $id);
+        $match = $qb->getQuery()->getResult();
+        // Return Json Response
+        if (!$match) {
+            throw $this->createNotFoundException(
+                'No match found'
+            );
+        }
+        return $jsonResponse->setContent($this->dataSerializer->serialize($match));
+    }
 }

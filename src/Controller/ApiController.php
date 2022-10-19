@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Matches;
 use App\Entity\Players;
-// use App\Service\DataSerializer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,31 +11,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiController extends AbstractController
 {
-
-    // private $dataSerializer;
-
-    // public function __construct(DataSerializer $dataSerializer, EntityManagerInterface $manager)
-    // {
-    //     $this->dataSerializer = $dataSerializer;
-    //     $this->manager = $manager;
-    // }
-
     #[Route('/api/add/{name}', name: 'app_api_riot')]
     public function fetchRiotApi(EntityManagerInterface $entityManager, string $name = "")
     {
+        // Token for Riot API
         $token = "RGAPI-d3f0ab28-fc9a-470f-8c66-b4710576bc25";
-
+        // Define $user variable
         $user = $name;
-
+        // URL for Riot API
         $urlApi = file_get_contents('https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' . $user . '?api_key=' . $token);
 
         $json = json_decode($urlApi, true);
 
+        // Create new player
         $player = new Players();
         $player->setPuuid($json['puuid']);
         $player->setName($json['name']);
+        $player->setLevel($json['summonerLevel']);
         $entityManager->persist($player);
 
+        // Create new match
         $urlMatch = file_get_contents('https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $json['puuid'] . '/ids?start=0&count=10&api_key=' . $token);
         $jsonMatch = json_decode($urlMatch, true);
 
@@ -57,37 +51,8 @@ class ApiController extends AbstractController
 
             $entityManager->persist($matchs);
         }
-
         $entityManager->flush();
+        // Return a response from the API
         return new Response('Saved new player with id ' . $player->getId());
     }
-
-    // #[Route('/api/get/{name}', name: 'app_api_bdd',)]
-
-    // public function fetchBdd(PlayersRepository $playersRepository, MatchesRepository $matchesRepository, string $name = ""): JsonResponse
-
-    // // {
-    // //     $player = $playersRepository->findOneBy(['name' => $name]);
-    // //     $matches = $matchesRepository->findBy(['idPlayer' => $player->getId()]);
-
-    // //     $data = $this->dataSerializer->serialize($matches);
-
-    // //     return new JsonResponse($data);
-    // // }
-    // {
-    //     $jsonResponse = new JsonResponse();
-
-    //     $player = $playersRepository->findOneBy(['name' => $name]);
-
-
-    //     $matchs = $matchesRepository->findBy(['idPlayer' => $player->getId()]);
-
-    //     $data = [];
-
-
-    //     array_push($data, $player, $matchs);
-
-    //     $jsonResponse->setContent($this->dataSerializer->serialize($data, 'json'));
-    //     return $jsonResponse;
-    // }
 }

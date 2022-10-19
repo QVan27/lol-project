@@ -24,6 +24,9 @@ class Players
     #[ORM\OneToMany(mappedBy: 'idPlayer', targetEntity: Matches::class)]
     private Collection $games;
 
+    #[ORM\Column]
+    private ?int $level = null;
+
     public function __construct()
     {
         $this->matches = new ArrayCollection();
@@ -112,6 +115,18 @@ class Players
                 $game->setIdPlayer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }
