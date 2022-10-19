@@ -1,7 +1,21 @@
+import { log } from "console";
 import React, { FunctionComponent, useRef } from "react";
+// Utils
+import fetchData from "../../utils/fetchData";
+// Shared
+import Canvas from "../shared/Canvas";
+// import Map from "../shared/Map";
 
 const MapPage: FunctionComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
+
+  const basicUrl = "http://127.0.0.1:8000/bdd/";
+  
+  React.useEffect(() => {
+    const player = fetchData(`${basicUrl}jensen`);
+    // const matches = api(`${basicUrl}jensen/matches`);
+    // const singleMatch = api(`${basicUrl}jensen/matches/EUW1_6113359836`);
+  }, []);
 
   return (
     <main>
@@ -14,7 +28,8 @@ const MapPage: FunctionComponent = () => {
                 <img src="./build/images/teemo.png" alt="Logo Teemo" />
               </div>
             </div>
-            <form className="map__container__form"
+            <form
+              className="map__container__form"
               ref={formRef}
               onSubmit={(e: React.SyntheticEvent) => {
                 e.preventDefault();
@@ -40,10 +55,15 @@ const MapPage: FunctionComponent = () => {
                 </label>
               </div>
               <div className="map__container__form-submit">
-                <input className="button-lol" type="submit" value="Rechercher" />
+                <input
+                  className="button-lol"
+                  type="submit"
+                  value="Rechercher"
+                />
               </div>
             </form>
-            
+            <Canvas />
+            {/* <Map /> */}
           </div>
         </div>
       </section>

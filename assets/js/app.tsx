@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom/client';
+
+import { createRoot } from "react-dom/client";
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import '../scss/app.scss';
 import { ROOT } from "./constants/general";
@@ -26,5 +28,7 @@ const App: FunctionComponent = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById(ROOT));
-
+const root = document.getElementById(ROOT);
+if (root) {
+  createRoot(root).render(<App />);
+}

@@ -34,13 +34,16 @@ class BddController extends AbstractController
     {
         // Get Player by Name
         $player = $doctrine->getRepository(Players::class)->findOneBy(['name' => $name]);
+
+        $jsonResponse = new JsonResponse();
+        $jsonResponse->headers->set('Access-Control-Allow-Origin', '*');
         // Return Player
         if (!$player) {
             throw $this->createNotFoundException(
                 'No player found for name ' . $name
             );
         }
-        return new JsonResponse($player->getName());
+        return $jsonResponse->setContent($this->dataSerializer->serialize($player));
     }
 
     /**
@@ -51,6 +54,7 @@ class BddController extends AbstractController
     public function getMatches(ManagerRegistry $doctrine, string $name = "")
     {
         $jsonResponse = new JsonResponse();
+        $jsonResponse->headers->set('Access-Control-Allow-Origin', '*');
         // Get Player by Name
         $player = $doctrine->getRepository(Players::class)->findOneBy(['name' => $name]);
         // QueryBuilder
@@ -78,6 +82,7 @@ class BddController extends AbstractController
     public function getSingleMatch(ManagerRegistry $doctrine, string $name = "", string $id = "")
     {
         $jsonResponse = new JsonResponse();
+        $jsonResponse->headers->set('Access-Control-Allow-Origin', '*');
         // Get Player by Name
         $player = $doctrine->getRepository(Players::class)->findOneBy(['name' => $name]);
         // QueryBuilder
