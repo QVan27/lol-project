@@ -9,3 +9,4 @@ const fetchData = async (url: string) => {
 };
 
 export default fetchData;
+

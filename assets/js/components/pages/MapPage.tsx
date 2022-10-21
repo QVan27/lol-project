@@ -1,5 +1,6 @@
-import { log } from "console";
-import React, { FunctionComponent, useRef } from "react";
+import React, { FunctionComponent, useRef, useEffect, useState } from "react";
+import { Player } from "../../models/Player";
+import { ApiFetch } from "../../services/ApiFetch";
 // Utils
 import fetchData from "../../utils/fetchData";
 // Shared
@@ -9,13 +10,17 @@ import Canvas from "../shared/Canvas";
 const MapPage: FunctionComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const basicUrl = "http://127.0.0.1:8000/bdd/";
+  const apiFetch = new ApiFetch();
 
-  React.useEffect(() => {
-    // const player = fetchData(`${basicUrl}jensen`);
-    // const matches = fetchData(`${basicUrl}jensen/matches`);
-    // const singleMatch = fetchData(`${basicUrl}jensen/matches/EUW1_6113359836`);
+  useEffect(() => {
+    (async () => {
+      apiFetch.getPlayer('azerty').then(async (response) => {
+       const player: Player = await response.json();
+       console.log(player)
+      }).catch(e => console.log(e));
+    })();
   }, []);
+                
 
   return (
     <main>
@@ -42,12 +47,11 @@ const MapPage: FunctionComponent = () => {
                 const gamertag = target.gamertag.value; // typechecks!
                 // etc...
 
+                console.log
 
-                const player = fetchData(`${basicUrl}${gamertag}`);
-                const matches = fetchData(`${basicUrl}${gamertag}/matches`);
+                // const player = fetchData(`${basicUrl}${gamertag}`);
                 
-                console.log(player);
-                console.log(matches);
+                // console.log(player);
                 
               }}
             >
