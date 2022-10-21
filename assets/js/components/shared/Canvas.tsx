@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
+import fetchData from "../../utils/fetchData";
 
 const Wrapper = styled.div`
   margin-inline: auto;
@@ -28,9 +29,47 @@ const CanvasContainer = styled.div`
 
 const HeatMap: FunctionComponent = () => {
   const mapRef = React.useRef<HTMLCanvasElement>(null);
-  const mCtx = mapRef.current?.getContext("2d");
+  const towerRef = React.useRef<HTMLDivElement>(null);
 
-  const towerRef = React.useRef<HTMLCanvasElement>(null);
+  const matchId = "EUW1_6113359836";
+  const basicUrl = "http://127.0.0.1:8000/bdd/";
+  // const match = fetchData(`${basicUrl}jensen/matches/${matchId}`);
+
+  const [match, setMatch] = React.useState();
+  
+  React.useEffect(() => {
+    (async () => {
+      const response = await fetchData(`${basicUrl}jensen/matches/${matchId}`);
+      setMatch(response);
+    })();
+  }, []);
+
+  console.log(match);
+  
+
+  React.useEffect(() => {
+    // const draw = (x: number, y: number) => {
+    //   ctx.drawImage(towerImg, x, y, 20, 20);
+    // };
+    // // const draw = (x: number, y: number) => {
+    // //   ctx.beginPath();
+    // //   ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    // //   ctx.fillStyle = "red";
+    // //   ctx.fill();
+    // // };
+    // const drawHeatMap = (data: any) => {
+    //   const { frames } = data;
+    //   frames.forEach((frame: any) => {
+    //     frame.events.forEach((event: any) => {
+    //       if (event.type === "BUILDING_KILL") {
+    //         const { position } = event;
+    //         draw(position.x, position.y);
+    //       }
+    //     });
+    //   });
+    // };
+    // drawHeatMap(matchData);
+  }, []);
 
   const data = {
     towers: [
@@ -92,8 +131,7 @@ const HeatMap: FunctionComponent = () => {
                   k: any
                 ) => {
                   return (
-                    <canvas
-                      
+                    <div
                       className="towers"
                       key={k}
                       id={`tower-${i}-${j}-${k}`}
@@ -101,7 +139,7 @@ const HeatMap: FunctionComponent = () => {
                       style={{
                         position: "absolute",
                         zIndex: 1,
-                        bottom:  (tower.y / 15000) * 100 + "%",
+                        bottom: (tower.y / 15000) * 100 + "%",
                         left: (tower.x / 15000) * 100 + "%",
                         width: tower.width,
                         height: tower.height,
