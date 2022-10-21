@@ -12,7 +12,7 @@ const MapPage: FunctionComponent = () => {
   const basicUrl = "http://127.0.0.1:8000/bdd/";
   
   React.useEffect(() => {
-    const player = fetchData(`${basicUrl}jensen`);
+    // const player = fetchData(`${basicUrl}jensen`);
     // const matches = api(`${basicUrl}jensen/matches`);
     // const singleMatch = api(`${basicUrl}jensen/matches/EUW1_6113359836`);
   }, []);
@@ -40,8 +40,17 @@ const MapPage: FunctionComponent = () => {
                 const server = target.server.value; // typechecks!
                 const gamertag = target.gamertag.value; // typechecks!
                 // etc...
+
+
+                const player = fetchData(`${basicUrl}${gamertag}`);
+                const matches = fetchData(`${basicUrl}${gamertag}/matches`);
+                
+                console.log(player);
+                console.log(matches);
+                
               }}
             >
+              
               <div className="map__container__form-group">
                 <label>
                   Serveur :
@@ -62,6 +71,11 @@ const MapPage: FunctionComponent = () => {
                 />
               </div>
             </form>
+            <div className="show_player">
+            
+              </div>
+
+
             <Canvas />
             {/* <Map /> */}
           </div>
