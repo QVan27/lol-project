@@ -27,6 +27,9 @@ class Players
     #[ORM\Column]
     private ?int $level = null;
 
+    #[ORM\Column]
+    private ?int $profilIconId = null;
+
     public function __construct()
     {
         $this->matches = new ArrayCollection();
@@ -127,6 +130,18 @@ class Players
     public function setLevel(int $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getProfilIconId(): ?int
+    {
+        return $this->profilIconId;
+    }
+
+    public function setProfilIconId(int $profilIconId): self
+    {
+        $this->profilIconId = $profilIconId;
 
         return $this;
     }

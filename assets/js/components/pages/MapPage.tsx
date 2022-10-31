@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useRef, useEffect, useState } from "react";
-import { Player } from "../../models/Player";
+import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
 // Utils
 import fetchData from "../../utils/fetchData";
@@ -7,21 +7,49 @@ import fetchData from "../../utils/fetchData";
 import Canvas from "../shared/Canvas";
 // import Map from "../shared/Map";
 
-const MapPage: FunctionComponent = () => {
-  const formRef = useRef<HTMLFormElement>(null);
+// const MapPage: FunctionComponent = () => {
+//   const formRef = useRef<HTMLFormElement>(null);
 
-  const apiFetch = new ApiFetch();
+//   const apiFetch = new ApiFetch();
 
+  // useEffect(() => {
+  //   (async () => {
+  //     apiFetch.getPlayer('azerty').then(async (response) => {
+  //      const player: Player = await response.json();
+  //      console.log(player)
+  //     }).catch(e => console.log(e));
+  //   })();
+  // }, []);
+
+interface IState {
+  loading: boolean;
+  player:   IPlayers[];
+  errorMessage: string;
+}
+  
+const MapPage: React.FC = () => {       
+const formRef = useRef<HTMLFormElement>(null);     
+ const [state, setState] = useState<IState>({
+    loading: false,
+    player: [] as IPlayers[],	
+    errorMessage: '',
+  });
+
+
+//network request
   useEffect(() => {
-    (async () => {
-      apiFetch.getPlayer('azerty').then(async (response) => {
-       const player: Player = await response.json();
-       console.log(player)
-      }).catch(e => console.log(e));
-    })();
+    setState({...state, loading: true});
+    ApiFetch.getPlayer()
+      .then((res) => setState({     
+         ...state, loading: false, player: res.data
+      }))
+        .catch(err => setState({
+          ...state, loading: false, errorMessage: err.message
+        }));
   }, []);
-                
 
+  const { player, errorMessage, loading } = state;
+console.log(player);
   return (
     <main>
       <section className="map">
@@ -45,13 +73,14 @@ const MapPage: FunctionComponent = () => {
                 };
                 const server = target.server.value; // typechecks!
                 const gamertag = target.gamertag.value; // typechecks!
-                // etc...
-
-                console.log
-
-                // const player = fetchData(`${basicUrl}${gamertag}`);
                 
-                // console.log(player);
+                // const url = ApiFetch(`${gamertag}`);
+                
+
+
+                
+                
+                // console.log(url);
                 
               }}
             >
@@ -79,13 +108,16 @@ const MapPage: FunctionComponent = () => {
 
             <div className="map__container__player">
               <div className="map__container__player__content">
-                <p className="map__container__player__content--name">Jensen</p>
+                <p className="map__container__player__content--name">{player.name}</p>
                 <p className="map__container__player__content--level">
-                  Level <span>245</span>
+                  Level <span>{player.level}</span>
                 </p>
               </div>
               <div className="map__container__player__img">
                 <img src="./build/images/225_summoner_icon.png" alt="" />
+                <div className="map__container__player__profilicon">
+                <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
+                </div>
               </div>
             </div>
 
@@ -95,63 +127,12 @@ const MapPage: FunctionComponent = () => {
               </p>
               <div className="map__container__matches__list">
                 <div className="map__container__matches__list--item">
+                 
+                  
+
                   <p>match 1</p>
                   <div>
                     <p>mode de jeu : <span>classic</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
-                  </div>
-                </div>
-                <div className="map__container__matches__list--item">
-                  <p>match 2</p>
-                  <div>
-                    <p>mode de jeu : <span>urf</span></p>
                   </div>
                 </div>
               </div>
