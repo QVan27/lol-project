@@ -38,6 +38,15 @@ const MapPage: React.FC = () => {
 
   const { player, errorMessage, loading } = state;
 
+  const [clickedButton, setClickedButton] = useState("");
+
+  const buttonHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    const button: HTMLDivElement = event.currentTarget;
+    setClickedButton(button.id);
+  };
+
   return (
     <main>
       <section className="map">
@@ -138,7 +147,9 @@ const MapPage: React.FC = () => {
                       (
                         <div
                           className="map__container__matches__list--item"
-                          key={index} id={game.matchId}
+                          key={index}
+                          id={game.matchId}
+                          onClick={buttonHandler}
                         >
                           <p>Match : {game.matchId}</p>
                           <div>
@@ -155,7 +166,15 @@ const MapPage: React.FC = () => {
               </div>
             </div>
 
-            <Canvas />
+            {clickedButton && (
+              <>
+                <p>Vous avez cliqué sur le match {clickedButton}</p>
+                <div className="map__container__canvas" id={clickedButton}>
+                  <Canvas />
+                </div>
+              </>
+            )}
+            {/* <Canvas /> */}
             {/* <Map /> */}
           </div>
         </div>
