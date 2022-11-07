@@ -169,13 +169,42 @@ console.log(player)
                             <p>
                               K-D-A :{" "}
                               <span>
+                                
+
                               
+                                    
                         
 
                               
                               </span>
 
                             </p>
+                          </div> 
+                          <div className="map__container__champion">
+                            <p>Champion:</p>
+                              <div className="map__container__champion__list">
+                                 {game.resume.info.participants.map(
+                                  (participant: any, index: number) => (
+                                    console.log(game.matchId),
+                                    (
+                                      <div className="map__container__champion__list--item">
+                                      <div
+                                      key={index} id={game.matchId}
+                                    >
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
+                                              participant.championName +
+                                              ".png"
+                                            }
+                                            alt="" width="16" height="16"
+                                          />
+                                       </div>
+                                      </div>
+                                    )
+                                  )
+                                 )} 
+                              </div>   
                           </div> 
                         </div>
                       )
