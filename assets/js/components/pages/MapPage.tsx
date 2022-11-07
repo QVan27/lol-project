@@ -7,7 +7,6 @@ import fetchData from "../../utils/fetchData";
 import Canvas from "../shared/Canvas";
 // import Map from "../shared/Map";
 
-// const MapPage: FunctionComponent = () => {
 //   const formRef = useRef<HTMLFormElement>(null);
 
 //   const apiFetch = new ApiFetch();
@@ -35,28 +34,10 @@ const MapPage: React.FC = () => {
     errorMessage: "",
   });
 
-  //network request
   useEffect(() => {
-    // setState({ ...state, loading: true });
-    // ApiFetch.getPlayer("jensen")
-    //   .then((res) =>
-    //     setState({
-    //       ...state,
-    //       loading: false,
-    //       player: res.data,
-    //     })
-    //   )
-    //   .catch((err) =>
-    //     setState({
-    //       ...state,
-    //       loading: false,
-    //       errorMessage: err.message,
-    //     })
-    //   );
   }, []);
 
   const { player, errorMessage, loading } = state;
-  // console.log(player);
   return (
     <main>
       <section className="map">
@@ -101,7 +82,7 @@ const MapPage: React.FC = () => {
               <div className="map__container__form-group">
                 <label>
                   Serveur :
-                  <input type="text" name="server" value="EU" disabled />
+                  <input type="text" name="server" value="EUW1" disabled />
                 </label>
               </div>
               <div className="map__container__form-group">
@@ -118,58 +99,60 @@ const MapPage: React.FC = () => {
                 />
               </div>
             </form>
+
             <div className="map__container__info">
-            <div className="map__container__player">
-            <div className="map__container__player--img" >
-              <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
+
+              <div className="map__container__player">
+                <div className="map__container__player--img">
+                  <img
+                    src={
+                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" +
+                      player.profilIconId +
+                      ".png"
+                    }
+                    alt=""
+                  ></img>
+                </div>
+
+                <div className="map__container__player__content">
+                  <p className="map__container__player__content--name">
+                    {player.name}
+                  </p>
+                  <p className="map__container__player__content--level">
+                    Level <span>{player.level}</span>
+                  </p>
+                </div>
+
+                <div className="map__container__player__img">
+                  <img src="./build/images/225_summoner_icon.png" alt="" />
+                </div>
               </div>
-              <div className="map__container__player__content">
-                <p className="map__container__player__content--name">{player.name}</p>
-                <p className="map__container__player__content--level">
-                  Level <span>{player.level}</span>
+
+              <div className="map__container__matches">
+                <p className="map__container__matches--title">
+                  10 dernières parties
                 </p>
-              </div>
-              <div className="map__container__player__img">
-                <img src="./build/images/225_summoner_icon.png" alt="" />
-                <div className="map__container__player__profilicon">
-                 
-                <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
+                <div className="map__container__matches__list">
+
+                  {player.games?.map(
+                    (game) => (
+                      console.log(player.games),
+                      (
+                        <div className="map__container__matches__list--item">
+                          <p>Match : {game.matchId}</p>
+                          <div>
+                            <p>
+                              Mode de jeu :{" "}
+                              <span>{game.resume.info.gameMode}</span>
+                            </p>
+                          </div>
+                        </div>
+                      )
+                    )
+                  )}
                 </div>
               </div>
-            </div>
-            </div>
 
-            <div className="map__container__matches">
-              <p className="map__container__matches--title">
-                10 dernières parties
-              </p>
-              <div className="map__container__matches__list">
-                
-                {player.games?.map((game) => ( 
-                  console.log(player.games),
-                  <div className="map__container__matches__list-item">
-                    <div className="map__container__matches__list-item__content">
-                      <p className="map__container__matches__list-item__content--name">
-                        {game.matchId}
-                      </p>
-                      <p className="map__container__gamees__list-item__content--level">
-                        Mode de jeu <span>{game.resume.info.gameMode}</span>
-                      </p>
-                    </div>
-                  </div>
-                ))}
-                
-                
-                <div className="map__container__matches__list--item">
-                 
-                  
-
-                  <p>match 1</p>
-                  <div>
-                    <p>mode de jeu : <span>classic</span></p>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <Canvas />
