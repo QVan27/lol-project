@@ -12,44 +12,51 @@ import Canvas from "../shared/Canvas";
 
 //   const apiFetch = new ApiFetch();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     apiFetch.getPlayer('azerty').then(async (response) => {
-  //      const player: Player = await response.json();
-  //      console.log(player)
-  //     }).catch(e => console.log(e));
-  //   })();
-  // }, []);
+// useEffect(() => {
+//   (async () => {
+//     apiFetch.getPlayer('azerty').then(async (response) => {
+//      const player: Player = await response.json();
+//      console.log(player)
+//     }).catch(e => console.log(e));
+//   })();
+// }, []);
 
 interface IState {
   loading: boolean;
-  player:   IPlayers[];
+  player: IPlayers[];
   errorMessage: string;
 }
-  
-const MapPage: React.FC = () => {       
-const formRef = useRef<HTMLFormElement>(null);     
- const [state, setState] = useState<IState>({
+
+const MapPage: React.FC = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [state, setState] = useState<IState>({
     loading: false,
-    player: [] as IPlayers[],	
-    errorMessage: '',
+    player: [] as IPlayers[],
+    errorMessage: "",
   });
 
-
-//network request
+  //network request
   useEffect(() => {
-    setState({...state, loading: true});
-    ApiFetch.getPlayer()
-      .then((res) => setState({     
-         ...state, loading: false, player: res.data
-      }))
-        .catch(err => setState({
-          ...state, loading: false, errorMessage: err.message
-        }));
+    // setState({ ...state, loading: true });
+    // ApiFetch.getPlayer("jensen")
+    //   .then((res) =>
+    //     setState({
+    //       ...state,
+    //       loading: false,
+    //       player: res.data,
+    //     })
+    //   )
+    //   .catch((err) =>
+    //     setState({
+    //       ...state,
+    //       loading: false,
+    //       errorMessage: err.message,
+    //     })
+    //   );
   }, []);
 
   const { player, errorMessage, loading } = state;
-// console.log(player);
+  // console.log(player);
   return (
     <main>
       <section className="map">
@@ -68,27 +75,33 @@ const formRef = useRef<HTMLFormElement>(null);
               onSubmit={(e: React.SyntheticEvent) => {
                 e.preventDefault();
                 const target = e.target as typeof e.target & {
-                  server: { value: string };
+                  // server: { value: string };
                   gamertag: { value: string };
                 };
-                const server = target.server.value; // typechecks!
                 const gamertag = target.gamertag.value; // typechecks!
-                
-                
-                
 
-
-                
-                
-                // console.log(url);
-                
+                setState({ ...state, loading: true });
+                ApiFetch.getPlayer(gamertag)
+                  .then((res) =>
+                    setState({
+                      ...state,
+                      loading: false,
+                      player: res.data,
+                    })
+                  )
+                  .catch((err) =>
+                    setState({
+                      ...state,
+                      loading: false,
+                      errorMessage: err.message,
+                    })
+                  );
               }}
             >
-              
               <div className="map__container__form-group">
                 <label>
                   Serveur :
-                  <input type="text" name="server" />
+                  <input type="text" name="server" value="EU" disabled />
                 </label>
               </div>
               <div className="map__container__form-group">
@@ -106,30 +119,39 @@ const formRef = useRef<HTMLFormElement>(null);
               </div>
             </form>
 
-            <div className="map__container__player">
-              <div className="map__container__player__content">
-                <p className="map__container__player__content--name">{player.name}</p>
-                <p className="map__container__player__content--level">
-                  Level <span>{player.level}</span>
-                </p>
-              </div>
-              <div className="map__container__player__img">
-                <img src="./build/images/225_summoner_icon.png" alt="" />
-                <div className="map__container__player__profilicon">
-                 
-                <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
+            <div className="map__container__info">
+              <div className="map__container__player">
+                <div className="map__container__player__content">
+                  <p className="map__container__player__content--name">
+                    {player.name}
+                  </p>
+                  <p className="map__container__player__content--level">
+                    Level <span>{player.level}</span>
+                  </p>
+                </div>
+                <div className="map__container__player__img">
+                  <img src="./build/images/225_summoner_icon.png" alt="" />
+                  <div className="map__container__player__profilicon">
+                    <img
+                      src={
+                        "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" +
+                        player.profilIconId +
+                        ".png"
+                      }
+                      alt=""
+                    ></img>
+                  </div>
                 </div>
               </div>
-            </div>
+              
+              <div className="map__container__matches">
+                <p className="map__container__matches--title">
+                  10 dernières parties
+                </p>
 
-            <div className="map__container__matches">
-              <p className="map__container__matches--title">
-                10 dernières parties
-              </p>
-              <div className="map__container__matches__list">
-                
-                {player.games?.map((game) => ( 
-                  console.log(player.games),
+                <div className="map__container__matches__list">
+                  {/* {player.games?.map((game) => (
+                  // console.log(player.games),
                   <div className="map__container__matches__list-item">
                     <div className="map__container__matches__list-item__content">
                       <p className="map__container__matches__list-item__content--name">
@@ -140,17 +162,18 @@ const formRef = useRef<HTMLFormElement>(null);
                       </p>
                     </div>
                   </div>
-                ))}
-                
-                
-                <div className="map__container__matches__list--item">
-                 
-                  
-
-                  <p>match 1</p>
-                  <div>
-                    <p>mode de jeu : <span>classic</span></p>
-                  </div>
+                ))} */}
+                  {player.games?.map((game) => (
+                    // console.log(player.games),
+                    <div className="map__container__matches__list--item">
+                      <p>Match : {game.matchId}</p>
+                      <div>
+                        <p>
+                          Mode de jeu : <span>{game.resume.info.gameMode}</span>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

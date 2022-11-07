@@ -15,7 +15,7 @@ class ApiController extends AbstractController
     public function fetchRiotApi(EntityManagerInterface $entityManager, string $name = "")
     {
         // Token for Riot API
-        $token = "RGAPI-9cdf0e0d-914d-4d73-82b0-cae40297ab84";
+        $token = "RGAPI-730208b3-fd93-4efb-95a5-6438e6ff94bd";
         // Define $user variable
         $user = $name;
         // URL for Riot API
