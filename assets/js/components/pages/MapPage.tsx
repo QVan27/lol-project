@@ -107,17 +107,24 @@ const formRef = useRef<HTMLFormElement>(null);
             </form>
 
             <div className="map__container__player">
+              <div className="map__container__player--img" >
+              <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
+              </div>
               <div className="map__container__player__content">
                 <p className="map__container__player__content--name">{player.name}</p>
                 <p className="map__container__player__content--level">
                   Level <span>{player.level}</span>
+                  
+
                 </p>
               </div>
               <div className="map__container__player__img">
                 <img src="./build/images/225_summoner_icon.png" alt="" />
                 <div className="map__container__player__profilicon">
-                 
-                <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
+                 {
+                  console.log(player.profilIconId)
+                 }
+          
                 </div>
               </div>
             </div>
@@ -130,28 +137,14 @@ const formRef = useRef<HTMLFormElement>(null);
                 
                 {player.games?.map((game) => ( 
                   console.log(player.games),
-                  <div className="map__container__matches__list-item">
-                    <div className="map__container__matches__list-item__content">
-                      <p className="map__container__matches__list-item__content--name">
-                        {game.matchId}
-                      </p>
-                      <p className="map__container__gamees__list-item__content--level">
-                        Mode de jeu <span>{game.resume.info.gameMode}</span>
-                      </p>
-                    </div>
+                  <div className="map__container__matches__list--item">
+                    <p>match</p>
+                      {game.matchId}
+                    <div>
+                      Mode de jeu: <span>{game.resume.info.gameMode}</span>
+                     </div> 
                   </div>
                 ))}
-                
-                
-                <div className="map__container__matches__list--item">
-                 
-                  
-
-                  <p>match 1</p>
-                  <div>
-                    <p>mode de jeu : <span>classic</span></p>
-                  </div>
-                </div>
               </div>
             </div>
 
