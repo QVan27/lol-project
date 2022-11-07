@@ -118,40 +118,35 @@ const MapPage: React.FC = () => {
                 />
               </div>
             </form>
-
             <div className="map__container__info">
-              <div className="map__container__player">
-                <div className="map__container__player__content">
-                  <p className="map__container__player__content--name">
-                    {player.name}
-                  </p>
-                  <p className="map__container__player__content--level">
-                    Level <span>{player.level}</span>
-                  </p>
-                </div>
-                <div className="map__container__player__img">
-                  <img src="./build/images/225_summoner_icon.png" alt="" />
-                  <div className="map__container__player__profilicon">
-                    <img
-                      src={
-                        "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" +
-                        player.profilIconId +
-                        ".png"
-                      }
-                      alt=""
-                    ></img>
-                  </div>
+            <div className="map__container__player">
+            <div className="map__container__player--img" >
+              <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
+              </div>
+              <div className="map__container__player__content">
+                <p className="map__container__player__content--name">{player.name}</p>
+                <p className="map__container__player__content--level">
+                  Level <span>{player.level}</span>
+                </p>
+              </div>
+              <div className="map__container__player__img">
+                <img src="./build/images/225_summoner_icon.png" alt="" />
+                <div className="map__container__player__profilicon">
+                 
+                <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
                 </div>
               </div>
-              
-              <div className="map__container__matches">
-                <p className="map__container__matches--title">
-                  10 dernières parties
-                </p>
+            </div>
+            </div>
 
-                <div className="map__container__matches__list">
-                  {/* {player.games?.map((game) => (
-                  // console.log(player.games),
+            <div className="map__container__matches">
+              <p className="map__container__matches--title">
+                10 dernières parties
+              </p>
+              <div className="map__container__matches__list">
+                
+                {player.games?.map((game) => ( 
+                  console.log(player.games),
                   <div className="map__container__matches__list-item">
                     <div className="map__container__matches__list-item__content">
                       <p className="map__container__matches__list-item__content--name">
@@ -162,18 +157,17 @@ const MapPage: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                ))} */}
-                  {player.games?.map((game) => (
-                    // console.log(player.games),
-                    <div className="map__container__matches__list--item">
-                      <p>Match : {game.matchId}</p>
-                      <div>
-                        <p>
-                          Mode de jeu : <span>{game.resume.info.gameMode}</span>
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                ))}
+                
+                
+                <div className="map__container__matches__list--item">
+                 
+                  
+
+                  <p>match 1</p>
+                  <div>
+                    <p>mode de jeu : <span>classic</span></p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -84,17 +84,23 @@
           }
         }
       }
-      .map__container__info {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        @media screen and (min-width: 540px) {
-          flex-direction: row;
-          align-items: center;
-          gap: 80px;
-        }
-        .map__container__player {
-          position: relative;
+      .map__container__player {
+        position: relative;
+          .map__container__player--img {
+            width: 70%;
+            height: 70%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            overflow: hidden;
+              img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+          }
           .map__container__player__img {
             position: relative;
             width: 200px;
@@ -106,32 +112,13 @@
               object-fit: cover;
             }
           }
-          .map__container__player__content {
-            background-color: $color__background-dark;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            border-radius: 50%;
-            width: 70%;
-            height: 70%;
-            justify-content: center;
-            align-items: center;
-            .map__container__player__content--name {
-              font-size: 2rem;
-              text-align: center;
-            }
-            .map__container__player__content--level {
-              font-size: 0.8rem;
-              text-align: center;
-            }
-          }
-  
-        }
-        .map__container__matches {
+        .map__container__player__content {
+          
+          // background-color: $color__background-dark;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           display: flex;
           flex-direction: column;
           gap: 20px;
