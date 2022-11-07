@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
 // Utils
-import fetchData from "../../utils/fetchData";
+// import fetchData from "../../utils/fetchData";
 // Shared
 import Canvas from "../shared/Canvas";
 // import Map from "../shared/Map";
@@ -34,10 +34,10 @@ const MapPage: React.FC = () => {
     errorMessage: "",
   });
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const { player, errorMessage, loading } = state;
+
   return (
     <main>
       <section className="map">
@@ -101,7 +101,6 @@ const MapPage: React.FC = () => {
             </form>
 
             <div className="map__container__info">
-
               <div className="map__container__player">
                 <div className="map__container__player--img">
                   <img
@@ -111,7 +110,7 @@ const MapPage: React.FC = () => {
                       ".png"
                     }
                     alt=""
-                  ></img>
+                  />
                 </div>
 
                 <div className="map__container__player__content">
@@ -133,12 +132,14 @@ const MapPage: React.FC = () => {
                   10 dernières parties
                 </p>
                 <div className="map__container__matches__list">
-
                   {player.games?.map(
-                    (game) => (
-                      console.log(player.games),
+                    (game: any, index: number) => (
+                      console.log(game.matchId),
                       (
-                        <div className="map__container__matches__list--item">
+                        <div
+                          className="map__container__matches__list--item"
+                          key={index} id={game.matchId}
+                        >
                           <p>Match : {game.matchId}</p>
                           <div>
                             <p>
@@ -152,7 +153,6 @@ const MapPage: React.FC = () => {
                   )}
                 </div>
               </div>
-
             </div>
 
             <Canvas />
