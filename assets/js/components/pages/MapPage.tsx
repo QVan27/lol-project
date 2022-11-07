@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
 // Utils
-import fetchData from "../../utils/fetchData";
+// import fetchData from "../../utils/fetchData";
 // Shared
 import Canvas from "../shared/Canvas";
 // import Map from "../shared/Map";
@@ -37,6 +37,7 @@ const MapPage: React.FC = () => {
   useEffect(() => {}, []);
 
   const { player, errorMessage, loading } = state;
+
   return (
     <main>
       <section className="map">
@@ -109,7 +110,7 @@ const MapPage: React.FC = () => {
                       ".png"
                     }
                     alt=""
-                  ></img>
+                  />
                 </div>
 
                 <div className="map__container__player__content">
@@ -132,12 +133,12 @@ const MapPage: React.FC = () => {
                 </p>
                 <div className="map__container__matches__list">
                   {player.games?.map(
-                    (game, index) => (
-                      console.log(player.games),
+                    (game: any, index: number) => (
+                      console.log(game.matchId),
                       (
                         <div
                           className="map__container__matches__list--item"
-                          key={index}
+                          key={index} id={game.matchId}
                         >
                           <p>Match : {game.matchId}</p>
                           <div>
