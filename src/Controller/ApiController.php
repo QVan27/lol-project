@@ -15,7 +15,7 @@ class ApiController extends AbstractController
     public function fetchRiotApi(EntityManagerInterface $entityManager, string $name = "")
     {
         // Token for Riot API
-        $token = "RGAPI-17e8c2fa-6e71-4b24-872f-499b586bd628";
+        $token = "RGAPI-730208b3-fd93-4efb-95a5-6438e6ff94bd";
         // Define $user variable
         $user = $name;
         // URL for Riot API
@@ -28,6 +28,7 @@ class ApiController extends AbstractController
         $player->setPuuid($json['puuid']);
         $player->setName($json['name']);
         $player->setLevel($json['summonerLevel']);
+        $player->setProfilIconId($json['profileIconId']);
         $entityManager->persist($player);
 
         // Create new match
