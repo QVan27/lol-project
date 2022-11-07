@@ -34,8 +34,7 @@ const MapPage: React.FC = () => {
     errorMessage: "",
   });
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const { player, errorMessage, loading } = state;
   return (
@@ -101,7 +100,6 @@ const MapPage: React.FC = () => {
             </form>
 
             <div className="map__container__info">
-
               <div className="map__container__player">
                 <div className="map__container__player--img">
                   <img
@@ -133,12 +131,14 @@ const MapPage: React.FC = () => {
                   10 dernières parties
                 </p>
                 <div className="map__container__matches__list">
-
                   {player.games?.map(
-                    (game) => (
+                    (game, index) => (
                       console.log(player.games),
                       (
-                        <div className="map__container__matches__list--item">
+                        <div
+                          className="map__container__matches__list--item"
+                          key={index}
+                        >
                           <p>Match : {game.matchId}</p>
                           <div>
                             <p>
@@ -152,7 +152,6 @@ const MapPage: React.FC = () => {
                   )}
                 </div>
               </div>
-
             </div>
 
             <Canvas />
