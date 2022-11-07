@@ -31,47 +31,47 @@ const HeatMap: FunctionComponent = () => {
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
-  const matchId = "EUW1_6113359836";
-  const basicUrl = "http://127.0.0.1:8000/bdd/";
+  // const matchId = "EUW1_6113359836";
+  // const basicUrl = "http://127.0.0.1:8000/bdd/";
   // const match = fetchData(`${basicUrl}jensen/matches/${matchId}`);
 
-  const [match, setMatch] = React.useState();
+  // const [match, setMatch] = React.useState();
   
-  React.useEffect(() => {
-    (async () => {
-      const response = await fetchData(`${basicUrl}jensen/matches/${matchId}`);
-      setMatch(response);
-    })();
-  }, []);
+  // React.useEffect(() => {
+  //   (async () => {
+  //     const response = await fetchData(`${basicUrl}jensen/matches/${matchId}`);
+  //     setMatch(response);
+  //   })();
+  // }, []);
 
-  console.log(match);
+  // console.log(match);
   
 
-  React.useEffect(() => {
-    // const draw = (x: number, y: number) => {
-    //   ctx.drawImage(towerImg, x, y, 20, 20);
-    // };
-    // // const draw = (x: number, y: number) => {
-    // //   ctx.beginPath();
-    // //   ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    // //   ctx.fillStyle = "red";
-    // //   ctx.fill();
-    // // };
-    // const drawHeatMap = (data: any) => {
-    //   const { frames } = data;
-    //   frames.forEach((frame: any) => {
-    //     frame.events.forEach((event: any) => {
-    //       if (event.type === "BUILDING_KILL") {
-    //         const { position } = event;
-    //         draw(position.x, position.y);
-    //       }
-    //     });
-    //   });
-    // };
-    // drawHeatMap(matchData);
-  }, []);
+  // React.useEffect(() => {
+  //   // const draw = (x: number, y: number) => {
+  //   //   ctx.drawImage(towerImg, x, y, 20, 20);
+  //   // };
+  //   // // const draw = (x: number, y: number) => {
+  //   // //   ctx.beginPath();
+  //   // //   ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  //   // //   ctx.fillStyle = "red";
+  //   // //   ctx.fill();
+  //   // // };
+  //   // const drawHeatMap = (data: any) => {
+  //   //   const { frames } = data;
+  //   //   frames.forEach((frame: any) => {
+  //   //     frame.events.forEach((event: any) => {
+  //   //       if (event.type === "BUILDING_KILL") {
+  //   //         const { position } = event;
+  //   //         draw(position.x, position.y);
+  //   //       }
+  //   //     });
+  //   //   });
+  //   // };
+  //   // drawHeatMap(matchData);
+  // }, []);
 
-  const data = {
+  const data1 = {
     towers: [
       {
         RED: [
@@ -117,7 +117,7 @@ const HeatMap: FunctionComponent = () => {
       <Container>
         <CanvasContainer>
           <canvas id="map" ref={mapRef} width="500" height="500" />
-          {data.towers.map((team, i) => {
+          {data1.towers.map((team, i) => {
             return Object.keys(team).map((color, j) => {
               return team[color].map(
                 (
