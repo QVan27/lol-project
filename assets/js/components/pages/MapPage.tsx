@@ -1,3 +1,4 @@
+import { cp } from "fs";
 import React, { useRef, useEffect, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
@@ -37,7 +38,7 @@ const MapPage: React.FC = () => {
   useEffect(() => {}, []);
 
   const { player, errorMessage, loading } = state;
-
+console.log(player)
   return (
     <main>
       <section className="map">
@@ -147,6 +148,35 @@ const MapPage: React.FC = () => {
                               <span>{game.resume.info.gameMode}</span>
                             </p>
                           </div>
+                          <div>
+                            <p>
+                              Temps :{" "}
+                              <span>{game.resume.info.gameDuration % 60} minutes
+                              </span>
+                            </p>
+                          </div>  
+                          <div>
+                            <p>
+                              Date :{" "}
+                              <span>
+                              {new Date(
+                                  game.resume.info.gameCreation
+                                ).toLocaleDateString()}
+                              </span>   
+                            </p>
+                          </div>  
+                          <div>
+                            <p>
+                              K-D-A :{" "}
+                              <span>
+                              
+                        
+
+                              
+                              </span>
+
+                            </p>
+                          </div> 
                         </div>
                       )
                     )
