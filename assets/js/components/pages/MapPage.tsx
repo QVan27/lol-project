@@ -1,5 +1,6 @@
-import { log } from "console";
-import React, { FunctionComponent, useRef } from "react";
+import React, { FunctionComponent, useRef, useEffect, useState } from "react";
+import { Player } from "../../models/Player";
+import { ApiFetch } from "../../services/ApiFetch";
 // Utils
 import fetchData from "../../utils/fetchData";
 // Shared
@@ -9,13 +10,17 @@ import Canvas from "../shared/Canvas";
 const MapPage: FunctionComponent = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const basicUrl = "http://127.0.0.1:8000/bdd/";
-  
-  React.useEffect(() => {
-    const player = fetchData(`${basicUrl}jensen`);
-    // const matches = api(`${basicUrl}jensen/matches`);
-    // const singleMatch = api(`${basicUrl}jensen/matches/EUW1_6113359836`);
+  const apiFetch = new ApiFetch();
+
+  useEffect(() => {
+    (async () => {
+      apiFetch.getPlayer('azerty').then(async (response) => {
+       const player: Player = await response.json();
+       console.log(player)
+      }).catch(e => console.log(e));
+    })();
   }, []);
+                
 
   return (
     <main>
@@ -28,6 +33,7 @@ const MapPage: FunctionComponent = () => {
                 <img src="./build/images/teemo.png" alt="Logo Teemo" />
               </div>
             </div>
+
             <form
               className="map__container__form"
               ref={formRef}
@@ -40,8 +46,16 @@ const MapPage: FunctionComponent = () => {
                 const server = target.server.value; // typechecks!
                 const gamertag = target.gamertag.value; // typechecks!
                 // etc...
+
+                console.log
+
+                // const player = fetchData(`${basicUrl}${gamertag}`);
+                
+                // console.log(player);
+                
               }}
             >
+              
               <div className="map__container__form-group">
                 <label>
                   Serveur :
@@ -62,6 +76,87 @@ const MapPage: FunctionComponent = () => {
                 />
               </div>
             </form>
+
+            <div className="map__container__player">
+              <div className="map__container__player__content">
+                <p className="map__container__player__content--name">Jensen</p>
+                <p className="map__container__player__content--level">
+                  Level <span>245</span>
+                </p>
+              </div>
+              <div className="map__container__player__img">
+                <img src="./build/images/225_summoner_icon.png" alt="" />
+              </div>
+            </div>
+
+            <div className="map__container__matches">
+              <p className="map__container__matches--title">
+                10 dernières parties
+              </p>
+              <div className="map__container__matches__list">
+                <div className="map__container__matches__list--item">
+                  <p>match 1</p>
+                  <div>
+                    <p>mode de jeu : <span>classic</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+                <div className="map__container__matches__list--item">
+                  <p>match 2</p>
+                  <div>
+                    <p>mode de jeu : <span>urf</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <Canvas />
             {/* <Map /> */}
           </div>
