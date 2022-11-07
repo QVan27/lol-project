@@ -49,7 +49,7 @@ const formRef = useRef<HTMLFormElement>(null);
   }, []);
 
   const { player, errorMessage, loading } = state;
-console.log(player);
+// console.log(player);
   return (
     <main>
       <section className="map">
@@ -74,7 +74,7 @@ console.log(player);
                 const server = target.server.value; // typechecks!
                 const gamertag = target.gamertag.value; // typechecks!
                 
-                // const url = ApiFetch(`${gamertag}`);
+                
                 
 
 
@@ -116,6 +116,7 @@ console.log(player);
               <div className="map__container__player__img">
                 <img src="./build/images/225_summoner_icon.png" alt="" />
                 <div className="map__container__player__profilicon">
+                 
                 <img src={"http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + player.profilIconId + ".png"} alt="" ></img>
                 </div>
               </div>
@@ -126,6 +127,22 @@ console.log(player);
                 10 dernières parties
               </p>
               <div className="map__container__matches__list">
+                
+                {player.games?.map((game) => ( 
+                  console.log(player.games),
+                  <div className="map__container__matches__list-item">
+                    <div className="map__container__matches__list-item__content">
+                      <p className="map__container__matches__list-item__content--name">
+                        {game.matchId}
+                      </p>
+                      <p className="map__container__gamees__list-item__content--level">
+                        Mode de jeu <span>{game.resume.info.gameMode}</span>
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                
+                
                 <div className="map__container__matches__list--item">
                  
                   

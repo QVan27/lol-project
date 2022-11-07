@@ -3,5 +3,6 @@ export interface Imatchs {
     matchId: string;
     timeline: JSON;
     resume: JSON;
+    gameMode: string;
 }
   
