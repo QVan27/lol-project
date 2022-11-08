@@ -135,13 +135,13 @@ console.log(player)
                 <div className="map__container__matches__list">
                   {player.games?.map(
                     (game: any, index: number) => (
-                      console.log(game.matchId),
+                      // console.log(game.matchId),
                       (
                         <div
                           className="map__container__matches__list--item"
                           key={index} id={game.matchId}
                         >
-                          <p>Match : {game.matchId}</p>
+                          <p>Match : {index + 1}</p>
                           <div>
                             <p>
                               Mode de jeu :{" "}
@@ -169,13 +169,7 @@ console.log(player)
                             <p>
                               K-D-A :{" "}
                               <span>
-                                
-
-                              
-                                    
-                        
-
-                              
+                             
                               </span>
 
                             </p>
@@ -185,11 +179,11 @@ console.log(player)
                               <div className="map__container__champion__list">
                                  {game.resume.info.participants.map(
                                   (participant: any, index: number) => (
-                                    console.log(game.matchId),
+                                    // console.log(game.matchId),
                                     (
-                                      <div className="map__container__champion__list--item">
+                                      <div className="map__container__champion__list--item"
+                                        key={index} id={game.matchId}>
                                       <div
-                                      key={index} id={game.matchId}
                                     >
                                           <img
                                             src={
@@ -197,7 +191,7 @@ console.log(player)
                                               participant.championName +
                                               ".png"
                                             }
-                                            alt="" width="16" height="16"
+                                            alt={participant.championName} width="16" height="16"
                                           />
                                        </div>
                                       </div>
@@ -206,6 +200,38 @@ console.log(player)
                                  )} 
                               </div>   
                           </div> 
+                          <div>
+                            <p>
+                              Item :{" "}
+                              <span>
+                                
+                                  {
+                                    game.resume.info.participants.map(
+                                      (participant: any, index: number) => (
+                                        (
+                                          <div className="map__container__champion__list--item"
+
+                                            key={index} id={game.matchId}>
+                                            <div
+                                            >
+                                              <img
+                                                src={
+                                                  "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +  
+                                                  participant.item0 +
+                                                  ".png"
+                                                }
+                                                alt={participant.item0} width="16" height="16"
+                                              />
+                                            </div>
+                                          </div>
+                                        )
+                                      )
+                                    )
+                                  }
+                                
+                              </span>   
+                            </p>
+                          </div>        
                         </div>
                       )
                     )
@@ -213,7 +239,6 @@ console.log(player)
                 </div>
               </div>
             </div>
-
             <Canvas />
             {/* <Map /> */}
           </div>
