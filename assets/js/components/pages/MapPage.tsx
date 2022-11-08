@@ -29,14 +29,12 @@ interface IState {
 
 const MapPage: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
+
   const [state, setState] = useState<IState>({
     loading: false,
     player: [] as IPlayers[],
     errorMessage: "",
   });
-
-  useEffect(() => {}, []);
-
   const { player, errorMessage, loading } = state;
 
   const [clickedButton, setClickedButton] = useState("");
@@ -47,6 +45,15 @@ const MapPage: React.FC = () => {
     const button: HTMLDivElement = event.currentTarget;
     setClickedButton(button.id);
   };
+
+  // https://dev.to/muratcanyuksel/comment-passer-des-donnees-entre-les-composants-react-16bi
+  const [data, setData] = useState("");
+
+  // console.log(state.player.games);
+
+  // const parentToChild = () => {
+  //   setData("Hello from parent");
+  // };
 
   return (
     <main>
@@ -142,88 +149,87 @@ const MapPage: React.FC = () => {
                   10 dernières parties
                 </p>
                 <div className="map__container__matches__list">
-                  {player.games?.map(
-                    (game: any, index: number) => (
-                      console.log(game.matchId),
-                      (
-                        <div
-                          className="map__container__matches__list--item"
-                          key={index}
-                          id={game.matchId}
-                          onClick={buttonHandler}
-                        >
-                          <p>Match : {game.matchId}</p>
-                          <div>
-                            <p>
-                              Mode de jeu :{" "}
-                              <span>{game.resume.info.gameMode}</span>
-                            </p>
-                          </div>
-                          <div>
-                            <p>
-                              Temps :{" "}
-                              <span>
-                                {game.resume.info.gameDuration % 60} minutes
-                              </span>
-                            </p>
-                          </div>
-                          <div>
-                            <p>
-                              Date :{" "}
-                              <span>
-                                {new Date(
-                                  game.resume.info.gameCreation
-                                ).toLocaleDateString()}
-                              </span>
-                            </p>
-                          </div>
-                          <div>
-                            <p>
-                              K-D-A : <span></span>
-                            </p>
-                          </div>
-                          <div className="map__container__champion">
-                            <p>Champion:</p>
-                            <div className="map__container__champion__list">
-                              {game.resume.info.participants.map(
-                                (participant: any, index: number) => (
-                                  console.log(game.matchId),
-                                  (
-                                    <div className="map__container__champion__list--item">
-                                      <div key={index} id={game.matchId}>
-                                        <img
-                                          src={
-                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
-                                            participant.championName +
-                                            ".png"
-                                          }
-                                          alt=""
-                                          width="16"
-                                          height="16"
-                                        />
-                                      </div>
-                                    </div>
-                                  )
-                                )
-                              )}
-                            </div>
-                          </div>
+                  {player.games?.map((game: any, index: number) => (
+                    // console.log(game.matchId),
+                    <div
+                      className="map__container__matches__list--item"
+                      key={index}
+                      id={game.matchId}
+                      onClick={() => {
+                        setData(game);
+                      }}
+                    >
+                      <p>Match : {game.matchId}</p>
+                      <div>
+                        <p>
+                          Mode de jeu : <span>{game.resume.info.gameMode}</span>
+                        </p>
+                      </div>
+                      <div>
+                        <p>
+                          Temps :{" "}
+                          <span>
+                            {game.resume.info.gameDuration % 60} minutes
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p>
+                          Date :{" "}
+                          <span>
+                            {new Date(
+                              game.resume.info.gameCreation
+                            ).toLocaleDateString()}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p>
+                          K-D-A : <span></span>
+                        </p>
+                      </div>
+                      <div className="map__container__champion">
+                        <p>Champion:</p>
+                        <div className="map__container__champion__list">
+                          {game.resume.info.participants.map(
+                            (participant: any, index: number) => (
+                              // console.log(game.matchId),
+                              <div className="map__container__champion__list--item">
+                                <div key={index} id={game.matchId}>
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
+                                      participant.championName +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+                                </div>
+                              </div>
+                            )
+                          )}
                         </div>
-                      )
-                    )
-                  )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {clickedButton && (
+
+            {/* <Canvas parentToChild={data} /> */}
+
+            {data && (
               <>
-                <p>Vous avez cliqué sur le match {clickedButton}</p>
-                <div className="map__container__canvas" id={clickedButton}>
-                  <Canvas />
-                </div>
+                <p>Vous avez cliqué sur le match : {data.matchId}</p>
+                {/* <div className="map__container__canvas" id={clickedButton}> */}
+                  <Canvas parentToChild={data} />
+                {/* </div> */}
               </>
             )}
+
             {/* <Canvas /> */}
             {/* <Map /> */}
           </div>
