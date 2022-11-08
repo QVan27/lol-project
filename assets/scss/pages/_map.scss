@@ -170,6 +170,14 @@
             }
           }
         }
+        .map__container__champion {
+          display: flex;
+          flex-direction: column;
+          .map__container__champion__list {
+            display: flex;
+            gap: 1%;
+          }
+        }
       }
     }
   }
