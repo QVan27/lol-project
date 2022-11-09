@@ -218,14 +218,13 @@ const MapPage: React.FC = () => {
               </div>
             </div>
 
-
             {/* <Canvas parentToChild={data} /> */}
 
             {data && (
               <>
                 <p>Vous avez cliqué sur le match : {data.matchId}</p>
                 {/* <div className="map__container__canvas" id={clickedButton}> */}
-                  <Canvas parentToChild={data} />
+                <Canvas data={data} />
                 {/* </div> */}
               </>
             )}
