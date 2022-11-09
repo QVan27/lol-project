@@ -37,14 +37,14 @@ const MapPage: React.FC = () => {
 
   const { player, errorMessage, loading } = state;
 
-  const [clickedButton, setClickedButton] = useState("");
+  // const [clickedButton, setClickedButton] = useState("");
 
-  const buttonHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
+  // const buttonHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+  //   event.preventDefault();
 
-    const button: HTMLDivElement = event.currentTarget;
-    setClickedButton(button.id);
-  };
+  //   const button: HTMLDivElement = event.currentTarget;
+  //   setClickedButton(button.id);
+  // };
 
   // https://dev.to/muratcanyuksel/comment-passer-des-donnees-entre-les-composants-react-16bi
   const [data, setData] = useState("");
@@ -149,173 +149,174 @@ const MapPage: React.FC = () => {
                   10 dernières parties
                 </p>
                 <div className="map__container__matches__list">
-                  {player.games?.map((game: any, index: number) => (
-                    // console.log(game.matchId),
-                    <div
-                      className="map__container__matches__list--item"
-                      key={index}
-                      id={game.matchId}
-                      onClick={() => {
-                        setData(game);
-                      }}
-                    >
-                      <p>Match : {game.matchId}</p>
-                      <div>
-                        <p>
-                          Mode de jeu : <span>{game.resume.info.gameMode}</span>
-                        </p>
-                      </div>
-                      <div>
-                        <p>
-                          Temps :{" "}
+                  {player.games?.map((game: any, index: number) => {
+                    return (
+                      <div
+                        className="map__container__matches__list--item"
+                        key={index}
+                        id={game.matchId}
+                        onClick={() => {
+                          setData(game);
+                        }}
+                      >
+                        <p>Match : {game.matchId}</p>
+                        <div>
+                          <p>
+                            Mode de jeu :{" "}
+                            <span>{game.resume.info.gameMode}</span>
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            Temps :{" "}
+                            <span>
+                              {game.resume.info.gameDuration % 60} minutes
+                            </span>
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            Date :{" "}
+                            <span>
+                              {new Date(
+                                game.resume.info.gameCreation
+                              ).toLocaleDateString()}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="map__container__champion">
+                          <p>Champion:</p>
+                          <div className="map__container__champion__list">
+                            {game.resume.info.participants.map(
+                              (participant: any, index: number) => {
+                                return (
+                                  <div className="map__container__champion__list--item">
+                                    <div key={index} id={game.matchId}>
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
+                                          participant.championName +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                    </div>
+                                  </div>
+                                );
+                              }
+                            )}
+                          </div>
+                        </div>
+                        <p>Items : </p>
+                        <div>
                           <span>
-                            {game.resume.info.gameDuration % 60} minutes
+                            {game.resume.info.participants.map(
+                              (participant: any, index: number) => {
+                                if (participant.summonerName === player.name) {
+                                  return (
+                                    <div>
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                          participant.item0 +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                          participant.item1 +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                          participant.item2 +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                          participant.item3 +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                          participant.item4 +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                          participant.item5 +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                      <img
+                                        src={
+                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                          participant.item6 +
+                                          ".png"
+                                        }
+                                        alt=""
+                                        width="16"
+                                        height="16"
+                                      />
+                                    </div>
+                                  );
+                                }
+                              }
+                            )}
                           </span>
-                        </p>
-                      </div>
-                      <div>
-                        <p>
-                          Date :{" "}
+                        </div>
+                        <p>K-D-A : </p>
+                        <div>
                           <span>
-                            {new Date(
-                              game.resume.info.gameCreation
-                            ).toLocaleDateString()}
+                            {game.resume.info.participants.map(
+                              (participant: any, index: number) => {
+                                if (participant.summonerName === player.name) {
+                                  return (
+                                    <div>
+                                      <p>
+                                        {participant.kills} -{" "}
+                                        {participant.deaths} -{" "}
+                                        {participant.assists}
+                                      </p>
+                                    </div>
+                                  );
+                                }
+                              }
+                            )}
                           </span>
-                        </p>
-                      </div>
-                      <div className="map__container__champion">
-                        <p>Champion:</p>
-                        <div className="map__container__champion__list">
-                          {game.resume.info.participants.map(
-                            (participant: any, index: number) => (
-                              // console.log(game.matchId),
-                              <div className="map__container__champion__list--item">
-                                <div key={index} id={game.matchId}>
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
-                                      participant.championName +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-                                </div>
-                              </div>
-                            )
-                          )}
                         </div>
                       </div>
-                      <p>Items :{" "}</p>
-                      <div>
-                        <span>
-                          {game.resume.info.participants.map((participant: any, index: number) => {     7
-                          if (participant.summonerName === player.name) {
-                            console.log(participant.summonerName);
-                            return(
-                              <div>
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                      participant.item0 +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                      participant.item1 +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                      participant.item2 +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                      participant.item3 +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                      participant.item4 +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                      participant.item5 +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-                                  <img
-                                    src={
-                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                      participant.item6 +
-                                      ".png"
-                                    }
-                                    alt=""
-                                    width="16"
-                                    height="16"
-                                  />
-
-                                </div>
-                            
-                                )
-                              }                         
-                            }
-                          )} 
-                          </span>
-                       
-                      </div>
-                      <p>K-D-A :{" "}</p>
-                      <div>
-                        <span>
-                          {game.resume.info.participants.map((participant: any, index: number) => {     7
-                          if (participant.summonerName === player.name) {
-                            console.log(participant.summonerName);
-                            
-                            return(
-                              <div>
-                                  <p>{participant.kills} - {participant.deaths} - {participant.assists}</p>
-                                </div>
-                            
-                                )
-                              }                         
-                            }
-                          )} 
-                          </span>
-                       
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
