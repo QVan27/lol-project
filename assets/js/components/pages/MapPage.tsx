@@ -314,6 +314,25 @@ const MapPage: React.FC = () => {
                             )}
                           </span>
                         </div>
+                        <div>
+                          <span>
+                            {game.resume.info.participants.map(
+                              (participant: any, index: number) => {
+                                if (participant.summonerName === player.name) {
+                                  return (
+                                    <div>
+                                      <p>
+                                        {participant.win
+                                          ? "Victoire"
+                                          : "Défaite"}
+                                      </p>
+                                    </div>
+                                  );
+                                }
+                              }
+                            )}
+                          </span>
+                        </div>
                       </div>
                     );
                   })}
