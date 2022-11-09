@@ -298,7 +298,7 @@ const MapPage: React.FC = () => {
                       <p>K-D-A :{" "}</p>
                       <div>
                         <span>
-                          {game.resume.info.participants.map((participant: any, index: number) => {     7
+                          {game.resume.info.participants.map((participant: any, index: number) => {     
                           if (participant.summonerName === player.name) {
                             console.log(participant.summonerName);
                             
@@ -307,6 +307,23 @@ const MapPage: React.FC = () => {
                                   <p>{participant.kills} - {participant.deaths} - {participant.assists}</p>
                                 </div>
                             
+                                )
+                              }                         
+                            }
+                          )} 
+                          </span>
+                       
+                      </div>
+                      <div>
+                        <span>
+                          {game.resume.info.participants.map((participant: any, index: number) => {
+                          if (participant.summonerName === player.name) {
+                            console.log(participant.summonerName);
+                            
+                            return(
+                              <div>
+                                  <p>{participant.win ? "Victoire" : "Défaite"}</p>
+                                </div>
                                 )
                               }                         
                             }
