@@ -1,5 +1,4 @@
-import { cp } from "fs";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
 // Utils
@@ -35,6 +34,7 @@ const MapPage: React.FC = () => {
     player: [] as IPlayers[],
     errorMessage: "",
   });
+
   const { player, errorMessage, loading } = state;
 
   const [clickedButton, setClickedButton] = useState("");
