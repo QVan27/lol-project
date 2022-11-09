@@ -1,3 +1,4 @@
+import { log } from "console";
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import fetchData from "../../utils/fetchData";
@@ -27,7 +28,7 @@ const CanvasContainer = styled.div`
   }
 `;
 
-const HeatMap: FunctionComponent = () => {
+export default function HeatMap({ parentToChild }: any) {
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
@@ -36,7 +37,7 @@ const HeatMap: FunctionComponent = () => {
   // const match = fetchData(`${basicUrl}jensen/matches/${matchId}`);
 
   // const [match, setMatch] = React.useState();
-  
+
   // React.useEffect(() => {
   //   (async () => {
   //     const response = await fetchData(`${basicUrl}jensen/matches/${matchId}`);
@@ -45,7 +46,6 @@ const HeatMap: FunctionComponent = () => {
   // }, []);
 
   // console.log(match);
-  
 
   // React.useEffect(() => {
   //   // const draw = (x: number, y: number) => {
@@ -70,6 +70,9 @@ const HeatMap: FunctionComponent = () => {
   //   // };
   //   // drawHeatMap(matchData);
   // }, []);
+
+  console.log(parentToChild);
+  
 
   const data1 = {
     towers: [
@@ -153,8 +156,10 @@ const HeatMap: FunctionComponent = () => {
           })}
         </CanvasContainer>
       </Container>
+
+      
     </Wrapper>
   );
-};
+}
 
-export default HeatMap;
+// export default HeatMap;
