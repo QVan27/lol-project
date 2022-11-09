@@ -1,5 +1,4 @@
-import { cp } from "fs";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
 // Utils
@@ -35,6 +34,7 @@ const MapPage: React.FC = () => {
     player: [] as IPlayers[],
     errorMessage: "",
   });
+
   const { player, errorMessage, loading } = state;
 
   const [clickedButton, setClickedButton] = useState("");
@@ -183,11 +183,6 @@ const MapPage: React.FC = () => {
                           </span>
                         </p>
                       </div>
-                      <div>
-                        <p>
-                          K-D-A : <span></span>
-                        </p>
-                      </div>
                       <div className="map__container__champion">
                         <p>Champion:</p>
                         <div className="map__container__champion__list">
@@ -212,12 +207,118 @@ const MapPage: React.FC = () => {
                           )}
                         </div>
                       </div>
+                      <p>Items :{" "}</p>
+                      <div>
+                        <span>
+                          {game.resume.info.participants.map((participant: any, index: number) => {     7
+                          if (participant.summonerName === player.name) {
+                            console.log(participant.summonerName);
+                            return(
+                              <div>
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                      participant.item0 +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                      participant.item1 +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                      participant.item2 +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                      participant.item3 +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                      participant.item4 +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                      participant.item5 +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                      participant.item6 +
+                                      ".png"
+                                    }
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                  />
+
+                                </div>
+                            
+                                )
+                              }                         
+                            }
+                          )} 
+                          </span>
+                       
+                      </div>
+                      <p>K-D-A :{" "}</p>
+                      <div>
+                        <span>
+                          {game.resume.info.participants.map((participant: any, index: number) => {     7
+                          if (participant.summonerName === player.name) {
+                            console.log(participant.summonerName);
+                            
+                            return(
+                              <div>
+                                  <p>{participant.kills} - {participant.deaths} - {participant.assists}</p>
+                                </div>
+                            
+                                )
+                              }                         
+                            }
+                          )} 
+                          </span>
+                       
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
-
 
             {/* <Canvas parentToChild={data} /> */}
 
@@ -225,7 +326,7 @@ const MapPage: React.FC = () => {
               <>
                 <p>Vous avez cliqué sur le match : {data.matchId}</p>
                 {/* <div className="map__container__canvas" id={clickedButton}> */}
-                  <Canvas parentToChild={data} />
+                <Canvas data={data} />
                 {/* </div> */}
               </>
             )}

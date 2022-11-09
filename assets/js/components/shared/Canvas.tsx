@@ -28,7 +28,7 @@ const CanvasContainer = styled.div`
   }
 `;
 
-export default function HeatMap({ parentToChild }: any) {
+export default function HeatMap({ data }: any) {
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
@@ -71,7 +71,7 @@ export default function HeatMap({ parentToChild }: any) {
   //   // drawHeatMap(matchData);
   // }, []);
 
-  console.log(parentToChild);
+  console.log(data);
   
 
   const data1 = {
