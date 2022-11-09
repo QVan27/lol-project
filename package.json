@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/jest": "^29.2.2",
     "@types/styled-components": "^5.1.26",
     "konva": "^8.3.12",
     "prop-types": "^15.7.2",
@@ -24,6 +25,7 @@
     "@types/react": "^17.0.27",
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^4.3.4",
+    "@types/react-test-renderer": "^18.0.0",
     "axios": "^0.19.2",
     "babel-jest": "^29.3.1",
     "core-js": "^3.23.0",
@@ -45,7 +47,8 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress"
+    "build": "encore production --progress",
+    "test": "jest"
   },
   "proxy": "http://127.0.0.1:8000"
 }
