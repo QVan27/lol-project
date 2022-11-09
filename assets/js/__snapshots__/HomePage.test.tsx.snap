@@ -3,6 +3,7 @@
 exports[`changes the class when hovered 1`] = `
 <a
   className="button-lol normal"
+  href="http://www.facebook.com"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
@@ -13,6 +14,7 @@ exports[`changes the class when hovered 1`] = `
 exports[`changes the class when hovered 2`] = `
 <a
   className="button-lol hovered"
+  href="http://www.facebook.com"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
@@ -23,6 +25,7 @@ exports[`changes the class when hovered 2`] = `
 exports[`changes the class when hovered 3`] = `
 <a
   className="button-lol normal"
+  href="http://www.facebook.com"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
