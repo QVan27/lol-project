@@ -1,3 +1,4 @@
+import { cp } from "fs/promises";
 import React, { useRef, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
@@ -5,6 +6,7 @@ import { ApiFetch } from "../../services/ApiFetch";
 // import fetchData from "../../utils/fetchData";
 // Shared
 import Canvas from "../shared/Canvas";
+import ResumeMatch from "../shared/ResumeMatch";
 // import Map from "../shared/Map";
 
 //   const formRef = useRef<HTMLFormElement>(null);
@@ -159,7 +161,7 @@ const MapPage: React.FC = () => {
                           setData(game);
                         }}
                       >
-                        <p>Match : {game.matchId}</p>
+                        <p>Match : {index + 1}</p>
                         <div>
                           <p>
                             Mode de jeu :{" "}
@@ -215,6 +217,7 @@ const MapPage: React.FC = () => {
                             {game.resume.info.participants.map(
                               (participant: any, index: number) => {
                                 if (participant.summonerName === player.name) {
+                                  // console.log(participant);
                                   return (
                                     <div>
                                       <img
@@ -305,7 +308,7 @@ const MapPage: React.FC = () => {
                                       <p>
                                         {participant.kills} -{" "}
                                         {participant.deaths} -{" "}
-                                        {participant.assists}
+                                        {participant.assists} - {" "}
                                       </p>
                                     </div>
                                   );
@@ -345,8 +348,10 @@ const MapPage: React.FC = () => {
             {data && (
               <>
                 <p>Vous avez cliqué sur le match : {data.matchId}</p>
+                <ResumeMatch data={data}/>
                 {/* <div className="map__container__canvas" id={clickedButton}> */}
                 <Canvas data={data} />
+                
                 {/* </div> */}
               </>
             )}
@@ -361,3 +366,4 @@ const MapPage: React.FC = () => {
 };
 
 export default MapPage;
+
