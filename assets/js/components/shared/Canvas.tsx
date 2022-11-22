@@ -1,7 +1,11 @@
-import { log } from "console";
-import React, { FunctionComponent } from "react";
+import React from "react";
 import styled from "styled-components";
-import fetchData from "../../utils/fetchData";
+import {
+  AiFillBackward,
+  AiFillPauseCircle,
+  AiFillPlayCircle,
+  AiFillForward,
+} from "react-icons/ai";
 
 const Wrapper = styled.div`
   margin-inline: auto;
@@ -28,53 +32,64 @@ const CanvasContainer = styled.div`
   }
 `;
 
+const Player = styled.div`
+  margin-inline: auto;
+  width: min(500px, 92%);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: flex-end;
+`;
+
+const ButtonControl = styled.button`
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  border-radius: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  background-color: transparent;
+  color: #cdbe91;
+  cursor: pointer;
+  .backward,
+  .forward {
+    background-color: #1e2328;
+    border-radius: 100%;
+    padding: 15px;
+  }
+  span {
+    color: #fff;
+  }
+`;
+
+const ButtonPlayPause = styled.button`
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  border-radius: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  .play,
+  .pause {
+    background-color: #1e2328;
+    border-radius: 100%;
+    padding: 20px;
+    /* background: linear-gradient(to bottom left, #c8aa6d, #7a5c29); */
+    color: #c8aa6d;
+  }
+  span {
+    color: #fff;
+  }
+`;
+
 export default function HeatMap({ data }: any) {
-  const mapRef = React.useRef<HTMLCanvasElement>(null);
-  const towerRef = React.useRef<HTMLDivElement>(null);
-
-  // const matchId = "EUW1_6113359836";
-  // const basicUrl = "http://127.0.0.1:8000/bdd/";
-  // const match = fetchData(`${basicUrl}jensen/matches/${matchId}`);
-
-  // const [match, setMatch] = React.useState();
-
-  // React.useEffect(() => {
-  //   (async () => {
-  //     const response = await fetchData(`${basicUrl}jensen/matches/${matchId}`);
-  //     setMatch(response);
-  //   })();
-  // }, []);
-
-  // console.log(match);
-
-  // React.useEffect(() => {
-  //   // const draw = (x: number, y: number) => {
-  //   //   ctx.drawImage(towerImg, x, y, 20, 20);
-  //   // };
-  //   // // const draw = (x: number, y: number) => {
-  //   // //   ctx.beginPath();
-  //   // //   ctx.arc(x, y, 5, 0, 2 * Math.PI);
-  //   // //   ctx.fillStyle = "red";
-  //   // //   ctx.fill();
-  //   // // };
-  //   // const drawHeatMap = (data: any) => {
-  //   //   const { frames } = data;
-  //   //   frames.forEach((frame: any) => {
-  //   //     frame.events.forEach((event: any) => {
-  //   //       if (event.type === "BUILDING_KILL") {
-  //   //         const { position } = event;
-  //   //         draw(position.x, position.y);
-  //   //       }
-  //   //     });
-  //   //   });
-  //   // };
-  //   // drawHeatMap(matchData);
-  // }, []);
-
-  console.log(data);
-  
-
-  const data1 = {
+  const buildings = {
     towers: [
       {
         RED: [
@@ -114,13 +129,63 @@ export default function HeatMap({ data }: any) {
       },
     ],
   };
+  const mapRef = React.useRef<HTMLCanvasElement>(null);
+  const towerRef = React.useRef<HTMLDivElement>(null);
+
+  const [frame, setFrame] = React.useState(0);
+  const [timestamp, setTimestamp] = React.useState(0);
+  const [event, setEvent] = React.useState(0);
+  const [eventTimestamp, setEventTimestamp] = React.useState(0);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [isPaused, setIsPaused] = React.useState(false);
+  const [championKill, setChampionKill] = React.useState(0);
+  const [positionKill, setPositionKill] = React.useState(0);
+
+  // const currentFrame = frame;
+  // const currentTimestamp = timestamp;
+  // const currentEvent = event;
+  // const currentEventTimestamp = eventTimestamp;
+  // const currentChampionKill = championKill;
+
+  const millisToMinutesAndSeconds = (millis: any) => {
+    let minutes = Math.floor(millis / 60000);
+    let seconds: any = ((millis % 60000) / 1000).toFixed(0);
+    return seconds == 60
+      ? minutes + 1 + ":00"
+      : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  };
+
+  console.table(data);
+
+  const toggleTimeline = () => {
+    const timestamp =
+      data.timeline.info.frames[data.timeline.info.frames.length - 1].timestamp;
+    const date = new Date(timestamp);
+
+    console.log(date.getMinutes());
+
+    const interval = 1000;
+    const startTime = 0;
+
+    // faire un flat Map || frame.flatMap(event) => event);
+
+    // go from startTime to duration
+    // at each interval, update the frame, timestamp, event, eventTimestamp, championKill
+    // if the frame is the last frame, stop the interval and reset the frame to 0
+
+    if (!isPlaying) {
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <Wrapper>
       <Container>
         <CanvasContainer>
           <canvas id="map" ref={mapRef} width="500" height="500" />
-          {data1.towers.map((team, i) => {
+          {buildings.towers.map((team, i) => {
             return Object.keys(team).map((color, j) => {
               return team[color].map(
                 (
@@ -155,9 +220,34 @@ export default function HeatMap({ data }: any) {
             });
           })}
         </CanvasContainer>
-      </Container>
 
-      
+        {/*onClick={() => history.goBack()}
+            onClick={handlePlayPause}
+            {isPlaying ? "Pause" : "Play"}
+            onClick={handleNext}
+            
+            */}
+        <Player>
+          <ButtonControl>
+            <AiFillBackward className="backward" />
+            <span>reculer</span>
+          </ButtonControl>
+
+          <ButtonPlayPause onClick={toggleTimeline}>
+            {isPlaying ? (
+              <AiFillPauseCircle className="pause" />
+            ) : (
+              <AiFillPlayCircle className="play" />
+            )}
+            <span>{isPlaying ? "Pause" : "Play"}</span>
+          </ButtonPlayPause>
+
+          <ButtonControl>
+            <AiFillForward className="forward" />
+            <span>avancer</span>
+          </ButtonControl>
+        </Player>
+      </Container>
     </Wrapper>
   );
 }
