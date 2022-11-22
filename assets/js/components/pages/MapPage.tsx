@@ -1,4 +1,3 @@
-import { cp } from "fs/promises";
 import React, { useRef, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
@@ -216,82 +215,83 @@ const MapPage: React.FC = () => {
                           <span>
                             {game.resume.info.participants.map(
                               (participant: any, index: number) => {
-                                if (participant.summonerName === player.name) {
-                                  // console.log(participant);
-                                  return (
-                                    <div>
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                          participant.item0 +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                          participant.item1 +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                          participant.item2 +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                          participant.item3 +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                          participant.item4 +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                          participant.item5 +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                          participant.item6 +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
-                                    </div>
-                                  );
+                                if (participant.summonerName === player.name) { 
+                                    if (participant.item0 !== 0 && participant.item1 !== 0 && participant.item2 !== 0 && participant.item3 !== 0 && participant.item4 !== 0 && participant.item5 !== 0 && participant.item6 !== 0) {
+                                      return (
+                                        <div>
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              participant.item0 +
+                                              ".png"
+                                            }
+                                            alt=""
+                                            width="16"
+                                            height="16"
+                                          />
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              participant.item1 +
+                                              ".png"
+                                            }
+                                            alt=""
+                                            width="16"
+                                            height="16"
+                                          />
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              participant.item2 +
+                                              ".png"
+                                            }
+                                            alt=""
+                                            width="16"
+                                            height="16"
+                                          />
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              participant.item3 +
+                                              ".png"
+                                            }
+                                            alt=""
+                                            width="16"
+                                            height="16"
+                                          />
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              participant.item4 +
+                                              ".png"
+                                            }
+                                            alt=""
+                                            width="16"
+                                            height="16"
+                                          />
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              participant.item5 +
+                                              ".png"
+                                            }
+                                            alt=""
+                                            width="16"
+                                            height="16"
+                                          />
+                                          <img
+                                            src={
+                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              participant.item6 +
+                                              ".png"
+                                            }
+                                            alt=""
+                                            width="16"
+                                            height="16"
+                                          />
+                                        </div>
+                                      );
+                                    }
                                 }
                               }
                             )}
