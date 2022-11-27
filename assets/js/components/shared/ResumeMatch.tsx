@@ -17,6 +17,97 @@ const ResumeMatchContainer = styled.div`
     position: relative;
     max-width: 500px;
     min-width: 320px;
+    .match-date{
+  align-self: flex-end;
+  font-size: 15px;
+  color: lightgrey;
+  position: absolute;
+}
+
+.match-stats{
+  align-self: center;
+  margin: auto;
+  color: white;
+  font-size: 25px;
+}
+
+.match-details{
+  display: flex;
+  align-items: center;
+  width: 97%;
+  height: 95%;
+}
+
+.match-details-container {
+/*   font-family: 'Bevan', cursive; */
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2c3e50;
+}
+
+.container {
+  width: 700px;
+  height: 500px
+}
+
+.match-container {
+  width: 100%;
+  height: 85%;
+}
+
+.champion-row {
+  width: 100%;
+  height: 13%;
+  display: flex;
+  background-color: #ecf0f1;
+  border-bottom: 1px solid lightgrey;
+}
+
+.champion {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid lightgrey;
+}
+
+.champion-data {
+  height: 50%;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reverse {
+  flex-direction: row-reverse;
+  border-right: 0px;
+}
+
+.kills {
+  color: #7f8c8d;
+}
+
+.deaths {
+  color: #34495e;
+}
+
+.assissts {
+  color: #3498db;
+}
+
+.summoner-name {
+  font-family: 'Share', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+}
 `;
 
 const TableResumeMatch = styled.table`
@@ -29,7 +120,8 @@ const TableResumeMatch = styled.table`
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .styled-table thead tr {
-    color: #ffffff;
+    background-color: #31313C;
+    color: #7b7a8e;
     text-align: left;
 }
 .styled-table th,
@@ -121,6 +213,8 @@ const TableResumeMatch = styled.table`
 
 
 
+
+
 export default function ResumeMatch({ data }: any) {
     console.log(data);
   return (
@@ -128,429 +222,41 @@ export default function ResumeMatch({ data }: any) {
     <Wrapper>
         <Container>
             <ResumeMatchContainer>
-                <TableResumeMatch>
-                    <table className="styled-table" style={{backgroundColor:"#59343B"}}>
-                    <thead>
-                        <tr>
-                            <th>REd Team
-                            {
-                                    //show win or lose
-                                   data.resume.info.teams[0].win
-                                   ? "Victoire"
-                                   : "Défaite"
-                                }
-                            </th>
-                            <th>KDA</th>
-                            <th>Damage</th>
-                            <th>Objet utilisés</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            
-                        
-                        <tr>
-                            <td>
-                                {
-                                    <span> 
-                                    {data.resume.info.participants.map(
-                                      (participant: any, index: number) => {
-                                        if (participant.teamId === 100) {
-                                          return (
-                                            <div className="content_champion">
-                                              <img
-                                                src={
-                                                    "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" +
-                                                    participant.championName +
-                                                    ".png"
-                                                }
-                                                alt=""
-                                                width="16"
-                                                height="16"
-                                              />
-                                              <p>{participant.summonerName}</p>
-                                              <div className="level">{participant.champLevel}</div>
-                                            </div>
-                                          );
-                                        }
-                                      }
-                                    )}
-                                  </span>
-                                }
-                            </td>
-                            <td>
-                                {
-                                    <span>
-                                        {data.resume.info.participants.map(
-                                            (participant: any, index: number) => {
-                                                if (participant.teamId === 100) {
-                                                return (
-                                                    <div className="content_kill">
-                                                        <p>{participant.kills}/{participant.deaths}/{participant.assists}</p>
-                                                    </div>
-                                                );
-                                                }
-                                            }
-                                            )}
-                                    </span> 
-                                }
-                            </td>
-                            <td>
-                                
-                                    
-                                        {data.resume.info.participants.map(
-                                            (participant: any, index: number) => {
-                                            if (participant.teamId === 100) {
-                                                return (
-                                                        <div className="content_progress">
-                                                            <div className="progress_damage_tochampion">
-                                                            <p>{participant.totalDamageDealtToChampions}</p>
-                                                            <div className="progress_damage">
-                                                                <div className="progress_bar" style={{width: participant.totalDamageDealtToChampions / 1000 + "%"}}></div>
-                                                            </div>
-                                                            </div>
-                                                            <div className="progress_damage_taken">
-                                                            <p>{participant.totalDamageTaken}</p>
-                                                            <div className="progress_damage">
-                                                                <div className="progress_bar" style={{width: participant.totalDamageTaken / 1000 + "%"}}></div>
-                                                            </div>
-                                                            </div>
-                                                        </div>
-                                                );
-                                            }
-                                            }
-                                        )}
-                                    
-                                
-                            </td>
-                            <td>
-                                {
-                                    <span>
-                                        {data.resume.info.participants.map(
-                                            (participant: any, index: number) => {
-                                            if (participant.teamId === 100) {
-                                                if (participant.item0 === 0 || participant.item1 === 0 || participant.item2 === 0 || participant.item3 === 0 || participant.item4 === 0 || participant.item5 === 0 || participant.item6 === 0) {
-                                                    return (
-                                                       <div className="no_item"></div>
-                                                    );
-                                                }
-                                                else {
-                                                    return (
-                                                        <div className="content_item">
-                                                        <img
-                                                        src={
-                                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                            participant.item0 +
-                                                            ".png"
-                                                        }
-                                                        alt=""
-                                                        width="16"
-                                                        height="16"
-                                                        />
-                                                        <img
-                                                        src={
-                                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                            participant.item1 +
-                                                            ".png"
-                                                        }
-                                                        alt=""
-                                                        width="16"
-                                                        height="16"
-                                                        />
-                                                        <img
-                                                        src={
-                                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                            participant.item2 +
-                                                            ".png"
-                                                        }
-                                                        alt=""
-                                                        width="16"
-                                                        height="16"
-                                                        />
-                                                        <img
-                                                        src={
-                                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                            participant.item3 +
-                                                            ".png"
-                                                        }
-                                                        alt=""
-                                                        width="16"
-                                                        height="16"
-                                                        />
-                                                        <img
-                                                        src={
-                                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                            participant.item4 +
-                                                            ".png"
-                                                        }
-                                                        alt=""
-                                                        width="16"
-                                                        height="16"
-                                                        />
-                                                        <img
-                                                        src={
-                                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                            participant.item5 +
-                                                            ".png"
-                                                        }
-                                                        alt=""
-                                                        width="16"
-                                                        height="16"
-                                                        />
-                                                        <img
-                                                        src={
-                                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                            participant.item6 +
-                                                            ".png"
-                                                        }
-                                                        alt=""
-                                                        width="16"
-                                                        height="16"
-                                                        />
-                                                    </div>
-                                                    )
-                                                }
-                                               
-                                            }
-                                            }
-                                        )}
-                                    </span>
-                                }
-                            </td>
-                            <td>
-                                
-                            </td>
-                            <td>
-                              
-                            </td>
-                           
+            <div className="container">
+  <div className="match-details-container">
+    <div className="match-details">
+        <div className=""></div>
+      <div className="match-stats">54 - 32</div>
+    </div>
+  </div>
 
-                        </tr>
-        
-        }           
-                    </tbody>
-                    </table>
-                    
-                </TableResumeMatch>
-                <TableResumeMatch>
-                    <table className="styled-table" style={{backgroundColor:"#28344E"}}>
-                    <thead>
-                        <tr>
-                            <th>Blue team
-                                 {
-                                   data.resume.info.teams[1].win
-                                   ? "Victoire"
-                                   : "Défaite"  
-                                }
-                            </th>
-                            <th>KDA</th>
-                            <th>Damage</th>
-                            <th>Objet</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                {
-                                    <span> 
-                                    {data.resume.info.participants.map(
-                                      (participant: any, index: number) => {
-                                        if (participant.teamId === 200) {
-                                          return (
-                                            <div className="content_champion">
-                                              <img
-                                                src={
-                                                    "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
-                                                    participant.championName +
-                                                    ".png"
-                                                }
-                                                alt=""
-                                                width="16"
-                                                height="16"
-                                              />
-                                              <p>{participant.summonerName}</p>
-                                              <div className="level">{participant.champLevel}</div>
-                                            </div>
-                                          );
-                                        }
-                                      }
-                                    )}
-                                  </span>
-                                }
-                            </td>
-                            <td>
-                                {
-                                    <span>
-                                        {data.resume.info.participants.map(
-                                            (participant: any, index: number) => {
-                                                if (participant.teamId === 200) {
-                                                return (
-                                                    <div className="content_kill">
-                                                        <p>{participant.kills}/{participant.deaths}/{participant.assists}</p>
-                                                    </div>
-                                                );
-                                                }
-                                            }
-                                            )}
-                                    </span> 
-                                }
-                            </td>
-                            <td>
-                                {
-                                    <span>
-                                        {data.resume.info.participants.map(
-                                            (participant: any, index: number) => {
-                                            if (participant.teamId === 200) {
-                                                return (
-                                                        <div className="content_progress">
-                                                            <div className="progress_damage_tochampion">
-                                                            <p>{participant.totalDamageDealtToChampions}</p>
-                                                            <div className="progress_damage">
-                                                                <div className="progress_bar" style={{width: participant.totalDamageDealtToChampions / 1000 + "%"}}></div>
-                                                            </div>
-                                                            </div>
-                                                            <div className="progress_damage_taken">
-                                                            <p>{participant.totalDamageTaken}</p>
-                                                            <div className="progress_damage">
-                                                                <div className="progress_bar" style={{width: participant.totalDamageTaken / 1000 + "%"}}></div>
-                                                            </div>
-                                                            </div>
-                                                        </div>
-                                                );
-                                            }
-                                            }
-                                        )}
-                                    </span>
-                                }
-                            </td>
-                            <td>
-                                {
-                                    <span>
-                                        {data.resume.info.participants.map(
-                                            (participant: any, index: number) => {
-                                            if (participant.teamId === 200) {
-                                                if (participant.item0 !== 0 && participant.item1 !== 0 && participant.item2 !== 0 && participant.item3 !== 0 && participant.item4 !== 0 && participant.item5 !== 0 && participant.item6 !== 0) {
-                                                    return (
-                                                        <div className="content_item">
-                                                            {
-                                                                
-                                                            }
-                                                            <img
-                                                            src={
-                                                                "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                                participant.item0 +
-                                                                ".png"
-                                                            }
-                                                            alt=""
-                                                            width="16"
-                                                            height="16"
-                                                            />
-                                                            <img
-                                                            src={
-                                                                "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                                participant.item1 +
-                                                                ".png"
-                                                            }
-                                                            alt=""
-                                                            width="16"
-                                                            height="16"
-                                                            />
-                                                            <img
-                                                            src={
-                                                                "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                                participant.item2 +
-                                                                ".png"
-                                                            }
-                                                            alt=""
-                                                            width="16"
-                                                            height="16"
-                                                            />
-                                                            <img
-                                                            src={
-                                                                "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                                participant.item3 +
-                                                                ".png"
-                                                            }
-                                                            alt=""
-                                                            width="16"
-                                                            height="16"
-                                                            />
-                                                            <img
-                                                            src={
-                                                                "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                                participant.item4 +
-                                                                ".png"
-                                                            }
-                                                            alt=""
-                                                            width="16"
-                                                            height="16"
-                                                            />
-                                                            <img
-                                                            src={
-                                                                "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                                participant.item5 +
-                                                                ".png"
-                                                            }
-                                                            alt=""
-                                                            width="16"
-                                                            height="16"
-                                                            />
-                                                            <img
-                                                            src={
-                                                                "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                                                participant.item6 +
-                                                                ".png"
-                                                            }
-                                                            alt=""
-                                                            width="16"
-                                                            height="16"
-                                                            />
-                                                        </div>
-                                                        );
-                                                }
-                                               
-                                            }
-                                            }
-                                        )}
-                                    </span>
-                                }
-                            </td>
-                            <td>
-                                {
-                                    <span>
-                                        {/* score & classement */}
-                                        {data.resume.info.participants.map(
-                                            (participant: any, index: number) => {
-                                            if (participant.teamId === 200) {
-                                                return (
-                                                    <div className="ranking">
-                                                        {/* show rankig */}
-                                                        <p>{participant.highestAchievedSeasonTier}</p>
+  <div className="match-container">
+    <div className="champion-row">
+      <div className="champion">
+        <div className="champion-data">
+          <div className="summoner-name">
+            <img src="http://vignette4.wikia.nocookie.net/leagueoflegends/images/e/ef/KledSquare.png/revision/latest?cb=20160725201637" width="50px" height="50px"/>
+            <div>test name</div>
+          </div>
+          <div className="stat"><span className="kills">10</span> / <span className="deaths">4</span> / <span className="assissts">13</span></div>
+        </div>
+      </div>
+      <div className="champion">
+        <div className="champion-data reverse">
+          <div className="summoner-name reverse">
+            <img src="http://vignette3.wikia.nocookie.net/leagueoflegends/images/a/a7/IllaoiSquare.png/revision/latest?cb=20151111024020" width="50px" height="50px"/>
+            <div>test name</div>
+          </div>
+          <div className="stat"><span className="kills">10</span> / <span className="deaths">4</span> / <span className="assissts">13</span></div>
+        </div>
+      </div>
+    </div>
 
-                                                        
-                                                        
-                                                    </div>
-                                                 
-                                                 
+   
 
-                                                );
-                                            }
-                                            }
-                                        )}
+  </div>
 
-                                    </span>
-                                }
-                                
-                               
-                            </td>
-                        
-                            
-
-                        </tr>
-                    </tbody>
-                    </table>
-                
-                </TableResumeMatch>
+</div>
             </ResumeMatchContainer>
         </Container>
     </Wrapper>
