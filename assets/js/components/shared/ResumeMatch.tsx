@@ -15,8 +15,8 @@ const Container = styled.div`
 
 const ResumeMatchContainer = styled.div`
     position: relative;
-    max-width: 500px;
-    min-width: 320px;
+    /* max-width: 500px;
+    min-width: 320px; */
     .match-date{
   align-self: flex-end;
   font-size: 15px;
@@ -49,30 +49,26 @@ const ResumeMatchContainer = styled.div`
 }
 
 .container {
-  width: 700px;
-  height: 500px
+  width: 1000px;
+  height: 100%;
 }
 
 .match-container {
   width: 100%;
-  height: 85%;
-}
-
-.champion-row {
-  width: 100%;
-  height: 13%;
-  display: flex;
-  background-color: #ecf0f1;
-  border-bottom: 1px solid lightgrey;
-}
-
-.champion {
-  width: 50%;
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: #fff;
+}
+
+
+
+.champion-row {
+    width: 50%;
   border-right: 1px solid lightgrey;
+
+}
+.champion {
+    display: flex;
 }
 
 .champion-data {
@@ -83,9 +79,58 @@ const ResumeMatchContainer = styled.div`
   align-items: center;
 }
 
+.content-champ {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    margin-bottom: 0.5rem;
+                    width: 12em;
+                    position: relative;
+                     img {
+                        display: block;
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                     }
+                     .level {
+                        position: absolute;
+                        left: -3px;
+                        bottom: -3px;
+                        width: 15px;
+                        height: 15px;
+                        background: rgb(32, 45, 55);
+                        border-radius: 50%;
+                        color: rgb(255, 255, 255);
+                        font-size: 10px;
+                        text-align: center;
+                        line-height: 15px;
+                        font-family: Roboto, sans-serif;
+                     }
+
+}
+
+
 .reverse {
   flex-direction: row-reverse;
   border-right: 0px;
+  .level-reverse {
+                        position: absolute;
+                        left: 109px;
+                        bottom: -3px;
+                        width: 15px;
+                        height: 15px;
+                        background: rgb(32, 45, 55);
+                        border-radius: 50%;
+                        color: rgb(255, 255, 255);
+                        font-size: 10px;
+                        text-align: center;
+                        line-height: 15px;
+                        font-family: Roboto, sans-serif;
+                     }
+
+    
+    
+
 }
 
 .kills {
@@ -101,12 +146,18 @@ const ResumeMatchContainer = styled.div`
 }
 
 .summoner-name {
-  font-family: 'Share', cursive;
+  color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   justify-content: space-between;
   width: 40%;
+}
+
+.content_item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 `;
 
@@ -216,7 +267,7 @@ const TableResumeMatch = styled.table`
 
 
 export default function ResumeMatch({ data }: any) {
-    console.log(data);
+
   return (
 
     <Wrapper>
@@ -225,38 +276,296 @@ export default function ResumeMatch({ data }: any) {
             <div className="container">
   <div className="match-details-container">
     <div className="match-details">
-        <div className=""></div>
-      <div className="match-stats">54 - 32</div>
+        <div className="result">
+        {
+                                    //show win or lose
+                                   data.resume.info.teams[0].win
+                                   ? " Victoire"
+                                   : " Défaite"
+                                }
+        </div>
+        <div className="total-kill">
+
+        
+        </div>
+      <div className="match-stats">
+        {
+            // show time timestamp to minutes
+            Math.floor(data.resume.info.gameDuration / 60) + "m " + data.resume.info.gameDuration % 60 + "s"
+        }
+      </div>
+      <div className="result">
+        {
+                                    //show win or lose
+                                   data.resume.info.teams[1].win
+                                   ? " Victoire"
+                                   : " Défaite"
+                                }
+        </div>
     </div>
   </div>
 
   <div className="match-container">
-    <div className="champion-row">
+      <div className="champion-row">
+    
+    {data.resume.info.participants.map(
+        (participant: any, index: number) => {
+            if (participant.teamId === 100) {
+                return (
       <div className="champion">
         <div className="champion-data">
           <div className="summoner-name">
-            <img src="http://vignette4.wikia.nocookie.net/leagueoflegends/images/e/ef/KledSquare.png/revision/latest?cb=20160725201637" width="50px" height="50px"/>
-            <div>test name</div>
+          <div className="content-champ">
+            <img src={
+                                                    "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" +
+                                                 participant.championName +
+                                                    ".png"
+                                                }
+                                                alt=""
+                                                width="16"
+                                                height="16"/>
+            <div><p>{participant.summonerName}</p>
+            <div className="level">{participant.champLevel}</div></div>
+            </div>
+            <div className="items">
+                {
+                    <div className="content_item">
+                    <img
+                    src={
+                        //if no item
+                        participant.item0 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item0 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item1 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item1 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item2 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item2 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item3 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item3 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item4 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item4 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item5 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item5 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item6 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item6 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                </div>
+                }
+
+            </div>
           </div>
-          <div className="stat"><span className="kills">10</span> / <span className="deaths">4</span> / <span className="assissts">13</span></div>
+          <div className="stat"><span className="kills">{participant.kills}</span> / <span className="deaths">{participant.deaths}</span> / <span className="assissts">{participant.assists}</span></div>
+
         </div>
-      </div>
-      <div className="champion">
-        <div className="champion-data reverse">
-          <div className="summoner-name reverse">
-            <img src="http://vignette3.wikia.nocookie.net/leagueoflegends/images/a/a7/IllaoiSquare.png/revision/latest?cb=20151111024020" width="50px" height="50px"/>
-            <div>test name</div>
-          </div>
-          <div className="stat"><span className="kills">10</span> / <span className="deaths">4</span> / <span className="assissts">13</span></div>
         </div>
-      </div>
+       
+                );
+            }
+                
+                
+                
+                
+            }
+            )}
     </div>
 
-   
+    <div className="champion-row">
+    
+    {data.resume.info.participants.map(
+        (participant: any, index: number) => {
+            if (participant.teamId === 200) {
+                return (
+      <div className="champion reverse">
+        <div className="champion-data reverse">
+          <div className="summoner-name reverse">
+            <div className="content-champ reverse ">
+            <img src={
+                                                    "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" +
+                                                 participant.championName +
+                                                    ".png"
+                                                }
+                                                alt=""
+                                                width="16"
+                                                height="16"/>
+            <div><p>{participant.summonerName}</p>
+            <div className="level-reverse">{participant.champLevel}</div></div>
+            </div>
+            <div className="items">
+                {
+                    <div className="content_item">
+                    <img
+                    src={
+                        //if no item
+                        participant.item0 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item0 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item1 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item1 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item2 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item2 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item3 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item3 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item4 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item4 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item5 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item5 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                    <img
+                    src={
+                        participant.item6 === 0
+                        ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
+                        : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
+                        participant.item6 +
+                        ".png"
+                    }
+                    alt=""
+                    width="16"
+                    height="16"
+                    />
+                </div>
+                }
 
+            </div>
+          </div>
+          <div className="stat-reverse"><span className="kills">{participant.kills}</span> / <span className="deaths">{participant.deaths}</span> / <span className="assissts">{participant.assists}</span></div>
+        </div>
+        </div>
+       
+                );
+            }
+                
+                
+                
+                
+            }
+            )}
+    </div>
+    </div>
   </div>
 
-</div>
+
             </ResumeMatchContainer>
         </Container>
     </Wrapper>

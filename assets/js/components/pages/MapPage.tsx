@@ -171,7 +171,7 @@ const MapPage: React.FC = () => {
                           <p>
                             Temps :{" "}
                             <span>
-                              {game.resume.info.gameDuration % 60} minutes
+                              {Math.floor(game.resume.info.gameDuration / 60)} minutes
                             </span>
                           </p>
                         </div>
