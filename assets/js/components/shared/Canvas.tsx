@@ -6,6 +6,7 @@ import {
   AiFillPlayCircle,
   AiFillForward,
 } from "react-icons/ai";
+import { BiShow, BiHide } from "react-icons/bi";
 
 const Wrapper = styled.div`
   margin-inline: auto;
@@ -80,7 +81,6 @@ const ButtonPlayPause = styled.button`
     background-color: #1e2328;
     border-radius: 100%;
     padding: 20px;
-    /* background: linear-gradient(to bottom left, #c8aa6d, #7a5c29); */
     color: #c8aa6d;
   }
   span {
@@ -88,7 +88,19 @@ const ButtonPlayPause = styled.button`
   }
 `;
 
-export default function HeatMap({ data }: any) {
+const Filters = styled.div`
+  margin-inline: auto;
+  width: min(500px, 92%);
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+  }
+`;
+
+export default function Canvas({ data }: any) {
   const buildings = {
     towers: [
       {
@@ -137,15 +149,6 @@ export default function HeatMap({ data }: any) {
   const [event, setEvent] = React.useState(0);
   const [eventTimestamp, setEventTimestamp] = React.useState(0);
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [isPaused, setIsPaused] = React.useState(false);
-  const [championKill, setChampionKill] = React.useState(0);
-  const [positionKill, setPositionKill] = React.useState(0);
-
-  // const currentFrame = frame;
-  // const currentTimestamp = timestamp;
-  // const currentEvent = event;
-  // const currentEventTimestamp = eventTimestamp;
-  // const currentChampionKill = championKill;
 
   const millisToMinutesAndSeconds = (millis: any) => {
     let minutes = Math.floor(millis / 60000);
@@ -155,34 +158,90 @@ export default function HeatMap({ data }: any) {
       : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   };
 
-  console.table(data);
+  const interval = 60000;
+  const startTime = 0;
 
-  const toggleTimeline = () => {
-    const timestamp =
-      data.timeline.info.frames[data.timeline.info.frames.length - 1].timestamp;
-    const date = new Date(timestamp);
+  const [allKills, setAllKills] = React.useState<any>([]);
+  const championKills: Array<any> = [];
+  const [toggle, setToggle] = React.useState(false);
 
-    console.log(date.getMinutes());
-
-    const interval = 1000;
-    const startTime = 0;
-
-    // faire un flat Map || frame.flatMap(event) => event);
-
-    // go from startTime to duration
-    // at each interval, update the frame, timestamp, event, eventTimestamp, championKill
-    // if the frame is the last frame, stop the interval and reset the frame to 0
-
-    if (!isPlaying) {
-      setIsPlaying(true);
-    } else {
-      setIsPlaying(false);
+  const showKills = () => {
+    setToggle(!toggle);
+    // loop every frames
+    for (let i = 0; i < data.timeline.info.frames.length; i++) {
+      const el = data.timeline.info.frames[i];
+      // get events
+      for (let j = 0; j < el.events.length; j++) {
+        const event = el.events[j];
+        // get all champion kills
+        if (event.type === "CHAMPION_KILL") {
+          const championKill = event;
+          setAllKills(championKill);
+          championKills.push(championKill);
+        }
+      }
     }
+    setAllKills(championKills);
+  };
+
+  const championKill: Array<any> = [];
+
+  const getAllEvents = (data: any) => {
+    data.flatMap((item: any) => {
+      item.events.flat().filter((event: any) => {
+        event.type === "CHAMPION_KILL" && championKill.push(event);
+      });
+    });
+    return championKill;
+  };
+
+  const index: number = 1;
+  const btnPlay = React.useRef<HTMLDivElement>(null);
+  const btnPause = React.useRef<HTMLDivElement>(null);
+
+  const play = (bool: boolean, index: number) => {
+    if (bool === false) {
+      setIsPlaying(false);
+      return;
+    } else {
+      getAllEvents(data.timeline.info.frames);
+      setIsPlaying(true);
+      if (index < championKill.length) {
+        setTimeout(() => {
+          console.log(championKill[index]);
+          play(true, ++index);
+        }, (championKill[index].timestamp - championKill[index - 1].timestamp) / 100);
+      }
+    }
+  };
+
+  const start = () => {
+    play(true, index);
+  };
+
+  const stop = () => {
+    play(false, index);
   };
 
   return (
     <Wrapper>
       <Container>
+        <Filters>
+          <span>Filtre :</span>
+          <div>
+            {!toggle ? (
+              <ButtonControl onClick={showKills}>
+                <BiShow className="backward" />
+              </ButtonControl>
+            ) : (
+              <ButtonControl onClick={showKills}>
+                <BiHide className="backward" />
+              </ButtonControl>
+            )}
+            <span>{!toggle ? "Tous les kills" : "Cacher"}</span>
+          </div>
+        </Filters>
+
         <CanvasContainer>
           <canvas id="map" ref={mapRef} width="500" height="500" />
           {buildings.towers.map((team, i) => {
@@ -219,25 +278,62 @@ export default function HeatMap({ data }: any) {
               );
             });
           })}
+
+          {toggle &&
+            allKills.map((kill: any, i: number) => {
+              return (
+                <div
+                  className="kill"
+                  key={i}
+                  style={{
+                    position: "absolute",
+                    zIndex: 2,
+                    bottom: (kill.position.y / 15000) * 100 + "%",
+                    left: (kill.position.x / 15000) * 100 + "%",
+                    width: 20,
+                    height: 20,
+
+                    background: `center / cover no-repeat url(./build/images/map-events/skull-blue.svg)`,
+                  }}
+                />
+              );
+            })}
+
+          {/* {console.log(championKill)}
+          {championKill.map((kill: any, i: number) => {
+            return (
+              <div
+                className="kill"
+                key={i}
+                style={{
+                  position: "absolute",
+                  zIndex: 2,
+                  bottom: (kill.position.y / 15000) * 100 + "%",
+                  left: (kill.position.x / 15000) * 100 + "%",
+                  width: 20,
+                  height: 20,
+                  background: `center / cover no-repeat url(./build/images/map-events/skull-blue.svg)`,
+                }}
+              />
+            );
+          })} */}
         </CanvasContainer>
 
-        {/*onClick={() => history.goBack()}
-            onClick={handlePlayPause}
-            {isPlaying ? "Pause" : "Play"}
-            onClick={handleNext}
-            
-            */}
         <Player>
           <ButtonControl>
             <AiFillBackward className="backward" />
             <span>reculer</span>
           </ButtonControl>
 
-          <ButtonPlayPause onClick={toggleTimeline}>
+          <ButtonPlayPause>
             {isPlaying ? (
-              <AiFillPauseCircle className="pause" />
+              <div ref={btnPause} onClick={stop}>
+                <AiFillPauseCircle className="pause" />
+              </div>
             ) : (
-              <AiFillPlayCircle className="play" />
+              <div ref={btnPlay} onClick={start}>
+                <AiFillPlayCircle className="play" />
+              </div>
             )}
             <span>{isPlaying ? "Pause" : "Play"}</span>
           </ButtonPlayPause>
@@ -252,4 +348,3 @@ export default function HeatMap({ data }: any) {
   );
 }
 
-// export default HeatMap;
