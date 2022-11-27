@@ -281,6 +281,8 @@ export default function Canvas({ data }: any) {
 
           {toggle &&
             allKills.map((kill: any, i: number) => {
+              if (kill.victimId > 4) {
+                console.log(kill);
               return (
                 <div
                   className="kill"
@@ -292,12 +294,30 @@ export default function Canvas({ data }: any) {
                     left: (kill.position.x / 15000) * 100 + "%",
                     width: 20,
                     height: 20,
-
                     background: `center / cover no-repeat url(./build/images/map-events/skull-blue.svg)`,
                   }}
                 />
               );
-            })}
+                }
+                else
+                return (
+                  <div
+                    className="kill"
+                    key={i}
+                    style={{
+                      position: "absolute",
+                      zIndex: 2,
+                      bottom: (kill.position.y / 15000) * 100 + "%",
+                      left: (kill.position.x / 15000) * 100 + "%",
+                      width: 20,
+                      height: 20,
+                      background: `center / cover no-repeat url(./build/images/map-events/skull-red.svg)`,
+                    }}
+                  />
+                );
+            })
+
+            }
 
           {/* {console.log(championKill)}
           {championKill.map((kill: any, i: number) => {

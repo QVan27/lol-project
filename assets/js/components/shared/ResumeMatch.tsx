@@ -115,7 +115,7 @@ const ResumeMatchContainer = styled.div`
   border-right: 0px;
   .level-reverse {
                         position: absolute;
-                        left: 109px;
+                        left: 178px;
                         bottom: -3px;
                         width: 15px;
                         height: 15px;
@@ -157,7 +157,7 @@ const ResumeMatchContainer = styled.div`
 .content_item {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 1px;
 }
 `;
 
@@ -327,7 +327,9 @@ export default function ResumeMatch({ data }: any) {
             <div><p>{participant.summonerName}</p>
             <div className="level">{participant.champLevel}</div></div>
             </div>
-            <div className="items">
+            
+          </div>
+          <div className="items">
                 {
                     <div className="content_item">
                     <img
@@ -419,7 +421,6 @@ export default function ResumeMatch({ data }: any) {
                 }
 
             </div>
-          </div>
           <div className="stat"><span className="kills">{participant.kills}</span> / <span className="deaths">{participant.deaths}</span> / <span className="assissts">{participant.assists}</span></div>
 
         </div>
@@ -456,7 +457,8 @@ export default function ResumeMatch({ data }: any) {
             <div><p>{participant.summonerName}</p>
             <div className="level-reverse">{participant.champLevel}</div></div>
             </div>
-            <div className="items">
+          </div>
+          <div className="items">
                 {
                     <div className="content_item">
                     <img
@@ -548,7 +550,6 @@ export default function ResumeMatch({ data }: any) {
                 }
 
             </div>
-          </div>
           <div className="stat-reverse"><span className="kills">{participant.kills}</span> / <span className="deaths">{participant.deaths}</span> / <span className="assissts">{participant.assists}</span></div>
         </div>
         </div>
