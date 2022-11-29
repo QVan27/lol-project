@@ -1,25 +1,8 @@
 import React, { useRef, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
-// Utils
-// import fetchData from "../../utils/fetchData";
-// Shared
 import Canvas from "../shared/Canvas";
 import ResumeMatch from "../shared/ResumeMatch";
-// import Map from "../shared/Map";
-
-//   const formRef = useRef<HTMLFormElement>(null);
-
-//   const apiFetch = new ApiFetch();
-
-// useEffect(() => {
-//   (async () => {
-//     apiFetch.getPlayer('azerty').then(async (response) => {
-//      const player: Player = await response.json();
-//      console.log(player)
-//     }).catch(e => console.log(e));
-//   })();
-// }, []);
 
 interface IState {
   loading: boolean;
@@ -37,24 +20,8 @@ const MapPage: React.FC = () => {
   });
 
   const { player, errorMessage, loading } = state;
-
-  // const [clickedButton, setClickedButton] = useState("");
-
-  // const buttonHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   event.preventDefault();
-
-  //   const button: HTMLDivElement = event.currentTarget;
-  //   setClickedButton(button.id);
-  // };
-
   // https://dev.to/muratcanyuksel/comment-passer-des-donnees-entre-les-composants-react-16bi
   const [data, setData] = useState("");
-
-  // console.log(state.player.games);
-
-  // const parentToChild = () => {
-  //   setData("Hello from parent");
-  // };
 
   return (
     <main>
@@ -73,13 +40,15 @@ const MapPage: React.FC = () => {
               ref={formRef}
               onSubmit={(e: React.SyntheticEvent) => {
                 e.preventDefault();
+
                 const target = e.target as typeof e.target & {
-                  // server: { value: string };
                   gamertag: { value: string };
                 };
-                const gamertag = target.gamertag.value; // typechecks!
+
+                const gamertag = target.gamertag.value;
 
                 setState({ ...state, loading: true });
+
                 ApiFetch.getPlayer(gamertag)
                   .then((res) =>
                     setState({
@@ -118,65 +87,59 @@ const MapPage: React.FC = () => {
               </div>
             </form>
 
-            <div className="map__container__info">
-              <div className="map__container__player">
-                <div className="map__container__player--img">
-                  <img
-                    src={
-                      "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" +
-                      player.profilIconId +
-                      ".png"
-                    }
-                    alt=""
-                  />
+            {player.length !== 0 ? (
+              <div className="map__container__info">
+                <div className="map__container__player">
+                  <div className="map__container__player--img">
+                    <img
+                      src={
+                        "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" +
+                        player.profilIconId +
+                        ".png"
+                      }
+                      alt=""
+                    />
+                  </div>
+
+                  <div className="map__container__player__content">
+                    <p className="map__container__player__content--name">
+                      {player.name}
+                    </p>
+                    <p className="map__container__player__content--level">
+                      Level <span>{player.level}</span>
+                    </p>
+                  </div>
                 </div>
 
-                <div className="map__container__player__content">
-                  <p className="map__container__player__content--name">
-                    {player.name}
+                <div className="map__container__matches">
+                  <p className="map__container__matches--title">
+                    10 dernières parties
                   </p>
-                  <p className="map__container__player__content--level">
-                    Level <span>{player.level}</span>
-                  </p>
-                </div>
-
-                <div className="map__container__player__img">
-                  <img src="./build/images/225_summoner_icon.png" alt="" />
-                </div>
-              </div>
-
-              <div className="map__container__matches">
-                <p className="map__container__matches--title">
-                  10 dernières parties
-                </p>
-                <div className="map__container__matches__list">
-                  {player.games?.map((game: any, index: number) => {
-                    return (
-                      <div
-                        className="map__container__matches__list--item"
-                        key={index}
-                        id={game.matchId}
-                        onClick={() => {
-                          setData(game);
-                        }}
-                      >
-                        <p>Match : {index + 1}</p>
-                        <div>
-                          <p>
+                  <div className="map__container__matches__list">
+                    {player.games?.map((game: any, index: number) => {
+                      return (
+                        <div
+                          className={"map__container__matches__list--item"}
+                          key={index}
+                          id={game.matchId}
+                          onClick={() => {
+                            setData(game);
+                          }}
+                        >
+                          <p className="map__container__flex">
                             Mode de jeu :{" "}
                             <span>{game.resume.info.gameMode}</span>
                           </p>
-                        </div>
-                        <div>
-                          <p>
+
+                          <p className="map__container__flex">
                             Temps :{" "}
                             <span>
-                              {Math.floor(game.resume.info.gameDuration / 60)} minutes
+                              {Math.floor(game.resume.info.gameDuration / 60)}{" "}
+                              minutes
                             </span>
                           </p>
-                        </div>
-                        <div>
-                          <p>
+
+                          <p className="map__container__flex">
                             Date :{" "}
                             <span>
                               {new Date(
@@ -184,41 +147,53 @@ const MapPage: React.FC = () => {
                               ).toLocaleDateString()}
                             </span>
                           </p>
-                        </div>
-                        <div className="map__container__champion">
-                          <p>Champion:</p>
-                          <div className="map__container__champion__list">
-                            {game.resume.info.participants.map(
-                              (participant: any, index: number) => {
-                                return (
-                                  <div className="map__container__champion__list--item">
-                                    <div key={index} id={game.matchId}>
-                                      <img
-                                        src={
-                                          "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
-                                          participant.championName +
-                                          ".png"
-                                        }
-                                        alt=""
-                                        width="16"
-                                        height="16"
-                                      />
+
+                          <div className="map__container__flex">
+                            <p>Champion:</p>
+                            <div className="map__container__flex__list">
+                              {game.resume.info.participants.map(
+                                (participant: any, index: number) => {
+                                  return (
+                                    <div key={index} className="map__container__flex__list--item">
+                                      <div id={game.matchId}>
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
+                                            participant.championName +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                      </div>
                                     </div>
-                                  </div>
-                                );
-                              }
-                            )}
+                                  );
+                                }
+                              )}
+                            </div>
                           </div>
-                        </div>
-                        <p>Items : </p>
-                        <div>
-                          <span>
-                            {game.resume.info.participants.map(
-                              (participant: any, index: number) => {
-                                if (participant.summonerName === player.name) { 
-                                    if (participant.item0 !== 0 && participant.item1 !== 0 && participant.item2 !== 0 && participant.item3 !== 0 && participant.item4 !== 0 && participant.item5 !== 0 && participant.item6 !== 0) {
-                                      return (
-                                        <div>
+
+                          {game.resume.info.participants.map(
+                            (participant: any, index: number) => {
+                              if (participant.summonerName === player.name) {
+                                if (
+                                  participant.item0 !== 0 &&
+                                  participant.item1 !== 0 &&
+                                  participant.item2 !== 0 &&
+                                  participant.item3 !== 0 &&
+                                  participant.item4 !== 0 &&
+                                  participant.item5 !== 0 &&
+                                  participant.item6 !== 0
+                                ) {
+                                  return (
+                                    <>
+                                      <div
+                                        className="map__container__flex"
+                                        key={index}
+                                      >
+                                        <p>Items: </p>
+                                        <div className="map__container__flex__list">
                                           <img
                                             src={
                                               "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
@@ -290,74 +265,85 @@ const MapPage: React.FC = () => {
                                             height="16"
                                           />
                                         </div>
-                                      );
+                                      </div>
+                                    </>
+                                  );
+                                }
+                              }
+                            }
+                          )}
+
+                          <div className="map__container__flex">
+                            <p>K-D-A : </p>
+                            <span>
+                              {game.resume.info.participants.map(
+                                (participant: any, index: number) => {
+                                  if (
+                                    participant.summonerName === player.name
+                                  ) {
+                                    return (
+                                      <div key={index}>
+                                        <p>
+                                          {participant.kills} -{" "}
+                                          {participant.deaths} -{" "}
+                                          {participant.assists} -{" "}
+                                        </p>
+                                      </div>
+                                    );
+                                  }
+                                }
+                              )}
+                            </span>
+                          </div>
+
+                          {game.resume.info.participants.map(
+                            (participant: any, index: number) => {
+                              if (participant.summonerName === player.name) {
+                                return (
+                                  <div
+                                    key={index}
+                                    className={
+                                      participant.teamId === 100
+                                        ? "blue"
+                                        : "red"
                                     }
-                                }
+                                  ></div>
+                                );
                               }
-                            )}
-                          </span>
-                        </div>
-                        <p>K-D-A : </p>
-                        <div>
-                          <span>
-                            {game.resume.info.participants.map(
-                              (participant: any, index: number) => {
-                                if (participant.summonerName === player.name) {
-                                  return (
-                                    <div>
-                                      <p>
-                                        {participant.kills} -{" "}
-                                        {participant.deaths} -{" "}
-                                        {participant.assists} - {" "}
-                                      </p>
-                                    </div>
-                                  );
-                                }
+                            }
+                          )}
+
+                          {game.resume.info.participants.map(
+                            (participant: any, index: number) => {
+                              if (participant.summonerName === player.name) {
+                                return (
+                                  <p
+                                    key={index}
+                                    className={participant.win ? "win" : "lose"}
+                                  >
+                                    {participant.win ? "Victoire" : "Défaite"}
+                                  </p>
+                                );
                               }
-                            )}
-                          </span>
+                            }
+                          )}
                         </div>
-                        <div>
-                          <span>
-                            {game.resume.info.participants.map(
-                              (participant: any, index: number) => {
-                                if (participant.summonerName === player.name) {
-                                  return (
-                                    <div>
-                                      <p>
-                                        {participant.win
-                                          ? "Victoire"
-                                          : "Défaite"}
-                                      </p>
-                                    </div>
-                                  );
-                                }
-                              }
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* <Canvas parentToChild={data} /> */}
+            ) : (
+              <div>Sélectionner un joueur valide</div>
+            )}
 
             {data && (
               <>
                 <p>Vous avez cliqué sur le match : {data.matchId}</p>
-                <ResumeMatch data={data}/>
-                {/* <div className="map__container__canvas" id={clickedButton}> */}
+                <ResumeMatch data={data} />
                 <Canvas data={data} />
-                
-                {/* </div> */}
               </>
             )}
-
-            {/* <Canvas /> */}
-            {/* <Map /> */}
           </div>
         </div>
       </section>
@@ -366,4 +352,3 @@ const MapPage: React.FC = () => {
 };
 
 export default MapPage;
-
