@@ -22,14 +22,23 @@ const CanvasContainer = styled.div`
   position: relative;
   max-width: 500px;
   min-width: 320px;
+  max-height: 500px;
+  min-height: 320px;
+
   #map {
     width: 100%;
-    background: center / cover no-repeat url("./build/images/map.png");
+    background: center / cover no-repeat url("./build/images/map-500.png");
   }
-  .towers {
-    width: 20px;
-    height: 20px;
-    z-index: 1;
+
+  .towers, .kill {
+    transform: translate(-100%, 0%);
+    width: 10px;
+    height: 10px;
+
+    @media screen and (min-width: 768px) {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
@@ -141,7 +150,7 @@ export default function Canvas({ data }: any) {
       },
     ],
   };
-  
+
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
@@ -228,7 +237,6 @@ export default function Canvas({ data }: any) {
     <Wrapper>
       <Container>
         <Filters>
-          <span>Filtre :</span>
           <div>
             {!toggle ? (
               <ButtonControl onClick={showKills}>
@@ -239,7 +247,7 @@ export default function Canvas({ data }: any) {
                 <BiHide className="backward" />
               </ButtonControl>
             )}
-            <span>{!toggle ? "Tous les kills" : "Cacher"}</span>
+            <span>{!toggle ? "Afficher les kills" : "Cacher les kills"}</span>
           </div>
         </Filters>
 
@@ -250,11 +258,9 @@ export default function Canvas({ data }: any) {
               return team[color].map(
                 (
                   tower: {
-                    [x: string]: any;
-                    y: any;
-                    x: any;
-                    width: any;
-                    height: any;
+                    src: string;
+                    y: number;
+                    x: number;
                   },
                   k: any
                 ) => {
@@ -269,8 +275,6 @@ export default function Canvas({ data }: any) {
                         zIndex: 1,
                         bottom: (tower.y / 15000) * 100 + "%",
                         left: (tower.x / 15000) * 100 + "%",
-                        width: tower.width,
-                        height: tower.height,
                         background: `center / cover no-repeat url(${tower.src})`,
                       }}
                     />
@@ -284,23 +288,6 @@ export default function Canvas({ data }: any) {
             allKills.map((kill: any, i: number) => {
               if (kill.victimId > 4) {
                 console.log(kill);
-              return (
-                <div
-                  className="kill"
-                  key={i}
-                  style={{
-                    position: "absolute",
-                    zIndex: 2,
-                    bottom: (kill.position.y / 15000) * 100 + "%",
-                    left: (kill.position.x / 15000) * 100 + "%",
-                    width: 20,
-                    height: 20,
-                    background: `center / cover no-repeat url(./build/images/map-events/skull-blue.svg)`,
-                  }}
-                />
-              );
-                }
-                else
                 return (
                   <div
                     className="kill"
@@ -310,15 +297,25 @@ export default function Canvas({ data }: any) {
                       zIndex: 2,
                       bottom: (kill.position.y / 15000) * 100 + "%",
                       left: (kill.position.x / 15000) * 100 + "%",
-                      width: 20,
-                      height: 20,
+                      background: `center / cover no-repeat url(./build/images/map-events/skull-blue.svg)`,
+                    }}
+                  />
+                );
+              } else
+                return (
+                  <div
+                    className="kill"
+                    key={i}
+                    style={{
+                      position: "absolute",
+                      zIndex: 2,
+                      bottom: (kill.position.y / 15000) * 100 + "%",
+                      left: (kill.position.x / 15000) * 100 + "%",
                       background: `center / cover no-repeat url(./build/images/map-events/skull-red.svg)`,
                     }}
                   />
                 );
-            })
-
-            }
+            })}
 
           {/* {console.log(championKill)}
           {championKill.map((kill: any, i: number) => {
@@ -368,4 +365,3 @@ export default function Canvas({ data }: any) {
     </Wrapper>
   );
 }
-
