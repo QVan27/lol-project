@@ -141,6 +141,7 @@ export default function Canvas({ data }: any) {
       },
     ],
   };
+  
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 

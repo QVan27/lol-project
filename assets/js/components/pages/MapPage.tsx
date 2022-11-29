@@ -1,25 +1,8 @@
 import React, { useRef, useState } from "react";
 import { IPlayers } from "../../models/IPlayers";
 import { ApiFetch } from "../../services/ApiFetch";
-// Utils
-// import fetchData from "../../utils/fetchData";
-// Shared
 import Canvas from "../shared/Canvas";
 import ResumeMatch from "../shared/ResumeMatch";
-// import Map from "../shared/Map";
-
-//   const formRef = useRef<HTMLFormElement>(null);
-
-//   const apiFetch = new ApiFetch();
-
-// useEffect(() => {
-//   (async () => {
-//     apiFetch.getPlayer('azerty').then(async (response) => {
-//      const player: Player = await response.json();
-//      console.log(player)
-//     }).catch(e => console.log(e));
-//   })();
-// }, []);
 
 interface IState {
   loading: boolean;
@@ -38,23 +21,8 @@ const MapPage: React.FC = () => {
 
   const { player, errorMessage, loading } = state;
 
-  // const [clickedButton, setClickedButton] = useState("");
-
-  // const buttonHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   event.preventDefault();
-
-  //   const button: HTMLDivElement = event.currentTarget;
-  //   setClickedButton(button.id);
-  // };
-
   // https://dev.to/muratcanyuksel/comment-passer-des-donnees-entre-les-composants-react-16bi
   const [data, setData] = useState("");
-
-  // console.log(state.player.games);
-
-  // const parentToChild = () => {
-  //   setData("Hello from parent");
-  // };
 
   return (
     <main>
@@ -74,7 +42,6 @@ const MapPage: React.FC = () => {
               onSubmit={(e: React.SyntheticEvent) => {
                 e.preventDefault();
                 const target = e.target as typeof e.target & {
-                  // server: { value: string };
                   gamertag: { value: string };
                 };
                 const gamertag = target.gamertag.value; // typechecks!
@@ -95,6 +62,17 @@ const MapPage: React.FC = () => {
                       errorMessage: err.message,
                     })
                   );
+
+                // if apiFetch can't found player don't show container info
+                if (player.length === 0) {
+                  document
+                    .querySelector(".map__container__info")
+                    ?.classList.add("hidden");
+                } else {
+                  document
+                    .querySelector(".map__container__info")
+                    ?.classList.remove("hidden");
+                }
               }}
             >
               <div className="map__container__form-group">
@@ -118,7 +96,7 @@ const MapPage: React.FC = () => {
               </div>
             </form>
 
-            <div className="map__container__info">
+            <div className="map__container__info hidden">
               <div className="map__container__player">
                 <div className="map__container__player--img">
                   <img
@@ -171,7 +149,8 @@ const MapPage: React.FC = () => {
                           <p>
                             Temps :{" "}
                             <span>
-                              {Math.floor(game.resume.info.gameDuration / 60)} minutes
+                              {Math.floor(game.resume.info.gameDuration / 60)}{" "}
+                              minutes
                             </span>
                           </p>
                         </div>
@@ -210,14 +189,24 @@ const MapPage: React.FC = () => {
                             )}
                           </div>
                         </div>
-                        <p>Items : </p>
-                        <div>
-                          <span>
-                            {game.resume.info.participants.map(
-                              (participant: any, index: number) => {
-                                if (participant.summonerName === player.name) { 
-                                    if (participant.item0 !== 0 && participant.item1 !== 0 && participant.item2 !== 0 && participant.item3 !== 0 && participant.item4 !== 0 && participant.item5 !== 0 && participant.item6 !== 0) {
-                                      return (
+
+                        {game.resume.info.participants.map(
+                          (participant: any, index: number) => {
+                            if (participant.summonerName === player.name) {
+                              if (
+                                participant.item0 !== 0 &&
+                                participant.item1 !== 0 &&
+                                participant.item2 !== 0 &&
+                                participant.item3 !== 0 &&
+                                participant.item4 !== 0 &&
+                                participant.item5 !== 0 &&
+                                participant.item6 !== 0
+                              ) {
+                                return (
+                                  <>
+                                    <p>Items: </p>
+                                    <div>
+                                      <span>
                                         <div>
                                           <img
                                             src={
@@ -290,13 +279,14 @@ const MapPage: React.FC = () => {
                                             height="16"
                                           />
                                         </div>
-                                      );
-                                    }
-                                }
+                                      </span>
+                                    </div>
+                                  </>
+                                );
                               }
-                            )}
-                          </span>
-                        </div>
+                            }
+                          }
+                        )}
                         <p>K-D-A : </p>
                         <div>
                           <span>
@@ -308,7 +298,7 @@ const MapPage: React.FC = () => {
                                       <p>
                                         {participant.kills} -{" "}
                                         {participant.deaths} -{" "}
-                                        {participant.assists} - {" "}
+                                        {participant.assists} -{" "}
                                       </p>
                                     </div>
                                   );
@@ -343,21 +333,13 @@ const MapPage: React.FC = () => {
               </div>
             </div>
 
-            {/* <Canvas parentToChild={data} /> */}
-
             {data && (
               <>
                 <p>Vous avez cliqué sur le match : {data.matchId}</p>
-                <ResumeMatch data={data}/>
-                {/* <div className="map__container__canvas" id={clickedButton}> */}
+                <ResumeMatch data={data} />
                 <Canvas data={data} />
-                
-                {/* </div> */}
               </>
             )}
-
-            {/* <Canvas /> */}
-            {/* <Map /> */}
           </div>
         </div>
       </section>
@@ -366,4 +348,3 @@ const MapPage: React.FC = () => {
 };
 
 export default MapPage;
-
