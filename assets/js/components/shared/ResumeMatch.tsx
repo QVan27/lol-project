@@ -46,6 +46,7 @@ const ResumeMatchContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #2c3e50;
+  padding: 15px 20px 15px 20px;
 }
 
 .container {
@@ -58,6 +59,7 @@ const ResumeMatchContainer = styled.div`
   height: 100%;
   display: flex;
   background-color: #fff;
+  padding: 20px 20px 20px 20px;
 }
 
 
@@ -110,6 +112,22 @@ const ResumeMatchContainer = styled.div`
 }
 
 
+.content_progress {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 0.5rem;
+                    .progress_damage {
+                        width: 50px;
+                        height: 6px;
+                        margin: 4px auto 0px;
+                        background-color: #e0e0e0;
+                        .progress_bar {
+                            height: 100%;
+                            background-color: #f00;
+                        }
+                    }
+                }
 .reverse {
   flex-direction: row-reverse;
   border-right: 0px;
@@ -267,6 +285,7 @@ const TableResumeMatch = styled.table`
 
 
 export default function ResumeMatch({ data }: any) {
+    console.log(data);
 
   return (
 
@@ -327,6 +346,21 @@ export default function ResumeMatch({ data }: any) {
             <div><p>{participant.summonerName}</p>
             <div className="level">{participant.champLevel}</div></div>
             </div>
+
+            <div className="content_progress">
+                <div className="progress_damage_tochampion">
+                <p>{participant.totalDamageDealtToChampions}</p>
+                <div className="progress_damage">
+                    <div className="progress_bar" style={{width: participant.totalDamageDealtToChampions / 1000 + "%"}}></div>
+                </div>
+                </div>
+                <div className="progress_damage_taken">
+                <p>{participant.totalDamageTaken}</p>
+                <div className="progress_damage">
+                    <div className="progress_bar" style={{width: participant.totalDamageTaken / 1000 + "%"}}></div>
+                </div>
+                </div>
+                </div>
             
           </div>
           <div className="items">
