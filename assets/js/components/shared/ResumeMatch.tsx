@@ -7,6 +7,31 @@ const ResumeMatchContainer = styled.div`
   margin-inline: auto;
 `;
 
+// array with Standard summoner spells with key id and name
+
+const summonerSpells = [
+    { id: 7, name: "SummonerHeal" },
+    { id: 6, name: "SummonerHaste" },
+    { id: 3, name: "SummonerExhaust" },
+    { id: 21, name: "SummonerBarrier" },
+    { id: 32, name: "SummonerSnowball" },
+    { id: 7, name: "SummonerDash" },
+    { id: 11, name: "SummonerMana" },
+    { id: 4, name: "SummonerFlash" },
+    { id: 12, name: "SummonerTeleport" },
+    { id: 1, name: "SummonerBoost" },
+    { id: 21, name: "SummonerSmite" },
+    { id: 14, name: "SummonerDot" },
+];
+
+    
+
+
+
+
+
+
+
 export default function ResumeMatch({ data }: any) {
   return (
     <ResumeMatchContainer>
@@ -33,6 +58,7 @@ export default function ResumeMatch({ data }: any) {
           <div className="champion-row line">
             {data.resume.info.participants.map(
               (participant: any, index: number) => {
+                console.log(participant);
                 if (participant.teamId === 100) {
                   return (
                     <div className="champion">
@@ -56,6 +82,22 @@ export default function ResumeMatch({ data }: any) {
                             </div>
                             <p>{participant.summonerName}</p>
                           </div>
+                            <div className="spells">
+                                <div className="spell">
+                                    <img src={
+                                        "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                        summonerSpells.find((spell) => spell.id === participant.summoner1Id)?.name +
+                                        ".png"
+                                    } height="16" width="16"/>
+                                </div>
+                                <div className="spell">
+                                    <img src={
+                                        "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                        summonerSpells.find((spell) => spell.id === participant.summoner2Id)?.name +
+                                        ".png"
+                                    } height="16" width="16"/>
+                                </div>
+                            </div>
                         </div>
                         <div className="items">
                           {
