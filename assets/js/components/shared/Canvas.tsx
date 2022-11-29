@@ -16,6 +16,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
   display: grid;
   place-items: center;
+  gap: 2rem;
 `;
 
 const CanvasContainer = styled.div`
@@ -30,7 +31,8 @@ const CanvasContainer = styled.div`
     background: center / cover no-repeat url("./build/images/map-500.png");
   }
 
-  .towers, .kill {
+  .towers,
+  .kill {
     transform: translate(-100%, 0%);
     width: 10px;
     height: 10px;
@@ -154,10 +156,6 @@ export default function Canvas({ data }: any) {
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
-  const [frame, setFrame] = React.useState(0);
-  const [timestamp, setTimestamp] = React.useState(0);
-  const [event, setEvent] = React.useState(0);
-  const [eventTimestamp, setEventTimestamp] = React.useState(0);
   const [isPlaying, setIsPlaying] = React.useState(false);
 
   const millisToMinutesAndSeconds = (millis: any) => {
@@ -168,25 +166,18 @@ export default function Canvas({ data }: any) {
       : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   };
 
-  const interval = 60000;
-  const startTime = 0;
-
   const [allKills, setAllKills] = React.useState<any>([]);
   const championKills: Array<any> = [];
   const [toggle, setToggle] = React.useState(false);
 
   const showKills = () => {
     setToggle(!toggle);
-    // loop every frames
     for (let i = 0; i < data.timeline.info.frames.length; i++) {
       const el = data.timeline.info.frames[i];
-      // get events
       for (let j = 0; j < el.events.length; j++) {
         const event = el.events[j];
-        // get all champion kills
         if (event.type === "CHAMPION_KILL") {
           const championKill = event;
-          setAllKills(championKill);
           championKills.push(championKill);
         }
       }
@@ -209,28 +200,59 @@ export default function Canvas({ data }: any) {
   const btnPlay = React.useRef<HTMLDivElement>(null);
   const btnPause = React.useRef<HTMLDivElement>(null);
 
-  const play = (bool: boolean, index: number) => {
-    if (bool === false) {
-      setIsPlaying(false);
-      return;
-    } else {
-      getAllEvents(data.timeline.info.frames);
-      setIsPlaying(true);
-      if (index < championKill.length) {
-        setTimeout(() => {
-          console.log(championKill[index]);
-          play(true, ++index);
-        }, (championKill[index].timestamp - championKill[index - 1].timestamp) / 100);
+  const [playKill, setPlayKill] = React.useState<any[]>([]);
+
+  // NE PAS SUPPRIMER LA PREMIERE FONCTION PLAY !!!
+
+  // const play = (bool: boolean, index: number) => {
+  //   if (bool === false) {
+  //     setIsPlaying(false);
+  //     return;
+  //   } else {
+  //     getAllEvents(data.timeline.info.frames);
+  //     setIsPlaying(true);
+  //     if (index < championKill.length) {
+  //       setTimeout(() => {
+  //         const current = championKill[index];
+  //         setPlayKill((prev) => [...prev, current]);
+  //         play(true, ++index);
+  //       }, (championKill[index].timestamp - championKill[index - 1].timestamp) / 100);
+  //     }
+  //   }
+  // };
+
+  // NE PAS SUPPRIMER LA PREMIERE FONCTION PLAY !!!
+
+
+  const play = (index: number) => {
+    getAllEvents(data.timeline.info.frames);
+    console.table(championKill)
+    const interval = setInterval(() => {
+      if (isPlaying) {
+        if (index < championKill.length) {
+          const current = championKill[index];
+          setPlayKill((prev) => [...prev, current]);
+          index++;
+        } else {
+          setIsPlaying(false);
+          clearInterval(interval);
+        }
+      } else {
+        clearInterval(interval);
       }
-    }
+      console.count(championKill[index]);
+    }, 1000);
   };
 
   const start = () => {
-    play(true, index);
+    setIsPlaying(true);
+    setPlayKill([]);
+
+    play(0);
   };
 
   const stop = () => {
-    play(false, index);
+    setIsPlaying(false);
   };
 
   return (
@@ -286,39 +308,44 @@ export default function Canvas({ data }: any) {
 
           {toggle &&
             allKills.map((kill: any, i: number) => {
-              if (kill.victimId > 4) {
-                console.log(kill);
-                return (
-                  <div
-                    className="kill"
-                    key={i}
-                    style={{
-                      position: "absolute",
-                      zIndex: 2,
-                      bottom: (kill.position.y / 15000) * 100 + "%",
-                      left: (kill.position.x / 15000) * 100 + "%",
-                      background: `center / cover no-repeat url(./build/images/map-events/skull-blue.svg)`,
-                    }}
-                  />
-                );
-              } else
-                return (
-                  <div
-                    className="kill"
-                    key={i}
-                    style={{
-                      position: "absolute",
-                      zIndex: 2,
-                      bottom: (kill.position.y / 15000) * 100 + "%",
-                      left: (kill.position.x / 15000) * 100 + "%",
-                      background: `center / cover no-repeat url(./build/images/map-events/skull-red.svg)`,
-                    }}
-                  />
-                );
+              // if (kill.victimId > 4) {
+              return (
+                <div
+                  className="kill"
+                  key={i}
+                  style={{
+                    position: "absolute",
+                    zIndex: 2,
+                    bottom: (kill.position.y / 15000) * 100 + "%",
+                    left: (kill.position.x / 15000) * 100 + "%",
+                    backgroundImage:
+                      kill.victimId > 4
+                        ? "url(./build/images/map-events/skull-blue.svg)"
+                        : "url(./build/images/map-events/skull-red.svg)",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                  }}
+                />
+              );
+              // } else
+              //   return (
+              //     <div
+              //       className="kill"
+              //       key={i}
+              //       style={{
+              //         position: "absolute",
+              //         zIndex: 2,
+              //         bottom: (kill.position.y / 15000) * 100 + "%",
+              //         left: (kill.position.x / 15000) * 100 + "%",
+              //         background: `center / cover no-repeat url(./build/images/map-events/skull-red.svg)`,
+              //       }}
+              //     />
+              //   );
             })}
 
-          {/* {console.log(championKill)}
-          {championKill.map((kill: any, i: number) => {
+          {playKill.map((kill: any, i: number) => {
+            console.count(kill);
             return (
               <div
                 className="kill"
@@ -330,11 +357,17 @@ export default function Canvas({ data }: any) {
                   left: (kill.position.x / 15000) * 100 + "%",
                   width: 20,
                   height: 20,
-                  background: `center / cover no-repeat url(./build/images/map-events/skull-blue.svg)`,
+                  backgroundImage:
+                    kill.victimId > 4
+                      ? "url(./build/images/map-events/skull-blue.svg)"
+                      : "url(./build/images/map-events/skull-red.svg)",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
                 }}
               />
             );
-          })} */}
+          })}
         </CanvasContainer>
 
         <Player>
