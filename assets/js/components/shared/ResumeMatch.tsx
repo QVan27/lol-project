@@ -6,6 +6,10 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   margin-inline: auto;
   width: min(1140px, 92%);
+  @media screen and (min-width: 320px) and (max-width: 786px) {
+    width: unset;
+  }
+
 `;
 
 const Container = styled.div`
@@ -46,6 +50,7 @@ const ResumeMatchContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #2c3e50;
+  padding: 15px 20px 15px 20px;
 }
 
 .container {
@@ -58,6 +63,7 @@ const ResumeMatchContainer = styled.div`
   height: 100%;
   display: flex;
   background-color: #fff;
+  padding: 20px 20px 20px 20px;
 }
 
 
@@ -73,7 +79,7 @@ const ResumeMatchContainer = styled.div`
 
 .champion-data {
   height: 50%;
-  width: 95%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,10 +118,9 @@ const ResumeMatchContainer = styled.div`
 
 .reverse {
   flex-direction: row-reverse;
-  border-right: 0px;
   .level-reverse {
                         position: absolute;
-                        left: 178px;
+                        left: 164px;
                         bottom: -3px;
                         width: 15px;
                         height: 15px;
@@ -159,114 +164,120 @@ const ResumeMatchContainer = styled.div`
     align-items: center;
     gap: 1px;
 }
-`;
 
-const TableResumeMatch = styled.table`
-.styled-table {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-.styled-table thead tr {
-    background-color: #31313C;
-    color: #7b7a8e;
-    text-align: left;
-}
-.styled-table th,
-.styled-table td {
-    padding: 12px 15px;
-    span {
-        line-height: 2em;
+//responsive card resume match
+@media screen and (min-width: 320px) and (max-width: 786px) {
+    .container {
+        width: 90%;
+    .match-container {
+        flex-direction: column;
+        padding: 20px 15px 20px 15px;
+
+        .champion-row {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid lightgrey;
+        }
     }
-    .content_champion {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    margin-bottom: 0.5rem;
-                    width: 12em;
-                    position: relative;
-                     img {
-                        display: block;
-                        width: 32px;
-                        height: 32px;
-                        border-radius: 50%;
-                     }
-                     .level {
-                        position: absolute;
-                        left: -3px;
-                        bottom: -3px;
-                        width: 15px;
-                        height: 15px;
-                        background: rgb(32, 45, 55);
-                        border-radius: 50%;
-                        color: rgb(255, 255, 255);
-                        font-size: 10px;
-                        text-align: center;
-                        line-height: 15px;
-                        font-family: Roboto, sans-serif;
-                     }
 
-}
+    .match-details-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 15px 15px 15px;
+
+        .match-stats {
+            font-size: 20px;
+
+            .match-stats-item {
+                font-size: 15px;
+
+                .match-stats-item-value {
+                    font-size: 12px;
                 }
-                .content_kill {
-                    margin-bottom: 0.5rem;
-                }
-                .content_progress {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    margin-bottom: 0.5rem;
-                    .progress_damage {
-                        width: 50px;
-                        height: 6px;
-                        margin: 4px auto 0px;
-                        background-color: #e0e0e0;
-                        .progress_bar {
-                            height: 100%;
-                            background-color: #f00;
+            }
+        }
+    }
+
+    .match-details {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .champion-row {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid lightgrey;
+
+            .champion {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                .champion-data {
+                        display: grid; 
+                        grid-auto-columns: 1fr; 
+                        grid-template-columns: 1fr 1fr; 
+                        grid-template-rows: 1fr 1fr; 
+                        gap: 0px 0px; 
+                        grid-template-areas: 
+                            "summoner-name summoner-name"
+                            "items stat"; 
+                            .summoner-name { 
+                                grid-area: summoner-name;
+                                .content-champ {
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+            
+                                    .level {
+                                        position: absolute;
+                                        left: 0;
+                                        bottom: 0;
+                                        width: 15px;
+                                        height: 15px;
+                                        background: rgb(32, 45, 55);
+                                        border-radius: 50%;
+                                        color: rgb(255, 255, 255);
+                                        font-size: 10px;
+                                        text-align: center;
+                                        line-height: 15px;
+                                        font-family: Roboto, sans-serif;
+            
+                                        .level-reverse {
+                                            position: absolute;
+                                            left: 0;
+                                            bottom: 0;
+                                            width: 15px;
+                                            height: 15px;
+                                            background: rgb(32, 45, 55);
+                                            border-radius: 50%;
+                                            color: rgb(255, 255, 255);
+                                            font-size: 10px;
+                                            text-align: center;
+                                            line-height: 15px;
+                                            font-family: Roboto, sans-serif;
+                                        }
+                                    }
+                                }
+                            
+                            }
+                            .items { grid-area: items; }
+                            .stat { grid-area: stat; }
                         }
-                    }
-                }
-                .content_item {
-                    display: flex;
-                    gap: 2px;
-                    margin-bottom: 0.5rem;
-                    width: 12em;
 
                 }
-.no_item {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-    background-color: #703C47;
-}
+            }
+        }
+    }
+ }
 
-.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #000
-}
-.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
-}
 `;
-
-
-
 
 
 
 export default function ResumeMatch({ data }: any) {
+    console.log(data);
 
   return (
 
