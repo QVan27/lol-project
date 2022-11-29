@@ -89,24 +89,16 @@
         flex-direction: column;
         align-items: center;
         gap: 40px;
+        width: min(100%, 600px);
 
-        // &.hidden {
-        //   display: none;
-        // }
-        // @media screen and (min-width: 540px) {
-        //   flex-direction: row;
-        //   align-items: center;
-        //   gap: 80px;
-        // }
         .map__container__player {
+          display: flex;
+          gap: 30px;
+          align-items: center;
           position: relative;
           .map__container__player--img {
-            width: 70%;
-            height: 70%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 6.25rem;
+            height: 6.25rem;
             border-radius: 50%;
             overflow: hidden;
             img {
@@ -126,18 +118,6 @@
             }
           }
           .map__container__player__content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            border-radius: 50%;
-            width: 70%;
-            height: 70%;
-            justify-content: center;
-            align-items: center;
             .map__container__player__content--name {
               font-size: 2rem;
               text-align: center;
@@ -161,13 +141,13 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            height: 300px;
+            height: max(300px, 300px + 10vw);
             overflow-y: scroll;
             padding-right: 10px;
 
             .map__container__matches__list--item {
               display: grid;
-              grid-template-columns: 1fr;
+              grid-template-columns: repeat(2, 1fr);
               gap: 10px;
               position: relative;
               border-radius: 5px;
@@ -201,6 +181,12 @@
                 opacity: 0.2;
               }
 
+              .win,
+              .lose {
+                position: relative;
+                z-index: 1;
+              }
+
               .win {
                 color: green;
               }
@@ -215,6 +201,8 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
+          position: relative;
+          z-index: 1;
           &__list {
             display: flex;
             flex-wrap: wrap;
