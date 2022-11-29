@@ -154,8 +154,8 @@ const MapPage: React.FC = () => {
                               {game.resume.info.participants.map(
                                 (participant: any, index: number) => {
                                   return (
-                                    <div className="map__container__flex__list--item">
-                                      <div key={index} id={game.matchId}>
+                                    <div key={index} className="map__container__flex__list--item">
+                                      <div id={game.matchId}>
                                         <img
                                           src={
                                             "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
@@ -188,7 +188,10 @@ const MapPage: React.FC = () => {
                                 ) {
                                   return (
                                     <>
-                                      <div className="map__container__flex">
+                                      <div
+                                        className="map__container__flex"
+                                        key={index}
+                                      >
                                         <p>Items: </p>
                                         <div className="map__container__flex__list">
                                           <img
@@ -279,7 +282,7 @@ const MapPage: React.FC = () => {
                                     participant.summonerName === player.name
                                   ) {
                                     return (
-                                      <div>
+                                      <div key={index}>
                                         <p>
                                           {participant.kills} -{" "}
                                           {participant.deaths} -{" "}
@@ -298,6 +301,7 @@ const MapPage: React.FC = () => {
                               if (participant.summonerName === player.name) {
                                 return (
                                   <div
+                                    key={index}
                                     className={
                                       participant.teamId === 100
                                         ? "blue"
@@ -314,6 +318,7 @@ const MapPage: React.FC = () => {
                               if (participant.summonerName === player.name) {
                                 return (
                                   <p
+                                    key={index}
                                     className={participant.win ? "win" : "lose"}
                                   >
                                     {participant.win ? "Victoire" : "Défaite"}

@@ -8,34 +8,23 @@ const ResumeMatchContainer = styled.div`
 `;
 
 export default function ResumeMatch({ data }: any) {
-  console.log(data);
-
   return (
     <ResumeMatchContainer>
       <div className="container">
         <div className="match-details-container">
           <div className="match-details">
             <div className="result">
-              {
-                //show win or lose
-                data.resume.info.teams[0].win ? " Victoire" : " Défaite"
-              }
+              {data.resume.info.teams[0].win ? " Victoire" : " Défaite"}
             </div>
             <div className="total-kill"></div>
             <div className="match-stats">
-              {
-                // show time timestamp to minutes
-                Math.floor(data.resume.info.gameDuration / 60) +
-                  "m " +
-                  (data.resume.info.gameDuration % 60) +
-                  "s"
-              }
+              {Math.floor(data.resume.info.gameDuration / 60) +
+                "m " +
+                (data.resume.info.gameDuration % 60) +
+                "s"}
             </div>
             <div className="result">
-              {
-                //show win or lose
-                data.resume.info.teams[1].win ? " Victoire" : " Défaite"
-              }
+              {data.resume.info.teams[1].win ? " Victoire" : " Défaite"}
             </div>
           </div>
         </div>
@@ -73,7 +62,6 @@ export default function ResumeMatch({ data }: any) {
                             <div className="content_item">
                               <img
                                 src={
-                                  //if no item
                                   participant.item0 === 0
                                     ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
                                     : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
@@ -206,7 +194,6 @@ export default function ResumeMatch({ data }: any) {
                             <div className="content_item">
                               <img
                                 src={
-                                  //if no item
                                   participant.item0 === 0
                                     ? "https://www.mjt.me.uk/assets/images/smallest-png/openstreetmap.png"
                                     : "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" +
