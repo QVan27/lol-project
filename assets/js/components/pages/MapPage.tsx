@@ -64,15 +64,15 @@ const MapPage: React.FC = () => {
                   );
 
                 // if apiFetch can't found player don't show container info
-                if (player.length === 0) {
-                  document
-                    .querySelector(".map__container__info")
-                    ?.classList.add("hidden");
-                } else {
-                  document
-                    .querySelector(".map__container__info")
-                    ?.classList.remove("hidden");
-                }
+                // if (player.length === 0) {
+                //   document
+                //     .querySelector(".map__container__info")
+                //     ?.classList.add("hidden");
+                // } else {
+                //   document
+                //     .querySelector(".map__container__info")
+                //     ?.classList.remove("hidden");
+                // }
               }}
             >
               <div className="map__container__form-group">
@@ -130,47 +130,44 @@ const MapPage: React.FC = () => {
                 <div className="map__container__matches__list">
                   {player.games?.map((game: any, index: number) => {
                     return (
+                      // if game win add class win else add class lose
+
                       <div
-                        className="map__container__matches__list--item"
+                        className={"map__container__matches__list--item"}
                         key={index}
                         id={game.matchId}
                         onClick={() => {
                           setData(game);
                         }}
                       >
-                        <p>Match : {index + 1}</p>
-                        <div>
-                          <p>
-                            Mode de jeu :{" "}
-                            <span>{game.resume.info.gameMode}</span>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            Temps :{" "}
-                            <span>
-                              {Math.floor(game.resume.info.gameDuration / 60)}{" "}
-                              minutes
-                            </span>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            Date :{" "}
-                            <span>
-                              {new Date(
-                                game.resume.info.gameCreation
-                              ).toLocaleDateString()}
-                            </span>
-                          </p>
-                        </div>
-                        <div className="map__container__champion">
+                        <p className="map__container__flex">
+                          Mode de jeu : <span>{game.resume.info.gameMode}</span>
+                        </p>
+
+                        <p className="map__container__flex">
+                          Temps :{" "}
+                          <span>
+                            {Math.floor(game.resume.info.gameDuration / 60)}{" "}
+                            minutes
+                          </span>
+                        </p>
+
+                        <p className="map__container__flex">
+                          Date :{" "}
+                          <span>
+                            {new Date(
+                              game.resume.info.gameCreation
+                            ).toLocaleDateString()}
+                          </span>
+                        </p>
+
+                        <div className="map__container__flex">
                           <p>Champion:</p>
-                          <div className="map__container__champion__list">
+                          <div className="map__container__flex__list">
                             {game.resume.info.participants.map(
                               (participant: any, index: number) => {
                                 return (
-                                  <div className="map__container__champion__list--item">
+                                  <div className="map__container__flex__list--item">
                                     <div key={index} id={game.matchId}>
                                       <img
                                         src={
@@ -204,82 +201,80 @@ const MapPage: React.FC = () => {
                               ) {
                                 return (
                                   <>
-                                    <p>Items: </p>
-                                    <div>
-                                      <span>
-                                        <div>
-                                          <img
-                                            src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                              participant.item0 +
-                                              ".png"
-                                            }
-                                            alt=""
-                                            width="16"
-                                            height="16"
-                                          />
-                                          <img
-                                            src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                              participant.item1 +
-                                              ".png"
-                                            }
-                                            alt=""
-                                            width="16"
-                                            height="16"
-                                          />
-                                          <img
-                                            src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                              participant.item2 +
-                                              ".png"
-                                            }
-                                            alt=""
-                                            width="16"
-                                            height="16"
-                                          />
-                                          <img
-                                            src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                              participant.item3 +
-                                              ".png"
-                                            }
-                                            alt=""
-                                            width="16"
-                                            height="16"
-                                          />
-                                          <img
-                                            src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                              participant.item4 +
-                                              ".png"
-                                            }
-                                            alt=""
-                                            width="16"
-                                            height="16"
-                                          />
-                                          <img
-                                            src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                              participant.item5 +
-                                              ".png"
-                                            }
-                                            alt=""
-                                            width="16"
-                                            height="16"
-                                          />
-                                          <img
-                                            src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
-                                              participant.item6 +
-                                              ".png"
-                                            }
-                                            alt=""
-                                            width="16"
-                                            height="16"
-                                          />
-                                        </div>
-                                      </span>
+                                    <div className="map__container__flex">
+                                      <p>Items: </p>
+                                      <div className="map__container__flex__list">
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                            participant.item0 +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                            participant.item1 +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                            participant.item2 +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                            participant.item3 +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                            participant.item4 +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                            participant.item5 +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                        <img
+                                          src={
+                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                            participant.item6 +
+                                            ".png"
+                                          }
+                                          alt=""
+                                          width="16"
+                                          height="16"
+                                        />
+                                      </div>
                                     </div>
                                   </>
                                 );
@@ -287,8 +282,9 @@ const MapPage: React.FC = () => {
                             }
                           }
                         )}
-                        <p>K-D-A : </p>
-                        <div>
+
+                        <div className="map__container__flex">
+                          <p>K-D-A : </p>
                           <span>
                             {game.resume.info.participants.map(
                               (participant: any, index: number) => {
@@ -307,12 +303,21 @@ const MapPage: React.FC = () => {
                             )}
                           </span>
                         </div>
-                        <div>
-                          <span>
-                            {game.resume.info.participants.map(
-                              (participant: any, index: number) => {
-                                if (participant.summonerName === player.name) {
-                                  return (
+
+                        {game.resume.info.participants.map(
+                          (participant: any, index: number) => {
+                            if (participant.summonerName === player.name) {
+                              return (
+                                console.log(participant),
+                                (
+                                  <div
+                                    className={
+                                      participant.teamId === 100
+                                        ? "blue"
+                                        : "red"
+                                    }
+                                  >
+                                    {/* <span>
                                     <div>
                                       <p>
                                         {participant.win
@@ -320,12 +325,28 @@ const MapPage: React.FC = () => {
                                           : "Défaite"}
                                       </p>
                                     </div>
-                                  );
-                                }
-                              }
-                            )}
-                          </span>
-                        </div>
+                                  </span> */}
+                                  </div>
+                                )
+                              );
+                            }
+                          }
+                        )}
+
+                        {game.resume.info.participants.map(
+                          (participant: any, index: number) => {
+                            if (participant.summonerName === player.name) {
+                              return (
+                                console.log(participant),
+                                (
+                                  <p className={participant.win ? "win" : "lose"}>
+                                    {participant.win ? "Victoire" : "Défaite"}
+                                  </p>
+                                )
+                              );
+                            }
+                          }
+                        )}
                       </div>
                     );
                   })}
