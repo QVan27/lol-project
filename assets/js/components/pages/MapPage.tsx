@@ -93,7 +93,7 @@ const MapPage: React.FC = () => {
                   <div className="map__container__player--img">
                     <img
                       src={
-                        "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" +
+                        "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" +
                         player.profilIconId +
                         ".png"
                       }
@@ -158,7 +158,7 @@ const MapPage: React.FC = () => {
                                       <div id={game.matchId}>
                                         <img
                                           src={
-                                            "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
+                                            "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/" +
                                             participant.championName +
                                             ".png"
                                           }
@@ -196,7 +196,7 @@ const MapPage: React.FC = () => {
                                         <div className="map__container__flex__list">
                                           <img
                                             src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
                                               participant.item0 +
                                               ".png"
                                             }
@@ -206,7 +206,7 @@ const MapPage: React.FC = () => {
                                           />
                                           <img
                                             src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
                                               participant.item1 +
                                               ".png"
                                             }
@@ -216,7 +216,7 @@ const MapPage: React.FC = () => {
                                           />
                                           <img
                                             src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
                                               participant.item2 +
                                               ".png"
                                             }
@@ -226,7 +226,7 @@ const MapPage: React.FC = () => {
                                           />
                                           <img
                                             src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
                                               participant.item3 +
                                               ".png"
                                             }
@@ -236,7 +236,7 @@ const MapPage: React.FC = () => {
                                           />
                                           <img
                                             src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
                                               participant.item4 +
                                               ".png"
                                             }
@@ -246,7 +246,7 @@ const MapPage: React.FC = () => {
                                           />
                                           <img
                                             src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
                                               participant.item5 +
                                               ".png"
                                             }
@@ -256,7 +256,7 @@ const MapPage: React.FC = () => {
                                           />
                                           <img
                                             src={
-                                              "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
+                                              "https://ddragon.leagueoflegends.com/cdn/12.20.1/img/item/" +
                                               participant.item6 +
                                               ".png"
                                             }

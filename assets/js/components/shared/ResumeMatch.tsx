@@ -68,7 +68,7 @@ export default function ResumeMatch({ data }: any) {
                             <div className="content-champ__box">
                               <img
                                 src={
-                                  "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" +
+                                  "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" +
                                   participant.championName +
                                   ".png"
                                 }
@@ -85,14 +85,14 @@ export default function ResumeMatch({ data }: any) {
                               <div className="spells">
                                 <div className="spell">
                                     <img src={
-                                        "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                        "https://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
                                         summonerSpells.find((spell) => spell.id === participant.summoner1Id)?.name +
                                         ".png"
                                     } height="16" width="16"/>
                                 </div>
                                 <div className="spell">
                                     <img src={
-                                        "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                        "https://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
                                         summonerSpells.find((spell) => spell.id === participant.summoner2Id)?.name +
                                         ".png"
                                     } height="16" width="16"/>
@@ -217,7 +217,7 @@ export default function ResumeMatch({ data }: any) {
                             <div className="content-champ__box">
                               <img
                                 src={
-                                  "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" +
+                                  "https://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" +
                                   participant.championName +
                                   ".png"
                                 }
