@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { MAP, HOME } from "../../constants/route-paths";
+import { HOME } from "../../constants/route-paths";
 
 const Header: FunctionComponent = () => {
 
@@ -14,9 +14,6 @@ const Header: FunctionComponent = () => {
             </div>
             <span>LOL. Trackers</span>
           </Link>
-          {/* <Link className="nav-link" to={MAP}>
-            Recherche
-          </Link> */}
         </nav>
       </div>
     </header>
