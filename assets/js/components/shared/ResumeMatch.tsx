@@ -82,7 +82,7 @@ export default function ResumeMatch({ data }: any) {
                             </div>
                             <p>{participant.summonerName}</p>
                           </div>
-                            <div className="spells">
+                              <div className="spells">
                                 <div className="spell">
                                     <img src={
                                         "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
@@ -98,6 +98,7 @@ export default function ResumeMatch({ data }: any) {
                                     } height="16" width="16"/>
                                 </div>
                             </div>
+                           
                         </div>
                         <div className="items">
                           {
