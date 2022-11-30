@@ -133,8 +133,8 @@
 
                 img {
                   display: block;
-                  width: 32px;
-                  height: 32px;
+                  width: 40px;
+                  height: 40px;
                   border-radius: 50%;
 
                   @media screen and (max-width: 768px) {
@@ -160,6 +160,14 @@
                     left: auto;
                     right: -3px;
                   }
+                }
+              }
+
+              &__info {
+                &__spells {
+                  display: flex;
+                  align-items: center;
+                  gap: 2px;
                 }
               }
             }
