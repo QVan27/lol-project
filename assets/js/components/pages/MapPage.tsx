@@ -20,7 +20,7 @@ const MapPage: React.FC = () => {
   });
 
   const { player, errorMessage, loading } = state;
-  // https://dev.to/muratcanyuksel/comment-passer-des-donnees-entre-les-composants-react-16bi
+
   const [data, setData] = useState("");
 
   return (
@@ -154,7 +154,10 @@ const MapPage: React.FC = () => {
                               {game.resume.info.participants.map(
                                 (participant: any, index: number) => {
                                   return (
-                                    <div key={index} className="map__container__flex__list--item">
+                                    <div
+                                      key={index}
+                                      className="map__container__flex__list--item"
+                                    >
                                       <div id={game.matchId}>
                                         <img
                                           src={
@@ -286,7 +289,7 @@ const MapPage: React.FC = () => {
                                         <p>
                                           {participant.kills} -{" "}
                                           {participant.deaths} -{" "}
-                                          {participant.assists} -{" "}
+                                          {participant.assists}
                                         </p>
                                       </div>
                                     );

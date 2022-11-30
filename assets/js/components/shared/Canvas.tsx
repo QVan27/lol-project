@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  AiFillBackward,
-  AiFillPauseCircle,
-  AiFillPlayCircle,
+  // AiFillBackward,
+  // AiFillPauseCircle,
+  // AiFillPlayCircle,
   AiFillForward,
 } from "react-icons/ai";
 import { BiShow, BiHide } from "react-icons/bi";
@@ -33,7 +33,7 @@ const CanvasContainer = styled.div`
 
   .towers,
   .kill {
-    transform: translate(-100%, 0%);
+    transform: translate(-50%, 50%);
     width: 10px;
     height: 10px;
 
@@ -46,7 +46,6 @@ const CanvasContainer = styled.div`
 
 const Player = styled.div`
   margin-inline: auto;
-  width: min(500px, 92%);
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -73,31 +72,32 @@ const ButtonControl = styled.button`
   }
   span {
     color: #fff;
+    white-space: nowrap;
   }
 `;
 
-const ButtonPlayPause = styled.button`
-  background-color: transparent;
-  border: none;
-  align-items: center;
-  border-radius: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  background-color: transparent;
-  cursor: pointer;
-  .play,
-  .pause {
-    background-color: #1e2328;
-    border-radius: 100%;
-    padding: 20px;
-    color: #c8aa6d;
-  }
-  span {
-    color: #fff;
-  }
-`;
+// const ButtonPlayPause = styled.button`
+//   background-color: transparent;
+//   border: none;
+//   align-items: center;
+//   border-radius: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   gap: 10px;
+//   background-color: transparent;
+//   cursor: pointer;
+//   .play,
+//   .pause {
+//     background-color: #1e2328;
+//     border-radius: 100%;
+//     padding: 20px;
+//     color: #c8aa6d;
+//   }
+//   span {
+//     color: #fff;
+//   }
+// `;
 
 const Filters = styled.div`
   margin-inline: auto;
@@ -156,15 +156,15 @@ export default function Canvas({ data }: any) {
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
-  const [isPlaying, setIsPlaying] = React.useState(false);
+  // const [isPlaying, setIsPlaying] = React.useState(false);
 
-  const millisToMinutesAndSeconds = (millis: any) => {
-    let minutes = Math.floor(millis / 60000);
-    let seconds: any = ((millis % 60000) / 1000).toFixed(0);
-    return seconds == 60
-      ? minutes + 1 + ":00"
-      : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  };
+  // const millisToMinutesAndSeconds = (millis: any) => {
+  //   let minutes = Math.floor(millis / 60000);
+  //   let seconds: any = ((millis % 60000) / 1000).toFixed(0);
+  //   return seconds == 60
+  //     ? minutes + 1 + ":00"
+  //     : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  // };
 
   const [allKills, setAllKills] = React.useState<any>([]);
   const championKills: Array<any> = [];
@@ -196,9 +196,11 @@ export default function Canvas({ data }: any) {
     return championKill;
   };
 
-  const index: number = 1;
-  const btnPlay = React.useRef<HTMLDivElement>(null);
-  const btnPause = React.useRef<HTMLDivElement>(null);
+  getAllEvents(data.timeline.info.frames);
+
+  // const index: number = 1;
+  // const btnPlay = React.useRef<HTMLDivElement>(null);
+  // const btnPause = React.useRef<HTMLDivElement>(null);
 
   const [playKill, setPlayKill] = React.useState<any[]>([]);
 
@@ -221,58 +223,99 @@ export default function Canvas({ data }: any) {
   //   }
   // };
 
+  // const start = () => {
+  //   setIsPlaying(true);
+  //   play(true, index);
+  // };
+
+  // const stop = () => {
+  //   setIsPlaying(false);
+  //   setPlayKill([]);
+  //   play(false, index);
+  // };
+
   // NE PAS SUPPRIMER LA PREMIERE FONCTION PLAY !!!
 
+  // Recursive SetTimeout Function to play the game
+  // const play = (bool: boolean, index: number) => {
+  //   if (bool === false) {
+  //     setIsPlaying(false);
+  //     return;
+  //   } else {
+  //     getAllEvents(data.timeline.info.frames);
+  //     setIsPlaying(true);
+  //     if (index < championKill.length) {
+  //       setTimeout(() => {
+  //         const current = championKill[index];
+  //         setPlayKill((prev) => [...prev, current]);
+  //         play(true, ++index);
+  //       }, (championKill[index].timestamp - championKill[index - 1].timestamp) / 100);
+  //     }
+  //   }
+  // };
 
-  const play = (index: number) => {
-    getAllEvents(data.timeline.info.frames);
-    console.table(championKill)
-    const interval = setInterval(() => {
-      if (isPlaying) {
-        if (index < championKill.length) {
-          const current = championKill[index];
-          setPlayKill((prev) => [...prev, current]);
-          index++;
-        } else {
-          setIsPlaying(false);
-          clearInterval(interval);
-        }
-      } else {
-        clearInterval(interval);
-      }
-      console.count(championKill[index]);
-    }, 1000);
+  // const start = () => {
+  //   setIsPlaying(true);
+  //   play(true, index);
+  // };
+
+  // const stop = () => {
+  //   setIsPlaying(false);
+  //   setPlayKill([]);
+  //   play(false, index);
+  // };
+  // Recursive SetTimeout Function to play the game
+
+  // New Function
+
+  const next = () => {
+    const index = playKill.length;
+    if (index < championKill.length) {
+      setPlayKill((prev) => [...prev, championKill[index]]);
+      console.count(playKill.length.toString());
+      return true;
+    }
+    return false;
   };
 
-  const start = () => {
-    setIsPlaying(true);
-    setPlayKill([]);
+  // const play = () => {
+  //   const timer = setInterval(() => {
+  //     const index = playKill.length;
+  //     if (index < championKill.length) {
+  //       setPlayKill((prev) => [...prev, championKill[index]]);
+  //       console.count(playKill.length.toString());
+  //     } else {
+  //       clearInterval(timer);
+  //     }
+  //     console.log(playKill);
+  //   }, 1000);
+  // };
 
-    play(0);
-  };
+  // const prev = () => {
+  //   try {
+  //     const pop = playKill.pop();
+  //     const index = playKill.length;
+  //     const kill: NodeListOf<Element> = document.querySelectorAll(".kill");
+  //     console.table(kill);
 
-  const stop = () => {
-    setIsPlaying(false);
-  };
+  //     for (const i of kill) {
+  //       const lastKill = i.getAttribute("data-key");
+  //       const lastKillToNumber = parseInt(lastKill);
+  //       if (lastKillToNumber === index) {
+  //         i.remove();
+  //       }
+  //     }
+  //     console.log(pop);
+  //     setPlayKill(playKill);
+  //     console.log(playKill);
+  //   } catch (e: any) {
+  //     console.warn(e);
+  //   }
+  // };
 
   return (
     <Wrapper>
       <Container>
-        <Filters>
-          <div>
-            {!toggle ? (
-              <ButtonControl onClick={showKills}>
-                <BiShow className="backward" />
-              </ButtonControl>
-            ) : (
-              <ButtonControl onClick={showKills}>
-                <BiHide className="backward" />
-              </ButtonControl>
-            )}
-            <span>{!toggle ? "Afficher les kills" : "Cacher les kills"}</span>
-          </div>
-        </Filters>
-
         <CanvasContainer>
           <canvas id="map" ref={mapRef} width="500" height="500" />
           {buildings.towers.map((team, i) => {
@@ -308,7 +351,6 @@ export default function Canvas({ data }: any) {
 
           {toggle &&
             allKills.map((kill: any, i: number) => {
-              // if (kill.victimId > 4) {
               return (
                 <div
                   className="kill"
@@ -328,35 +370,19 @@ export default function Canvas({ data }: any) {
                   }}
                 />
               );
-              // } else
-              //   return (
-              //     <div
-              //       className="kill"
-              //       key={i}
-              //       style={{
-              //         position: "absolute",
-              //         zIndex: 2,
-              //         bottom: (kill.position.y / 15000) * 100 + "%",
-              //         left: (kill.position.x / 15000) * 100 + "%",
-              //         background: `center / cover no-repeat url(./build/images/map-events/skull-red.svg)`,
-              //       }}
-              //     />
-              //   );
             })}
 
           {playKill.map((kill: any, i: number) => {
-            console.count(kill);
             return (
               <div
                 className="kill"
                 key={i}
+                data-key={i}
                 style={{
                   position: "absolute",
                   zIndex: 2,
                   bottom: (kill.position.y / 15000) * 100 + "%",
                   left: (kill.position.x / 15000) * 100 + "%",
-                  width: 20,
-                  height: 20,
                   backgroundImage:
                     kill.victimId > 4
                       ? "url(./build/images/map-events/skull-blue.svg)"
@@ -371,27 +397,42 @@ export default function Canvas({ data }: any) {
         </CanvasContainer>
 
         <Player>
-          <ButtonControl>
+          <Filters>
+            <div>
+              {!toggle ? (
+                <ButtonControl onClick={showKills}>
+                  <BiShow className="backward" />
+                </ButtonControl>
+              ) : (
+                <ButtonControl onClick={showKills}>
+                  <BiHide className="backward" />
+                </ButtonControl>
+              )}
+              <span>{!toggle ? "Afficher les kills" : "Cacher les kills"}</span>
+            </div>
+          </Filters>
+
+          {/* <ButtonControl onClick={prev}>
             <AiFillBackward className="backward" />
             <span>reculer</span>
           </ButtonControl>
 
           <ButtonPlayPause>
             {isPlaying ? (
-              <div ref={btnPause} onClick={stop}>
+              <div ref={btnPause}>
                 <AiFillPauseCircle className="pause" />
               </div>
             ) : (
-              <div ref={btnPlay} onClick={start}>
+              <div ref={btnPlay} onClick={play}>
                 <AiFillPlayCircle className="play" />
               </div>
             )}
             <span>{isPlaying ? "Pause" : "Play"}</span>
-          </ButtonPlayPause>
+          </ButtonPlayPause> */}
 
-          <ButtonControl>
+          <ButtonControl onClick={next}>
             <AiFillForward className="forward" />
-            <span>avancer</span>
+            <span>Kill suivant</span>
           </ButtonControl>
         </Player>
       </Container>
