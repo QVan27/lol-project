@@ -75,7 +75,7 @@ const MapPage: React.FC = () => {
               <div className="map__container__form-group">
                 <label>
                   Gamertag :
-                  <input type="text" name="gamertag" />
+                  <input required type="text" name="gamertag" />
                 </label>
               </div>
               <div className="map__container__form-submit">
