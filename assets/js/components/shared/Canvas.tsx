@@ -140,7 +140,7 @@ const Log = styled.div`
   gap: 2rem;
   position: fixed;
   z-index: 100;
-  top: 10%;
+  top: 1%;
   left: 50%;
   padding: 1rem;
   border-radius: 0.625rem;
