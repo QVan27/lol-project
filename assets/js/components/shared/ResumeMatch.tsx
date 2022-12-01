@@ -72,24 +72,6 @@ export default function ResumeMatch({ data }: any) {
                                 {participant.champLevel}
                               </div>
                             </div>
-<<<<<<< HEAD
-                            <p>{participant.summonerName}</p>
-                          </div>
-                              <div className="spells">
-                                <div className="spell">
-                                    <img src={
-                                        "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
-                                        summonerSpells.find((spell) => spell.id === participant.summoner1Id)?.name +
-                                        ".png"
-                                    } height="16" width="16"/>
-                                </div>
-                                <div className="spell">
-                                    <img src={
-                                        "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
-                                        summonerSpells.find((spell) => spell.id === participant.summoner2Id)?.name +
-                                        ".png"
-                                    } height="16" width="16"/>
-=======
                             <div className="content-champ__info">
                               <p>{participant.summonerName}</p>
                               <div className="content-champ__info__spells">
@@ -120,7 +102,6 @@ export default function ResumeMatch({ data }: any) {
                                     height="16"
                                     width="16"
                                   />
->>>>>>> d40b846ad7fa2117b9609f407ae39fcee703b5aa
                                 </div>
                               </div>
                             </div>

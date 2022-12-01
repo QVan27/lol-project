@@ -236,6 +236,22 @@ export default function Canvas({ data }: any) {
 
   const [playKill, setPlayKill] = React.useState<any[]>([]);
 
+  // convert timestamp to minutes and seconds
+  const millisToMinutesAndSeconds = (millis: any) => {
+    let minutes = Math.floor(millis / 60000);
+    let seconds: any = ((millis % 60000) / 1000).toFixed(0);
+    return seconds == 60
+      ? minutes + 1 + ":00"
+      : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  };
+
+
+
+
+   
+  
+
+
   // NE PAS SUPPRIMER LA PREMIERE FONCTION PLAY !!!
 
   // const play = (bool: boolean, index: number) => {
@@ -530,16 +546,44 @@ export default function Canvas({ data }: any) {
       </Container>
 
       {playKill.map((kill: any, i: number) => {
+        console.log(data);
         return (
-          console.log(kill),
+          
           (
             <Log key={i} data-key={i}>
               <p className="killers">
-                {kill.type} a tué {kill.type}
+                {/* show summonerName with killerId and participantId */}
+
+                {data.resume.info.participants.map((participant: any) => {
+                  if (participant.participantId === kill.killerId) {
+                    return (
+                      <span key={participant.participantId}>
+                        {participant.summonerName}
+                      </span>
+                    );
+                  }
+                })}
+                a tué
+                {data.resume.info.participants.map((participant: any) => {
+                  if (participant.participantId === kill.victimId) {
+                    return (
+                      <span key={participant.participantId}>
+                        {participant.summonerName}
+                      </span>
+                    );
+                  }
+                })}
+                
+                
+              
+        
+                {/* {kill.type} a tué {kill.type} */}
               </p>
               <p className="time">
                 <AiFillClockCircle />
-                <span>{kill.timestamp}</span>
+                <span>
+                  { millisToMinutesAndSeconds(kill.timestamp) }
+                </span>
               </p>
             </Log>
           )
