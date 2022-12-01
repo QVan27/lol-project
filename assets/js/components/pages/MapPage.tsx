@@ -20,8 +20,24 @@ const MapPage: React.FC = () => {
   });
 
   const { player, errorMessage, loading } = state;
-  // https://dev.to/muratcanyuksel/comment-passer-des-donnees-entre-les-composants-react-16bi
+
   const [data, setData] = useState("");
+
+  const scrollDown = (ref: any) => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: ref.current.offsetTop,
+        behavior: "smooth",
+      });
+    }, 200);
+  };
+
+  const matchs = useRef<HTMLParagraphElement>(null);
+
+  const handleData = (data: any) => {
+    setData(data);
+    scrollDown(matchs);
+  };
 
   return (
     <main>
@@ -75,7 +91,7 @@ const MapPage: React.FC = () => {
               <div className="map__container__form-group">
                 <label>
                   Gamertag :
-                  <input type="text" name="gamertag" />
+                  <input required type="text" name="gamertag" />
                 </label>
               </div>
               <div className="map__container__form-submit">
@@ -123,7 +139,7 @@ const MapPage: React.FC = () => {
                           key={index}
                           id={game.matchId}
                           onClick={() => {
-                            setData(game);
+                            handleData(game);
                           }}
                         >
                           <p className="map__container__flex">
@@ -154,7 +170,10 @@ const MapPage: React.FC = () => {
                               {game.resume.info.participants.map(
                                 (participant: any, index: number) => {
                                   return (
-                                    <div key={index} className="map__container__flex__list--item">
+                                    <div
+                                      key={index}
+                                      className="map__container__flex__list--item"
+                                    >
                                       <div id={game.matchId}>
                                         <img
                                           src={
@@ -286,7 +305,7 @@ const MapPage: React.FC = () => {
                                         <p>
                                           {participant.kills} -{" "}
                                           {participant.deaths} -{" "}
-                                          {participant.assists} -{" "}
+                                          {participant.assists}
                                         </p>
                                       </div>
                                     );
@@ -339,7 +358,9 @@ const MapPage: React.FC = () => {
 
             {data && (
               <>
-                <p>Vous avez cliqué sur le match : {data.matchId}</p>
+                <p ref={matchs}>
+                  Vous avez cliqué sur le match : {data.matchId}
+                </p>
                 <ResumeMatch data={data} />
                 <Canvas data={data} />
               </>

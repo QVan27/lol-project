@@ -3,6 +3,7 @@
     "@types/axios": "^0.14.0",
     "@types/jest": "^29.2.2",
     "@types/styled-components": "^5.1.26",
+    "babel-preset-react": "^6.24.1",
     "konva": "^8.3.12",
     "prop-types": "^15.7.2",
     "react": "^18.2.0",

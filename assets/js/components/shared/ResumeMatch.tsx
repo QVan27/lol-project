@@ -7,6 +7,23 @@ const ResumeMatchContainer = styled.div`
   margin-inline: auto;
 `;
 
+// array with Standard summoner spells with key id and name
+
+const summonerSpells = [
+  { id: 7, name: "SummonerHeal" },
+  { id: 6, name: "SummonerHaste" },
+  { id: 3, name: "SummonerExhaust" },
+  { id: 21, name: "SummonerBarrier" },
+  { id: 32, name: "SummonerSnowball" },
+  { id: 7, name: "SummonerDash" },
+  { id: 11, name: "SummonerMana" },
+  { id: 4, name: "SummonerFlash" },
+  { id: 12, name: "SummonerTeleport" },
+  { id: 1, name: "SummonerBoost" },
+  { id: 21, name: "SummonerSmite" },
+  { id: 14, name: "SummonerDot" },
+];
+
 export default function ResumeMatch({ data }: any) {
   return (
     <ResumeMatchContainer>
@@ -54,7 +71,39 @@ export default function ResumeMatch({ data }: any) {
                                 {participant.champLevel}
                               </div>
                             </div>
-                            <p>{participant.summonerName}</p>
+                            <div className="content-champ__info">
+                              <p>{participant.summonerName}</p>
+                              <div className="content-champ__info__spells">
+                                <div className="content-champ__info__spells--spell">
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                      summonerSpells.find(
+                                        (spell) =>
+                                          spell.id === participant.summoner1Id
+                                      )?.name +
+                                      ".png"
+                                    }
+                                    height="16"
+                                    width="16"
+                                  />
+                                </div>
+                                <div className="content-champ__info__spells--spell">
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                      summonerSpells.find(
+                                        (spell) =>
+                                          spell.id === participant.summoner2Id
+                                      )?.name +
+                                      ".png"
+                                    }
+                                    height="16"
+                                    width="16"
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div className="items">
@@ -186,7 +235,39 @@ export default function ResumeMatch({ data }: any) {
                                 {participant.champLevel}
                               </div>
                             </div>
-                            <p>{participant.summonerName}</p>
+                            <div className="content-champ__info">
+                              <p>{participant.summonerName}</p>
+                              <div className="content-champ__info__spells reverse">
+                                <div className="content-champ__info__spells--spell">
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                      summonerSpells.find(
+                                        (spell) =>
+                                          spell.id === participant.summoner1Id
+                                      )?.name +
+                                      ".png"
+                                    }
+                                    height="16"
+                                    width="16"
+                                  />
+                                </div>
+                                <div className="content-champ__info__spells--spell">
+                                  <img
+                                    src={
+                                      "http://ddragon.leagueoflegends.com/cdn/5.9.1/img/spell/" +
+                                      summonerSpells.find(
+                                        (spell) =>
+                                          spell.id === participant.summoner2Id
+                                      )?.name +
+                                      ".png"
+                                    }
+                                    height="16"
+                                    width="16"
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div className="items">

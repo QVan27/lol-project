@@ -1,22 +1,8 @@
-import React, { FunctionComponent, useState } from "react";
-// import { useInput } from "../hooks/useInput";
-// import axios from '../../config/axios';
-// import { Link } from "react-router-dom";
+import React, { FunctionComponent } from "react";
 import { MAP } from "../../constants/route-paths";
 import MainButton from "../shared/Buttons/MainButton";
 
 const HomePage: FunctionComponent = () => {
-  //   const { value: title, bind, reset } = useInput('');
-
-  //   const handleSubmit = (evt: any) => {
-  //     evt.preventDefault();
-  //     axios.post('/post/create', { title }).then((res) => {
-  //       console.log(res.data);
-  //     });
-  //     reset();
-  //   };
- 
-
   return (
     <main>
       <section className="home">
