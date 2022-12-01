@@ -23,6 +23,22 @@ const MapPage: React.FC = () => {
 
   const [data, setData] = useState("");
 
+  const scrollDown = (ref: any) => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: ref.current.offsetTop,
+        behavior: "smooth",
+      });
+    }, 200);
+  };
+
+  const matchs = useRef<HTMLParagraphElement>(null);
+
+  const handleData = (data: any) => {
+    setData(data);
+    scrollDown(matchs);
+  };
+
   return (
     <main>
       <section className="map">
@@ -88,7 +104,6 @@ const MapPage: React.FC = () => {
             </form>
 
             {player.length !== 0 ? (
-              console.log(player),
               <div className="map__container__info">
                 <div className="map__container__player">
                   <div className="map__container__player--img">
@@ -124,7 +139,7 @@ const MapPage: React.FC = () => {
                           key={index}
                           id={game.matchId}
                           onClick={() => {
-                            setData(game);
+                            handleData(game);
                           }}
                         >
                           <p className="map__container__flex">
@@ -343,7 +358,9 @@ const MapPage: React.FC = () => {
 
             {data && (
               <>
-                <p>Vous avez cliqué sur le match : {data.matchId}</p>
+                <p ref={matchs}>
+                  Vous avez cliqué sur le match : {data.matchId}
+                </p>
                 <ResumeMatch data={data} />
                 <Canvas data={data} />
               </>

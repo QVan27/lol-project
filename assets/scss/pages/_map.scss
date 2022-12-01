@@ -93,18 +93,13 @@
 
         .map__container__player {
           display: flex;
+          gap: 30px;
           align-items: center;
           position: relative;
-          border: 1px solid $color__yellow;
-          border-radius: 5px;
-          background-color: $color__headline;
-          overflow: hidden;
-          .map__container__player__content {
-            padding: 1rem;
-          }
           .map__container__player--img {
             width: 6.25rem;
             height: 6.25rem;
+            border-radius: 50%;
             overflow: hidden;
             img {
               width: 100%;
@@ -191,7 +186,7 @@
                 border-radius: 5px;
                 transition: 0.3s ease-out;
               }
-
+              
               .blue {
                 background-color: blue;
                 opacity: 0.3;
