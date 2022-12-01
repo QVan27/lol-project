@@ -50,7 +50,6 @@ export default function ResumeMatch({ data }: any) {
           <div className="champion-row line">
             {data.resume.info.participants.map(
               (participant: any, index: number) => {
-                console.log(participant);
                 if (participant.teamId === 100) {
                   return (
                     <div className="champion">
