@@ -1,0 +1,233 @@
+/*--------------------------------------------------------------
+# Map
+--------------------------------------------------------------*/
+.map {
+  padding: 50px 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: center / cover no-repeat url("../../images/background-map.jpg");
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000000, $alpha: 0.7);
+  }
+  .wrap {
+    position: relative;
+    .map__container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+      .map__container__head {
+        padding: 20px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background: $color__paragraph-dark;
+        color: $color__yellow;
+        border-radius: 20px;
+        @media screen and (min-width: 568px) {
+          flex-direction: row;
+          gap: 50px;
+          align-items: center;
+        }
+        .map__container__head-img {
+          width: min(300px, 100%);
+          height: max(150px, 150px + 5vw);
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+        .map__container__head-title {
+          font-family: $font__lol;
+          @media screen and (min-width: 568px) {
+            white-space: nowrap;
+          }
+        }
+      }
+      .map__container__form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        @media screen and (min-width: 768px) {
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: center;
+        }
+        .map__container__form-group {
+          label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: rgba($color: #ffffff, $alpha: 0.75);
+            text-transform: capitalize;
+            font-weight: 100;
+            width: 100%;
+            input {
+              background: transparent;
+              border: 1px solid $color__yellow;
+              height: max(30px, 30px + 0.5vw);
+              background-color: $color__background-dark;
+            }
+          }
+        }
+      }
+      .map__container__info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        width: min(100%, 600px);
+
+        .map__container__player {
+          display: flex;
+          gap: 30px;
+          align-items: center;
+          position: relative;
+          .map__container__player--img {
+            width: 6.25rem;
+            height: 6.25rem;
+            border-radius: 50%;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          .map__container__player__img {
+            position: relative;
+            height: 248px;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          .map__container__player__content {
+            .map__container__player__content--name {
+              font-size: 2rem;
+              text-align: center;
+            }
+            .map__container__player__content--level {
+              font-size: 0.8rem;
+              text-align: center;
+            }
+          }
+        }
+        .map__container__matches {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          width: 100%;
+          .map__container__matches--title {
+            font-size: 1.5rem;
+            text-align: center;
+          }
+          .map__container__matches__list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: max(300px, 300px + 10vw);
+            overflow-y: scroll;
+            padding-right: 10px;
+
+            .map__container__matches__list--item {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 10px;
+              position: relative;
+              border-radius: 5px;
+              border: solid 1px $color__highlight;
+              padding: 10px;
+              background-color: $color__background-dark;
+              cursor: pointer;
+
+              @media screen and (hover: hover) {
+                transition: 0.3s ease-out;
+
+                &:hover {
+                  .blue,
+                  .red {
+                    opacity: 0.1;
+                  }
+                }
+              }
+
+              @media screen and (min-width: 576px) {
+                grid-template-columns: repeat(3, 1fr);
+              }
+
+              @media screen and (min-width: 768px) {
+                grid-template-columns: repeat(4, 1fr);
+              }
+
+              .blue,
+              .red {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                border-radius: 5px;
+                transition: 0.3s ease-out;
+              }
+              
+              .blue {
+                background-color: blue;
+                opacity: 0.3;
+              }
+              .red {
+                background-color: red;
+                opacity: 0.3;
+              }
+
+              .win,
+              .lose {
+                position: relative;
+                z-index: 1;
+              }
+
+              .win {
+                color: green;
+              }
+
+              .lose {
+                color: red;
+              }
+            }
+          }
+        }
+        .map__container__flex {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          position: relative;
+          z-index: 1;
+          &__list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1%;
+          }
+        }
+      }
+    }
+  }
+}
+/*--------------------------------------------------------------
+  # Map
+  --------------------------------------------------------------*/

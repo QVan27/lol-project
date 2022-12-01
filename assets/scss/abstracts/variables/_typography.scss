@@ -1,0 +1,27 @@
+// font Family
+$font__main: "Mukta Vaani", sans-serif;
+$font__code: "Fira Sans", sans-serif;
+$font__pre: "Fira Sans", sans-serif;
+$font__heading-h1: "Martel", serif;
+$font__headings: "Fira Sans", sans-serif;
+$font__lol: "Marcellus", serif;
+
+// Line Height
+$font__line-height-body: 1.25;
+$font__line-height-pre: 1.6;
+// Font Size
+$fs__title: calc(35px + (60 - 35) * ((100vw - 300px) / (1920 - 300)));
+$fs__subtitle: calc(24px + (45 - 24) * ((100vw - 300px) / (1920 - 300)));
+$fs__smalltitle: calc(18px + (28 - 18) * ((100vw - 300px) / (1920 - 300)));
+$fs__text: calc(16px + (18 - 16) * ((100vw - 300px) / (1920 - 300)));
+$fs__nav-mobile: calc(24px + (70 - 24) * ((100vw - 300px) / (1140 - 300)));
+// Font Size REM
+$fs__700: 2rem;
+$fs__600: 1.5rem;
+$fs__500: 1.25rem;
+$fs__450: 1.125rem;
+$fs__400: 1rem;
+$fs__300: 0.8rem;
+$fs__200: 0.6rem;
+$fs__100: 0.5rem;
+

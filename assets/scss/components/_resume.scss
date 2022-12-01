@@ -1,0 +1,211 @@
+.container {
+  .match-details-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color__background-dark;
+    padding: 15px 20px;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .match-details {
+      display: flex;
+      align-items: center;
+      width: 97%;
+      height: 95%;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .match-stats {
+        align-self: center;
+        margin: auto;
+        color: $color__secondary;
+        font-size: 1.56rem;
+
+        @media screen and (max-width: 768px) {
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+
+  .match-container {
+    display: flex;
+    justify-content: center;
+    background-color: $color__secondary;
+    padding: 20px;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
+
+    .champion-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 1rem;
+
+      @media screen and (max-width: 768px) {
+        gap: 20px;
+      }
+
+      &.line {
+        border-right: 1px solid lightgrey;
+        @media screen and (max-width: 768px) {
+          border-right: none;
+          border-bottom: 1px solid lightgrey;
+        }
+      }
+
+      .champion {
+        display: flex;
+        align-items: center;
+
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .champion-data {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
+          height: 50%;
+          width: 100%;
+
+          @media screen and (max-width: 768px) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto;
+            gap: 5px;
+            grid-template-areas:
+              "summoner-name summoner-name"
+              "items stat";
+            justify-items: center;
+
+            .summoner-name {
+              grid-area: summoner-name;
+            }
+            .items {
+              grid-area: items;
+            }
+            .stat {
+              grid-area: stat;
+            }
+          }
+
+          .summoner-name {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            justify-content: space-between;
+            color: $color__headline;
+
+            .content-champ {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              margin-bottom: 0.5rem;
+              width: 12em;
+
+              @media screen and (max-width: 768px) {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              }
+
+              p {
+                font-weight: bold;
+                white-space: nowrap;
+              }
+
+              &__box {
+                position: relative;
+
+                img {
+                  display: block;
+                  border-radius: 50%;
+                  width: 2.5rem;
+                  height: 2.5rem;
+
+                  @media screen and (max-width: 768px) {
+                    width: 4rem;
+                    height: 4rem;
+                  }
+                }
+
+                .level {
+                  position: absolute;
+                  left: -3px;
+                  bottom: -3px;
+                  width: 15px;
+                  height: 15px;
+                  background: rgb(32, 45, 55);
+                  border-radius: 50%;
+                  color: rgb(255, 255, 255);
+                  font-size: 10px;
+                  text-align: center;
+                  line-height: 15px;
+
+                  &.reverse {
+                    left: auto;
+                    right: -3px;
+                  }
+                }
+              }
+
+              &__info {
+                &__spells {
+                  display: flex;
+                  align-items: center;
+                  gap: 2px;
+                }
+              }
+            }
+          }
+
+          .stat {
+            color: $color__paragraph-dark;
+          }
+
+          .items {
+            .content_item {
+              display: flex;
+              align-items: center;
+              gap: 2px;
+
+              @media screen and (max-width: 768px) {
+                flex-wrap: wrap;
+              }
+
+              img {
+                width: 1rem;
+                height: 1rem;
+
+                @media screen and (max-width: 768px) {
+                  width: 2rem;
+                  height: 2rem;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .reverse {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+body,
+button,
+input,
+select,
+optgroup,
+textarea {
+	color: $color__paragraph;
+	font-family: $font__main;
+	font-size: $fs__text;
+	line-height: $font__line-height-body;
+}
+
+@import "headings";

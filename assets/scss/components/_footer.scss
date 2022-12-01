@@ -1,0 +1,11 @@
+footer {
+  font-size: $fs__300;
+  height: 4vh;
+  display: flex;
+  align-items: center;
+  .wrap {
+    p {
+      text-align: center;
+    }
+  }
+}

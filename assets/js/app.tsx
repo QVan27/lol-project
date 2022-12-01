@@ -1,30 +1,34 @@
 import React, { FunctionComponent } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom/client';
+
+import { createRoot } from "react-dom/client";
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import '../scss/app.scss';
 import { ROOT } from "./constants/general";
-// import Header from "./components/shared/Header";
-import { ABOUT, HOME, POST_DETAIL, POSTS } from "./constants/route-paths";
-
+import { MAP, HOME, NOTFOUND } from "./constants/route-paths";
+// Shared
+import Header from "./components/shared/Header";
+import Footer from './components/shared/Footer';
+// Components
 import HomePage from "./components/pages/HomePage";
-// import AboutPage from "./components/pages/AboutPage";
-// import PostDetailPage from "./components/pages/PostDetailPage";
-// import PostsPage from "./components/pages/PostsPage";
+import MapPage from "./components/pages/MapPage";
+import NotFound from "./components/pages/NotFound";
 
 const App: FunctionComponent = () => {
   return (
     <BrowserRouter>
-      {/* <Header /> */}
+      <Header />
       <Switch>
         <Route exact={ true } path={ HOME } component={ HomePage } />
-        {/* <Route exact={ true } path={ ABOUT } component={ AboutPage } /> */}
-        {/* <Route exact={ true } path={ POST_DETAIL } component={ PostDetailPage } /> */}
-        {/* <Route exact={ true } path={ POSTS } component={ PostsPage } /> */}
+        <Route exact={ true } path={ MAP } component={ MapPage } />
+        <Route exact={ true } path={ NOTFOUND } component={ NotFound } />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById(ROOT));
-
+const root = document.getElementById(ROOT);
+if (root) {
+  createRoot(root).render(<App />);
+}
