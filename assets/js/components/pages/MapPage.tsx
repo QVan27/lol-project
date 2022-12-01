@@ -88,6 +88,7 @@ const MapPage: React.FC = () => {
             </form>
 
             {player.length !== 0 ? (
+              console.log(player),
               <div className="map__container__info">
                 <div className="map__container__player">
                   <div className="map__container__player--img">

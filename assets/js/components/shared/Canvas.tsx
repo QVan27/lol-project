@@ -188,37 +188,13 @@ export default function Canvas({ data }: any) {
   const mapRef = React.useRef<HTMLCanvasElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
+  // state to control the play/pause button
   const [isPlaying, setIsPlaying] = React.useState(false);
-
-  // const millisToMinutesAndSeconds = (millis: any) => {
-  //   let minutes = Math.floor(millis / 60000);
-  //   let seconds: any = ((millis % 60000) / 1000).toFixed(0);
-  //   return seconds == 60
-  //     ? minutes + 1 + ":00"
-  //     : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  // };
-
-  const [allKills, setAllKills] = React.useState<any>([]);
-  const championKills: Array<any> = [];
+  // const championKills: Array<any> = [];
   const [toggle, setToggle] = React.useState(false);
-
-  const showKills = () => {
-    setToggle(!toggle);
-    for (let i = 0; i < data.timeline.info.frames.length; i++) {
-      const el = data.timeline.info.frames[i];
-      for (let j = 0; j < el.events.length; j++) {
-        const event = el.events[j];
-        if (event.type === "CHAMPION_KILL") {
-          const championKill = event;
-          championKills.push(championKill);
-        }
-      }
-    }
-    setAllKills(championKills);
-  };
-
+  // Array to store all the kills
   const championKill: Array<any> = [];
-
+  // Function to get the champion kills
   const getAllEvents = (data: any) => {
     data.flatMap((item: any) => {
       item.events.flat().filter((event: any) => {
@@ -227,15 +203,21 @@ export default function Canvas({ data }: any) {
     });
     return championKill;
   };
-
+  // Get all events
   getAllEvents(data.timeline.info.frames);
-
-  const index: number = 1;
-  const btnPlay = React.useRef<HTMLDivElement>(null);
-  const btnPause = React.useRef<HTMLDivElement>(null);
-
+  // use the state to store the champion kills
+  const [allKills, setAllKills] = React.useState<any>([]);
+  // Show all kills
+  const showKills = () => {
+    setToggle(!toggle);
+    if (!toggle) {
+      setAllKills(championKill);
+    } else {
+      setAllKills([]);
+    }
+  };
+  // Store the current frame
   const [playKill, setPlayKill] = React.useState<any[]>([]);
-
   // convert timestamp to minutes and seconds
   const millisToMinutesAndSeconds = (millis: any) => {
     let minutes = Math.floor(millis / 60000);
@@ -244,147 +226,8 @@ export default function Canvas({ data }: any) {
       ? minutes + 1 + ":00"
       : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   };
-
-
-
-
-   
-  
-
-
-  // NE PAS SUPPRIMER LA PREMIERE FONCTION PLAY !!!
-
-  // const play = (bool: boolean, index: number) => {
-  //   if (bool === false) {
-  //     setIsPlaying(false);
-  //     return;
-  //   } else {
-  //     getAllEvents(data.timeline.info.frames);
-  //     setIsPlaying(true);
-  //     if (index < championKill.length) {
-  //       setTimeout(() => {
-  //         const current = championKill[index];
-  //         setPlayKill((prev) => [...prev, current]);
-  //         play(true, ++index);
-  //       }, (championKill[index].timestamp - championKill[index - 1].timestamp) / 100);
-  //     }
-  //   }
-  // };
-
-  // const start = () => {
-  //   setIsPlaying(true);
-  //   play(true, index);
-  // };
-
-  // const stop = () => {
-  //   setIsPlaying(false);
-  //   setPlayKill([]);
-  //   play(false, index);
-  // };
-
-  // NE PAS SUPPRIMER LA PREMIERE FONCTION PLAY !!!
-
-  // Recursive SetTimeout Function to play the game
-  // const play = (bool: boolean, index: number) => {
-  //   if (bool === false) {
-  //     setIsPlaying(false);
-  //     return;
-  //   } else {
-  //     getAllEvents(data.timeline.info.frames);
-  //     setIsPlaying(true);
-  //     if (index < championKill.length) {
-  //       setTimeout(() => {
-  //         const current = championKill[index];
-  //         setPlayKill((prev) => [...prev, current]);
-  //         play(true, ++index);
-  //       }, (championKill[index].timestamp - championKill[index - 1].timestamp) / 100);
-  //     }
-  //   }
-  // };
-
-  // const start = () => {
-  //   setIsPlaying(true);
-  //   play(true, index);
-  // };
-
-  // const stop = () => {
-  //   setIsPlaying(false);
-  //   setPlayKill([]);
-  //   play(false, index);
-  // };
-  // Recursive SetTimeout Function to play the game
-
-  // New Function
-
-  // const [indexKill, setIndexKill] = React.useState(0);
-
-  // const next = () => {
-  //   // const index = playKill.length;
-  //   if (indexKill < championKill.length) {
-  //     setPlayKill((prev) => [...prev, championKill[indexKill]]);
-  //     console.log(playKill);
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
-  // const play = () => {
-  //   if (intervalref.current !== null) {
-  //     intervalref.current = window.setInterval(() => {
-  //       if (indexKill < championKill.length) {
-  //         setPlayKill((prev) => [...prev, championKill[indexKill]]);
-  //         console.log(playKill);
-  //         return true;
-  //       } else {
-  //         if (intervalref.current) {
-  //           window.clearInterval(intervalref.current);
-  //           setIndexKill(0);
-  //           intervalref.current = null;
-  //         }
-  //       }
-  //     }, 1000);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const l: number = playKill.length;
-  //   setIndexKill(l);
-  //   console.log(indexKill);
-
-  //   return () => {
-  //     if (intervalref.current !== null) {
-  //       window.clearInterval(intervalref.current);
-  //     }
-  //   };
-  // }, [playKill]);
-
-  // const prev = () => {
-  //   try {
-  //     const pop = playKill.pop();
-  //     const index = playKill.length;
-  //     const kill: NodeListOf<Element> = document.querySelectorAll(".kill");
-  //     console.table(kill);
-
-  //     for (const i of kill) {
-  //       const lastKill = i.getAttribute("data-key");
-  //       const lastKillToNumber = parseInt(lastKill);
-  //       if (lastKillToNumber === index) {
-  //         i.remove();
-  //       }
-  //     }
-  //     console.log(pop);
-  //     setPlayKill(playKill);
-  //     console.log(playKill);
-  //   } catch (e: any) {
-  //     console.warn(e);
-  //   }
-  // };
-
-  // https://www.kindacode.com/article/react-typescript-setinterval/
-  // Ref
   // This will be used to store the interval
   const intervalref = useRef<number | null>(null);
-
   // Start the interval
   // This will be called when the user clicks on the start button
   const play = () => {
@@ -392,33 +235,37 @@ export default function Canvas({ data }: any) {
     setIsPlaying(true);
     intervalref.current = window.setInterval(() => {
       setPlayKill((prev) => [...prev, championKill[prev.length]]);
-    }, 1000);
+    }, 2000);
   };
-
   // Stop the interval
   // This will be called when the user clicks on the stop button
-  const stop = () => {
-    setIsPlaying(false);
-    if (intervalref.current) {
+  const reset = () => {
+    if (!isPlaying || isPlaying) {
+      setIsPlaying(false);
       window.clearInterval(intervalref.current);
       setPlayKill([]);
       intervalref.current = null;
     }
   };
-
   // Pause the interval
   // This will be called when the user clicks on the pause button
   const pause = () => {
-    setIsPlaying(false);
     if (intervalref.current) {
+      setIsPlaying(false);
       window.clearInterval(intervalref.current);
       intervalref.current = null;
     }
   };
-
+  // Hide logs after 1 seconds
+  const logs = document.querySelectorAll<HTMLElement>("div.logs");
+  logs.forEach((log: any) => {
+    setTimeout(() => {
+      log.style.transition = "opacity 0.3s ease-out";
+      log.style.opacity = 0;
+    }, 1000);
+  });
   // Use the useEffect hook to cleanup the interval when the component unmounts
   useEffect(() => {
-    // here's the cleanup function
     return () => {
       if (intervalref.current !== null) {
         window.clearInterval(intervalref.current);
@@ -461,7 +308,6 @@ export default function Canvas({ data }: any) {
               );
             });
           })}
-
           {toggle &&
             allKills.map((kill: any, i: number) => {
               return (
@@ -484,7 +330,6 @@ export default function Canvas({ data }: any) {
                 />
               );
             })}
-
           {playKill.map((kill: any, i: number) => {
             return (
               <div
@@ -508,7 +353,6 @@ export default function Canvas({ data }: any) {
             );
           })}
         </CanvasContainer>
-
         <Player>
           <Filters>
             <div>
@@ -524,69 +368,56 @@ export default function Canvas({ data }: any) {
               <span>{!toggle ? "Show Kills" : "Hide Kills"}</span>
             </div>
           </Filters>
-
           <ButtonPlayPause>
             {isPlaying ? (
-              <div ref={btnPause} onClick={pause}>
+              <div onClick={pause}>
                 <AiFillPauseCircle className="pause" />
               </div>
             ) : (
-              <div ref={btnPlay} onClick={play}>
+              <div onClick={play}>
                 <AiFillPlayCircle className="play" />
               </div>
             )}
             <span>{isPlaying ? "Pause" : "Play"}</span>
           </ButtonPlayPause>
-
-          <ButtonControl onClick={stop}>
+          <ButtonControl onClick={reset}>
             <BiReset className="small" />
             <span>Reset</span>
           </ButtonControl>
         </Player>
       </Container>
-
       {playKill.map((kill: any, i: number) => {
         console.log(data);
         return (
-          
-          (
-            <Log key={i} data-key={i}>
-              <p className="killers">
-                {/* show summonerName with killerId and participantId */}
-
-                {data.resume.info.participants.map((participant: any) => {
-                  if (participant.participantId === kill.killerId) {
-                    return (
-                      <span key={participant.participantId}>
-                        {participant.summonerName}
-                      </span>
-                    );
-                  }
-                })}
-                a tué
-                {data.resume.info.participants.map((participant: any) => {
-                  if (participant.participantId === kill.victimId) {
-                    return (
-                      <span key={participant.participantId}>
-                        {participant.summonerName}
-                      </span>
-                    );
-                  }
-                })}
-                
-                
-              
-        
-                {/* {kill.type} a tué {kill.type} */}
-              </p>
-              <p className="time">
-                <AiFillClockCircle />
-                <span>
-                  { millisToMinutesAndSeconds(kill.timestamp) }
-                </span>
-              </p>
-            </Log>
-          )
+          <Log key={i} data-key={i} className="logs">
+            <p>Kill numéro : {++i}</p>
+            <p className="killers">
+              {/* show summonerName with killerId and participantId */}
+              {data.resume.info.participants.map((participant: any) => {
+                if (participant.participantId === kill.killerId) {
+                  return (
+                    <span key={participant.participantId}>
+                      {participant.summonerName + " "}
+                    </span>
+                  );
+                }
+              })}
+              a tué
+              {data.resume.info.participants.map((participant: any) => {
+                if (participant.participantId === kill.victimId) {
+                  return (
+                    <span key={participant.participantId}>
+                      {" " + participant.summonerName}
+                    </span>
+                  );
+                }
+              })}
+            </p>
+            <p className="time">
+              <AiFillClockCircle />
+              <span>{millisToMinutesAndSeconds(kill.timestamp)}</span>
+            </p>
+          </Log>
         );
       })}
     </Wrapper>
