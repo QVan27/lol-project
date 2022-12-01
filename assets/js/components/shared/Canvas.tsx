@@ -9,7 +9,7 @@ import { BiShow, BiHide, BiReset } from "react-icons/bi";
 
 const Wrapper = styled.div`
   margin-inline: auto;
-  width: min(1140px, 92%);
+  width: min(1140px, 100%);
 `;
 
 const Container = styled.div`
@@ -19,26 +19,42 @@ const Container = styled.div`
 `;
 
 const CanvasContainer = styled.div`
+  display: grid;
+  place-items: center;
   position: relative;
-  max-width: 500px;
-  min-width: 320px;
-  max-height: 500px;
-  min-height: 320px;
+  width: 18.125rem;
+  height: 18.125rem;
+
+  @media screen and (min-width: 375px) {
+    width: 20rem;
+    height: 20rem;
+  }
+
+  @media screen and (min-width: 576px) {
+    width: 31.25rem;
+    height: 31.25rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    width: 37.5rem;
+    height: 37.5rem;
+  }
 
   #map {
-    width: 100%;
     background: center / cover no-repeat url("./build/images/map-500.png");
+    width: 96%;
+    height: 96%;
   }
 
   .towers,
   .kill {
+    width: 1rem;
+    height: 1rem;
     transform: translate(-50%, 50%);
-    width: 10px;
-    height: 10px;
 
     @media screen and (min-width: 768px) {
-      width: 20px;
-      height: 20px;
+      width: 1.25rem;
+      height: 1.25rem;
     }
   }
 
@@ -53,29 +69,28 @@ const CanvasContainer = styled.div`
 `;
 
 const Player = styled.div`
-  margin-inline: auto;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 1.25rem;
   align-items: flex-end;
+  margin-inline: auto;
 `;
 
 const ButtonControl = styled.button`
-  background-color: transparent;
-  border: none;
-  align-items: center;
-  border-radius: 100%;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 0.625rem;
+  border: none;
+  border-radius: 100%;
   background-color: transparent;
   color: #cdbe91;
   cursor: pointer;
   .small {
-    background-color: #1e2328;
-    border-radius: 100%;
     padding: 15px;
+    border-radius: 100%;
+    background-color: #1e2328;
   }
   span {
     color: #fff;
@@ -84,21 +99,21 @@ const ButtonControl = styled.button`
 `;
 
 const ButtonPlayPause = styled.button`
-  background-color: transparent;
-  border: none;
-  align-items: center;
-  border-radius: 100%;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 0.625rem;
+  border: none;
+  border-radius: 100%;
+  background-color: transparent;
   background-color: transparent;
   cursor: pointer;
   .play,
   .pause {
-    background-color: #1e2328;
+    padding: 1.25rem;
     border-radius: 100%;
-    padding: 20px;
+    background-color: #1e2328;
     color: #c8aa6d;
   }
   span {
@@ -113,21 +128,22 @@ const Filters = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
     align-items: center;
+    gap: 0.625rem;
   }
 `;
 
 const Log = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 2rem;
   position: fixed;
   z-index: 100;
   top: 10%;
   left: 50%;
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   border: 1px solid #c8aa6d;
   background-color: #1e2328;
   transform: translateX(-50%);
@@ -140,6 +156,30 @@ const Log = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  .killers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 1rem;
+    min-width: 18.75rem;
+
+    @media screen and (min-width: 400px) {
+      min-width: 24.4375rem;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    span {
+      white-space: nowrap;
+    }
   }
 `;
 
@@ -185,7 +225,7 @@ export default function Canvas({ data }: any) {
     ],
   };
 
-  const mapRef = React.useRef<HTMLCanvasElement>(null);
+  const mapRef = React.useRef<HTMLDivElement>(null);
   const towerRef = React.useRef<HTMLDivElement>(null);
 
   // state to control the play/pause button
@@ -205,17 +245,6 @@ export default function Canvas({ data }: any) {
   };
   // Get all events
   getAllEvents(data.timeline.info.frames);
-  // use the state to store the champion kills
-  const [allKills, setAllKills] = React.useState<any>([]);
-  // Show all kills
-  const showKills = () => {
-    setToggle(!toggle);
-    if (!toggle) {
-      setAllKills(championKill);
-    } else {
-      setAllKills([]);
-    }
-  };
   // Store the current frame
   const [playKill, setPlayKill] = React.useState<any[]>([]);
   // convert timestamp to minutes and seconds
@@ -233,6 +262,7 @@ export default function Canvas({ data }: any) {
   const play = () => {
     if (intervalref.current !== null) return;
     setIsPlaying(true);
+    setToggle(false);
     intervalref.current = window.setInterval(() => {
       setPlayKill((prev) => [...prev, championKill[prev.length]]);
     }, 2000);
@@ -244,6 +274,7 @@ export default function Canvas({ data }: any) {
       setIsPlaying(false);
       window.clearInterval(intervalref.current);
       setPlayKill([]);
+      setToggle(false);
       intervalref.current = null;
     }
   };
@@ -254,6 +285,18 @@ export default function Canvas({ data }: any) {
       setIsPlaying(false);
       window.clearInterval(intervalref.current);
       intervalref.current = null;
+    }
+  };
+  // use the state to store the champion kills
+  const [allKills, setAllKills] = React.useState<any>([]);
+  // Show all kills
+  const showKills = () => {
+    setToggle(!toggle);
+    if (!toggle) {
+      setAllKills(championKill);
+      pause();
+    } else {
+      setAllKills([]);
     }
   };
   // Hide logs after 1 seconds
@@ -277,7 +320,7 @@ export default function Canvas({ data }: any) {
     <Wrapper>
       <Container>
         <CanvasContainer>
-          <canvas id="map" ref={mapRef} width="500" height="500" />
+          <div id="map" ref={mapRef} />
           {buildings.towers.map((team, i) => {
             return Object.keys(team).map((color, j) => {
               return team[color].map(
@@ -321,8 +364,8 @@ export default function Canvas({ data }: any) {
                     left: (kill.position.x / 15000) * 100 + "%",
                     backgroundImage:
                       kill.victimId > 4
-                        ? "url(./build/images/map-events/skull-and-crossbones-blue.svg)"
-                        : "url(./build/images/map-events/skull-and-crossbones-red.svg)",
+                        ? "url(./build/images/map-events/skull-and-crossbones-red.svg)"
+                        : "url(./build/images/map-events/skull-and-crossbones-blue.svg)",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
@@ -343,8 +386,8 @@ export default function Canvas({ data }: any) {
                   left: (kill.position.x / 15000) * 100 + "%",
                   backgroundImage:
                     kill.victimId > 4
-                      ? "url(./build/images/map-events/skull-and-crossbones-blue.svg)"
-                      : "url(./build/images/map-events/skull-and-crossbones-red.svg)",
+                      ? "url(./build/images/map-events/skull-and-crossbones-red.svg)"
+                      : "url(./build/images/map-events/skull-and-crossbones-blue.svg)",
                   backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
@@ -387,44 +430,42 @@ export default function Canvas({ data }: any) {
         </Player>
       </Container>
       {playKill.map((kill: any, i: number) => {
-        console.log(data);
         return (
           <Log key={i} data-key={i} className="logs">
             <p>Kill numéro : {++i}</p>
-            <p className="killers">
-              {/* show summonerName with killerId and participantId */}
+            <div className="killers">
               {data.resume.info.participants.map((participant: any) => {
                 if (participant.participantId === kill.killerId) {
                   return (
-                    <span key={participant.participantId}>
+                    <div key={participant.participantId}>
                       <img
                         src={`http://ddragon.leagueoflegends.com/cdn/11.6.1/img/champion/${participant.championName}.png`}
                         alt={participant.championName}
                         height="45"
                         width="45"
                       />
-                      {participant.summonerName + " "}
-                    </span>
+                      <span>{participant.summonerName}</span>
+                    </div>
                   );
                 }
               })}
-              a tué
+              <span>a tué</span>
               {data.resume.info.participants.map((participant: any) => {
                 if (participant.participantId === kill.victimId) {
                   return (
-                    <span key={participant.participantId}>
+                    <div key={participant.participantId}>
                       <img
                         src={`http://ddragon.leagueoflegends.com/cdn/11.6.1/img/champion/${participant.championName}.png`}
                         alt={participant.championName}
                         height="45"
                         width="45"
                       />
-                      {" " + participant.summonerName}
-                    </span>
+                      <span>{participant.summonerName}</span>
+                    </div>
                   );
                 }
               })}
-            </p>
+            </div>
             <p className="time">
               <AiFillClockCircle />
               <span>{millisToMinutesAndSeconds(kill.timestamp)}</span>
