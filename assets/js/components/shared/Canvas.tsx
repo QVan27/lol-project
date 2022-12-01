@@ -397,6 +397,12 @@ export default function Canvas({ data }: any) {
                 if (participant.participantId === kill.killerId) {
                   return (
                     <span key={participant.participantId}>
+                      <img
+                        src={`http://ddragon.leagueoflegends.com/cdn/11.6.1/img/champion/${participant.championName}.png`}
+                        alt={participant.championName}
+                        height="45"
+                        width="45"
+                      />
                       {participant.summonerName + " "}
                     </span>
                   );
@@ -407,6 +413,12 @@ export default function Canvas({ data }: any) {
                 if (participant.participantId === kill.victimId) {
                   return (
                     <span key={participant.participantId}>
+                      <img
+                        src={`http://ddragon.leagueoflegends.com/cdn/11.6.1/img/champion/${participant.championName}.png`}
+                        alt={participant.championName}
+                        height="45"
+                        width="45"
+                      />
                       {" " + participant.summonerName}
                     </span>
                   );
