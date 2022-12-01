@@ -232,12 +232,8 @@ export default function Canvas({ data }: any) {
   // Stop the interval
   // This will be called when the user clicks on the stop button
   const reset = () => {
-    setIsPlaying(false);
-    if (!isPlaying) {
-      window.clearInterval(intervalref.current);
-      setPlayKill([]);
-      intervalref.current = null;
-    } else {
+    if (!isPlaying || isPlaying) {
+      setIsPlaying(false);
       window.clearInterval(intervalref.current);
       setPlayKill([]);
       intervalref.current = null;
@@ -246,8 +242,8 @@ export default function Canvas({ data }: any) {
   // Pause the interval
   // This will be called when the user clicks on the pause button
   const pause = () => {
-    setIsPlaying(false);
     if (intervalref.current) {
+      setIsPlaying(false);
       window.clearInterval(intervalref.current);
       intervalref.current = null;
     }
